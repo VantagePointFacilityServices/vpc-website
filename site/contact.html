@@ -22,7 +22,7 @@
       <a href="index.html">Home</a>
       <div class="nav-item has-dropdown">
         <button class="nav-dropdown-toggle" aria-expanded="false" aria-controls="nav-services">
-          Services
+          Packages
           <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
         </button>
         <div class="nav-dropdown-menu" id="nav-services">
@@ -31,7 +31,7 @@
           <a href="estate-care.html">Estate Care</a>
         </div>
       </div>
-      <a href="service-areas.html">Service Areas</a>
+      <a href="service-areas.html">Area</a>
       <a href="about.html">About Us</a>
       <a href="contact.html" class="active">Contact</a>
     </nav>
@@ -60,56 +60,21 @@
   </div>
 </section>
 
-<!-- ============ CONTACT DETAILS ============ -->
-<section>
-  <div class="wrap">
-    <div class="contact-cards">
-      <a class="contact-card" href="tel:0755000000">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.12 4.2 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-        <div><h4>Phone</h4><p>(07) 5500 0000</p></div>
-      </a>
-      <a class="contact-card" href="mailto:hello@vantagepointcleaning.com.au">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 6 10-6"/></svg>
-        <div><h4>Email</h4><p>hello@vantagepointcleaning.com.au</p></div>
-      </a>
-      <a class="contact-card" href="service-areas.html">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s7-7.4 7-12a7 7 0 1 0-14 0c0 4.6 7 12 7 12z"/><circle cx="12" cy="10" r="2.5"/></svg>
-        <div><h4>Service area</h4><p>Gold Coast, QLD — Zones 1&ndash;5</p></div>
-      </a>
-    </div>
-
-    <div class="hours-block">
-      <h4>Office hours</h4>
-      <ul class="hours-list">
-        <li><span>Mon&ndash;Fri</span><span>8:00am &ndash; 5:00pm</span></li>
-        <li><span>Saturday</span><span>By appointment</span></li>
-        <li><span>Sunday</span><span>Closed</span></li>
-      </ul>
-    </div>
-  </div>
-</section>
-
-<!-- ============ FORM ============ -->
-<section class="bg-cloud" id="contact">
-  <div class="wrap">
-    <div class="section-head center">
-      <span class="eyebrow">Get Instant Quote</span>
+<!-- ============ REQUEST A QUOTE ============ -->
+<section id="contact">
+  <div class="wrap contact-grid">
+    <div>
+      <span class="eyebrow">Request a Quote</span>
       <h2>Tell us about your home</h2>
-      <p>Essential and Signature are published flat-rate plans, so we can come back to you with a price. Estate Care is arranged through a private walkthrough &mdash; <a href="estate-care.html">start here</a> and we&rsquo;ll be in touch to organise one.</p>
-    </div>
-    <div class="contact-form-wrap">
-      <div class="hero-form">
+      <p class="lead">Essential and Signature are published flat-rate plans, so we can come back to you with a price. Estate Care is arranged through a private walkthrough &mdash; <a href="estate-care.html" class="text-link">start here</a>.</p>
       <form class="assessment-form">
         <div class="form-fields">
-          <h3>Request Instant Quote</h3>
           <div class="form-row">
             <div><label for="fname">First name</label><input id="fname" name="first_name" type="text" autocomplete="given-name" required></div>
             <div><label for="lname">Last name</label><input id="lname" name="last_name" type="text" autocomplete="family-name" required></div>
           </div>
-          <div class="form-row single">
+          <div class="form-row">
             <div><label for="phone">Phone</label><input id="phone" name="phone" type="tel" autocomplete="tel" required></div>
-          </div>
-          <div class="form-row single">
             <div><label for="email">Email</label><input id="email" name="email" type="email" autocomplete="email" required></div>
           </div>
           <div class="form-row single">
@@ -142,15 +107,41 @@
             <label for="company">Company</label>
             <input id="company" name="company" type="text" tabindex="-1" autocomplete="off">
           </div>
-          <button type="submit" class="btn btn-primary btn-block">Request Instant Quote</button>
-          <p class="form-note">Your information is secure and never shared.</p>
+          <button type="submit" class="btn btn-primary">Request Instant Quote</button>
+          <p class="form-note" style="text-align:left">Your information is secure and never shared.</p>
         </div>
         <div class="form-success">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
           <h3>Request received</h3>
           <p class="small">Thank you — a member of our team will be in touch shortly to arrange your private home care assessment.</p>
         </div>
       </form>
+    </div>
+
+    <div class="contact-sidebar">
+      <div class="talk-card">
+        <img class="slot-mark" src="assets/img/emblem-white.svg" alt="">
+        <span class="eyebrow on-inverse">Talk to a Person</span>
+        <div class="talk-card-list">
+          <a class="talk-card-item" href="tel:0755000000"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.12 4.2 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>(07) 5500 0000</a>
+          <a class="talk-card-item" href="mailto:hello@vantagepointcleaning.com.au"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 6 10-6"/></svg>hello@vantagepointcleaning.com.au</a>
+          <div class="talk-card-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>Gold Coast, QLD &amp; Northern NSW</div>
+          <div class="talk-card-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>Mon&ndash;Fri, 8am&ndash;5pm</div>
+        </div>
+      </div>
+
+      <div class="next-card">
+        <h3>What Happens Next</h3>
+        <ol class="next-list">
+          <li><span class="step-index">1.</span>We confirm your published price by phone or email</li>
+          <li><span class="step-index">2.</span>You choose your start date and preferred access</li>
+          <li><span class="step-index">3.</span>A dedicated cleaner or team is assigned to your home</li>
+          <li><span class="step-index">4.</span>Your first visit — documented with before &amp; after photos</li>
+        </ol>
+        <div class="tab-badges">
+          <span class="tab-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 13c0 5-3.5 7.5-7.35 8.75a1 1 0 0 1-.65.01C8.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg>Fully insured</span>
+          <span class="tab-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9 12l2 2 4-4"/></svg>Police-checked</span>
+        </div>
       </div>
     </div>
   </div>
@@ -158,6 +149,7 @@
 
 <!-- ============ FOOTER ============ -->
 <footer class="site-footer">
+  <svg class="footer-watermark" viewBox="0 0 403.95 415.97" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M207.38,0C93.03,0,0,93.03,0,207.38v208.59h105.96v-117.74l27.14-14.25,43.81-23.01,47.45-24.92v153.92h-47.45v-96.79l-26,14.48v108.32h99.45v-222.94l-73.45,38.58v-115.39l106.21,57.8v219.69l40.31-23.85c49.66-29.38,80.51-83.46,80.51-141.17V0h-196.57ZM377.95,228.7c0,48.55-25.96,94.07-67.75,118.79l-1.08.64v-189.56l-158.21-86.1v172.79l-70.95,37.26v107.45H26v-182.59C26,107.37,107.37,26,207.38,26h170.57v202.7Z"/></svg>
   <div class="wrap">
     <div class="footer-grid">
       <div>
@@ -175,7 +167,7 @@
           <li><a href="index.html">Essential Home Care</a></li>
           <li><a href="signature-home-care.html">Signature Home Care</a></li>
           <li><a href="estate-care.html">Estate Care</a></li>
-          <li><a href="service-areas.html">Service Areas</a></li>
+          <li><a href="service-areas.html">Area</a></li>
           <li><a href="about.html">About Us</a></li>
           <li><a href="careers.html">Careers</a></li>
           <li><a href="contact.html">Contact</a></li>
