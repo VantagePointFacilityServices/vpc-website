@@ -356,14 +356,16 @@ p { margin: 0 0 16px; font-size: var(--p1); color: var(--arsenic); }
 .hero-grid > * { min-width: 0; }
 .hero h1 { color: var(--white); margin-bottom: 18px; }
 
-/* The hero title holds one line at every width. Measured, the rendered text is
-   ~10.15x the font size, so it fits while the size stays under ~9.9% of the
-   column — 9.4cqi leaves headroom for font-loading variance. Sizing off the
-   container (not the viewport) means the one-column and two-column hero
-   layouts are both handled by this single rule. Max is 2.25x min, inside the
-   2.5x ceiling that keeps zoom and user font settings usable. */
-.hero-copy {
+/* Every hero H1 shares one size, sized off its own container rather than the
+   viewport so the one-column (.hero-single), two-column (.hero-grid), and
+   homepage (.hero-copy) hero layouts all read at the same scale. Max is
+   2.25x min, inside the 2.5x ceiling that keeps zoom and user font settings
+   usable. Headlines are no longer forced to one line — length varies per
+   page, so wrapping is left to flow naturally. */
+.hero-copy, .hero-single, .hero-grid > div:first-child {
   container-type: inline-size;
+}
+.hero-copy {
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -375,8 +377,7 @@ p { margin: 0 0 16px; font-size: var(--p1); color: var(--arsenic); }
 .hero-copy .hero-social {
   margin: 0;
 }
-.hero-copy h1 {
-  white-space: nowrap;
+.hero-copy h1, .hero-single h1, .hero-grid > div:first-child h1 {
   font-size: clamp(1.6rem, 9.4cqi, 3.6rem);
 }
 .hero .lead { font-size: 1.2rem; color: var(--smoke); max-width: 540px; }
