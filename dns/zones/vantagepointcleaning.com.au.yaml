@@ -1,0 +1,18 @@
+zone: vantagepointcleaning.com.au
+
+records:
+  - type: A
+    name: vantagepointcleaning.com.au
+    content: 185.199.108.153
+  - type: A
+    name: vantagepointcleaning.com.au
+    content: 185.199.109.153
+  - type: A
+    name: vantagepointcleaning.com.au
+    content: 185.199.110.153
+  - type: A
+    name: vantagepointcleaning.com.au
+    content: 185.199.111.153
+  - type: CNAME
+    name: www.vantagepointcleaning.com.au
+    content: vantagepointfacilityservices.github.io
