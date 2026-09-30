@@ -1,18 +1,90 @@
+# Desired state for the vantagepointcleaning.com.au zone, applied by
+# sync-dns.mjs against the Cloudflare API. This file is the single source
+# of truth — edit it, then run the sync script (dry-run by default).
+# See dns/README.md for the field reference.
+#
+# STATUS (2026-09-30): NOT APPLIED. The domain's nameservers are still
+# GoDaddy (ns73/ns74.domaincontrol.com) and the apex serves a GoDaddy
+# Website Builder page. Cut over with docs/DEPLOYMENT.md, and dry-run with
+# --prune before any --apply.
+
 zone: vantagepointcleaning.com.au
 
 records:
+  # --- Website (GitHub Pages) — deployed by .github/workflows/deploy-website.yml ---
+  # DNS-only at apex/www so GitHub can issue its own TLS cert. www is canonical
+  # (site/CNAME); GitHub redirects the bare apex to it.
   - type: A
     name: vantagepointcleaning.com.au
     content: 185.199.108.153
+    proxied: false
   - type: A
     name: vantagepointcleaning.com.au
     content: 185.199.109.153
+    proxied: false
   - type: A
     name: vantagepointcleaning.com.au
     content: 185.199.110.153
+    proxied: false
   - type: A
     name: vantagepointcleaning.com.au
     content: 185.199.111.153
+    proxied: false
   - type: CNAME
     name: www.vantagepointcleaning.com.au
     content: vantagepointfacilityservices.github.io
+    proxied: false
+
+  # --- Google Workspace email — LIVE on GoDaddy DNS today. Values pulled from public ---
+  # --- DNS 2026-09-30. Must exist in Cloudflare before the nameserver switch, or mail stops. ---
+  - type: MX
+    name: vantagepointcleaning.com.au
+    content: 'aspmx.l.google.com'
+    priority: 1
+  - type: MX
+    name: vantagepointcleaning.com.au
+    content: 'alt1.aspmx.l.google.com'
+    priority: 5
+  - type: MX
+    name: vantagepointcleaning.com.au
+    content: 'alt2.aspmx.l.google.com'
+    priority: 5
+  - type: MX
+    name: vantagepointcleaning.com.au
+    content: 'alt3.aspmx.l.google.com'
+    priority: 10
+  - type: MX
+    name: vantagepointcleaning.com.au
+    content: 'alt4.aspmx.l.google.com'
+    priority: 10
+  # SPF — the live GoDaddy record is "v=spf1 include:dc-aa8e722993._spfm.vantagepointcleaning.com.au ~all".
+  # That _spfm record only exists while GoDaddy hosts DNS; after the move it's NXDOMAIN and SPF
+  # permerrors (exactly what broke VPFS until 2026-09-29). This is the fixed value. Keep ONE SPF record.
+  - type: TXT
+    name: vantagepointcleaning.com.au
+    content: '"v=spf1 include:_spf.google.com ~all"'
+  # DMARC — copied as live. rua points at GoDaddy's onsecureserver.net reporting, which stops being
+  # useful after the move: replace rua with a mailbox you read once DKIM (below) is on.
+  - type: TXT
+    name: _dmarc.vantagepointcleaning.com.au
+    content: '"v=DMARC1; p=quarantine; adkim=r; aspf=r; rua=mailto:dmarc_rua@onsecureserver.net;"'
+  - type: TXT
+    name: vantagepointcleaning.com.au
+    content: '"google-site-verification=xL3KMvrrqw-DI3buMNQlwVSSVZEdZZ2XqjcpSABwaQE"'
+
+  # --- Google DKIM — NOT set up (no google._domainkey record exists). Generate it in ---
+  # --- Google Admin > Apps > Gmail > Authenticate email, paste it here, apply, then ---
+  # --- click "Start authentication" in Google Admin. ---
+  # - type: TXT
+  #   name: google._domainkey.vantagepointcleaning.com.au
+  #   content: '"v=DKIM1; k=rsa; p=REPLACE_WITH_GOOGLE_ADMIN_KEY"'
+
+  # --- GoHighLevel email sending domain — not built yet (VPC sub-account doesn't exist). ---
+  # --- Copy the records GHL shows under Settings > Email Services > dedicated domain for ---
+  # --- noreply.vantagepointcleaning.com.au — same shape as the vpfs-website .com.au zone file. ---
+
+  # --- VPC Worker custom domain (worker.vantagepointcleaning.com.au) — deliberately NOT ---
+  # --- managed here. Wrangler owns it via worker/wrangler.toml routes; sync-dns never ---
+  # --- prunes Cloudflare read-only records. ---
+
+redirects: []
