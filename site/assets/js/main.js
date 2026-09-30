@@ -51,6 +51,19 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
 
+  // Cloudflare Turnstile bot check. api.js loads with `defer`, so it has run
+  // by DOMContentLoaded. Rendering adds a hidden `cf-turnstile-response`
+  // input to the form; the token is worthless until a server verifies it,
+  // so the future CRM POST must send it on to a Worker that does.
+  document.querySelectorAll('.assessment-form .turnstile-widget').forEach(function (el) {
+    if (!el.dataset.sitekey || !window.turnstile) return;
+    window.turnstile.render(el, {
+      sitekey: el.dataset.sitekey,
+      action: 'lead',
+      appearance: 'interaction-only'
+    });
+  });
+
   // Assessment request form(s) — placeholder submit handler until CRM is wired up
   document.querySelectorAll('.assessment-form').forEach(function (form) {
     form.addEventListener('submit', function (e) {
@@ -65,7 +78,9 @@ document.addEventListener('DOMContentLoaded', function () {
       var body = form.querySelector('.form-fields');
       var success = form.querySelector('.form-success');
 
-      // TODO: POST to the CRM here — send only when `caught` is false.
+      // TODO: POST to the CRM here — send only when `caught` is false, and
+      // include the form's `cf-turnstile-response` value for server-side
+      // verification (see the Turnstile block above).
       form.setAttribute('data-lead-ready', caught ? 'false' : 'true');
 
       // The success state shows either way, so a bot gets no signal.

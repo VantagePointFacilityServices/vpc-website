@@ -161,6 +161,8 @@
             <label for="company">Company</label>
             <input id="company" name="company" type="text" tabindex="-1" autocomplete="off">
           </div>
+          <!-- Cloudflare Turnstile bot check; site key from the Turnstile dashboard -->
+          <div class="turnstile-widget" data-sitekey=""></div>
           <button type="submit" class="btn btn-primary btn-block">Request My Consultation</button>
           <p class="form-note">Your information is secure and never shared. Enquiries are reviewed personally by our leadership team — no automated quote, no obligation.</p>
         </div>
@@ -379,6 +381,7 @@
   </div>
 </footer>
 
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit" defer></script>
 <script src="assets/js/main.js"></script>
 </body>
 </html>
