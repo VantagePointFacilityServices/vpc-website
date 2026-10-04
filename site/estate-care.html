@@ -60,7 +60,7 @@
     <a class="logo" href="index.html"><img src="assets/img/logo-navy.svg" alt="Vantage Point Cleaning"></a>
     <nav class="main-nav">
       <a href="index.html">Home</a>
-      <div class="nav-item has-dropdown current">
+      <div class="nav-item has-dropdown">
         <button class="nav-dropdown-toggle" aria-expanded="false" aria-controls="nav-services">
           Packages
           <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
@@ -69,9 +69,9 @@
           <a href="index.html">Essential Home Care</a>
           <a href="signature-home-care.html">Signature Home Care</a>
           <a href="reserve-home-care.html">Reserve Home Care</a>
-          <a href="estate-care.html" class="active">Estate Care</a>
         </div>
       </div>
+      <a href="estate-care.html" class="nav-estate active" title="By private walkthrough">Estate Care<span class="nav-sub">By private walkthrough</span></a>
       <a href="service-areas.html">Area</a>
       <a href="about.html">About Us</a>
       <a href="contact.html">Contact</a>
@@ -89,7 +89,7 @@
 <section class="hero page-hero">
   <div class="wrap hero-grid">
     <div>
-      <div class="breadcrumb"><a href="index.html">Essential Home Care</a> / Estate Care</div>
+      <div class="breadcrumb"><a href="index.html">Home</a> / Estate Care</div>
       <h1>Estate Care &mdash; Dedicated Home Cleaning for Gold Coast Estates</h1>
       <p class="lead">For larger and high-value Gold Coast homes that call for a dedicated team, a detailed maintenance program, and the discretion of concierge-style communication — not a booking, an invitation.</p>
       <ul class="hero-checks">
@@ -130,16 +130,7 @@
           <div class="form-row single">
             <div><label for="suburb">Suburb</label><input id="suburb" name="suburb" type="text" autocomplete="address-level2" placeholder="e.g. Sanctuary Cove" required></div>
           </div>
-          <div class="form-row single">
-            <div>
-              <label for="service">Service</label>
-              <select id="service" name="service" required>
-                <option>Essential Home Care</option>
-                <option>Signature Home Care</option>
-                <option selected>Estate Care</option>
-              </select>
-            </div>
-          </div>
+          <input type="hidden" name="service" value="Estate Care">
           <div class="form-row single">
             <div><label for="size">Approximate property size <span style="font-weight:400;color:var(--graphite);">(optional)</span></label>
               <select id="size" name="property_size">
@@ -229,7 +220,7 @@
     <div class="section-head center">
       <span class="eyebrow">Quality Assurance</span>
       <h2>Verified by a Supervisor, not a checklist alone</h2>
-      <p>Estate Care is the only tier that includes a direct Supervisor walkthrough of your home, built on our internal QUA-02 Client Home Walkthrough standard.</p>
+      <p>Estate Care is the only service that includes a direct Supervisor walkthrough of your home, built on our internal QUA-02 Client Home Walkthrough standard.</p>
     </div>
     <div class="assurance-grid">
       <div class="assurance-card">
@@ -306,7 +297,7 @@
       </div>
       <div class="faq-item">
         <button class="faq-q">Is this the same team as your Home Care plans?</button>
-        <div class="faq-a"><p>Estate Care runs as its own dedicated program, with a team assigned specifically to your property and direct Supervisor-level oversight not included in our standard recurring plans.</p></div>
+        <div class="faq-a"><p>Estate Care runs as its own dedicated program, with a team assigned specifically to your property and direct Supervisor-level oversight not part of our standard recurring home care packages.</p></div>
       </div>
       <div class="faq-item">
         <button class="faq-q">Is there a minimum commitment?</button>
@@ -348,7 +339,7 @@
           <li><a href="index.html">Essential Home Care</a></li>
           <li><a href="signature-home-care.html">Signature Home Care</a></li>
           <li><a href="reserve-home-care.html">Reserve Home Care</a></li>
-          <li><a href="estate-care.html">Estate Care</a></li>
+          <li class="footer-sep"><a href="estate-care.html">Estate Care</a> <span class="footer-note">by private walkthrough</span></li>
           <li><a href="service-areas.html">Area</a></li>
           <li><a href="about.html">About Us</a></li>
           <li><a href="careers.html">Careers</a></li>

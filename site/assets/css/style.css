@@ -812,3 +812,17 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--n
 @media (max-width: 960px) {
   .package-grid { grid-template-columns: 1fr; max-width: 520px; margin-inline: auto; gap: 34px; }
 }
+
+/* ===== Estate Care shown apart from the packages ===== */
+.main-nav > a.nav-estate {
+  border: 1px solid var(--smoke); border-radius: var(--radius-pill);
+  padding: 5px 14px;
+}
+.main-nav > a.nav-estate:hover, .main-nav > a.nav-estate.active { border-color: var(--navy); }
+.nav-sub { display: none; }
+.footer-sep { margin-top: 10px; padding-top: 10px; border-top: 1px solid rgba(255, 255, 255, .18); }
+.footer-note { display: block; font-size: 0.8rem; opacity: .75; }
+@media (max-width: 960px) {
+  .main-nav > a.nav-estate { border-radius: 0; border: none; border-bottom: 1px solid var(--cloud); padding: 9px 0; }
+  .nav-sub { display: block; font-size: 0.78rem; font-weight: 600; color: var(--graphite); }
+}
