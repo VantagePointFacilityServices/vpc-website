@@ -68,9 +68,10 @@
         <div class="nav-dropdown-menu" id="nav-services">
           <a href="index.html" class="active">Essential Home Care</a>
           <a href="signature-home-care.html">Signature Home Care</a>
-          <a href="estate-care.html">Estate Care</a>
+          <a href="reserve-home-care.html">Reserve Home Care</a>
         </div>
       </div>
+      <a href="estate-care.html" class="nav-estate" title="By private walkthrough">Estate Care<span class="nav-sub">By private walkthrough</span></a>
       <a href="service-areas.html">Area</a>
       <a href="about.html">About Us</a>
       <a href="contact.html">Contact</a>
@@ -138,6 +139,8 @@
             <label for="company">Company</label>
             <input id="company" name="company" type="text" tabindex="-1" autocomplete="off">
           </div>
+          <!-- Cloudflare Turnstile bot check; site key from the Turnstile dashboard -->
+          <div class="turnstile-widget" data-sitekey=""></div>
           <button type="submit" class="btn btn-primary btn-block">Request Instant Quote</button>
           <p class="form-note">Your information is secure and never shared.</p>
         </div>
@@ -178,6 +181,79 @@
       <div class="trust-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="5"/><path d="M9 12.5 7 21l5-3 5 3-2-8.5"/></svg></div>
       <div><h4>100% guarantee</h4><p>Not cleaned to standard? We'll come back for a 2-hour clean — your before photo has you covered.</p></div>
     </div>
+  </div>
+</section>
+
+<!-- ============ PACKAGE COMPARISON ============ -->
+<section id="packages" class="bg-cloud">
+  <div class="wrap">
+    <div class="section-head center">
+      <span class="eyebrow">Our Packages</span>
+      <h2>Choose the right level of care for your home</h2>
+      <p>Three managed home care packages, each with the same cleaner, the same documented standard and before-and-after photos. Pick the amount of detail that suits your home &mdash; Signature is the one most households start with.</p>
+    </div>
+    <div class="package-grid">
+      <article class="package-card">
+        <h3>Essential Home Care</h3>
+        <p class="package-tag">The essentials, done well every visit</p>
+        <p class="package-price"><span class="from">From</span><strong>$199</strong><span class="per">per visit</span></p>
+        <p class="package-example">3 bed / 2 bath home: <strong>$379</strong> per visit</p>
+        <p class="package-includes">Every visit includes</p>
+        <ul class="package-list">
+          <li>Kitchen: benches, splashback, sink, cooktop, appliance exteriors and microwave interior</li>
+          <li>Bathrooms: shower, bath, vanity, mirror and toilet</li>
+          <li>All floors vacuumed, hard floors mopped</li>
+          <li>Dusting of reachable surfaces, skirtings and sills</li>
+          <li>Beds made and bins emptied</li>
+          <li>High-touch surfaces sanitised</li>
+          <li>The same cleaner or team every visit</li>
+          <li>Before-and-after photos and a documented inspection</li>
+        </ul>
+        <div class="package-cta">
+          <a href="#contact" class="btn btn-secondary btn-block">Get Instant Quote</a>
+          <a href="index.html" class="link-arrow" style="justify-content:center">See Essential details <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        </div>
+      </article>
+      <article class="package-card featured">
+        <span class="package-badge">Recommended</span>
+        <h3>Signature Home Care</h3>
+        <p class="package-tag">Linen, laundry and rotating detail work</p>
+        <p class="package-price"><span class="from">From</span><strong>$349</strong><span class="per">per visit</span></p>
+        <p class="package-example">3 bed / 2 bath home: <strong>$569</strong> per visit</p>
+        <p class="package-includes">Everything in Essential, plus</p>
+        <ul class="package-list">
+          <li>Linen changed on all beds (linen supplied by you)</li>
+          <li>One laundry load washed, dried and folded</li>
+          <li>Interior glass at reachable height</li>
+          <li>Detailed kitchen clean</li>
+          <li>One rotational deep-clean task every visit</li>
+          <li>Consumable monitoring with a restock list</li>
+          <li>Priority booking window</li>
+        </ul>
+        <div class="package-cta">
+          <a href="#contact" class="btn btn-primary btn-block">Get Instant Quote</a>
+          <a href="signature-home-care.html" class="link-arrow" style="justify-content:center">See Signature details <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        </div>
+      </article>
+      <article class="package-card">
+        <h3>Reserve Home Care</h3>
+        <p class="package-tag">Our most complete care for the whole home</p>
+        <p class="package-price"><span class="from">From</span><strong>$569</strong><span class="per">per visit</span></p>
+        <p class="package-example">3 bed / 2 bath home: <strong>$829</strong> per visit</p>
+        <p class="package-includes">Everything in Signature, plus</p>
+        <ul class="package-list">
+          <li>Two rotational deep-clean tasks every visit</li>
+          <li>Up to two laundry loads</li>
+          <li>Detailed bathrooms every visit</li>
+          <li>48-hour priority reschedule guarantee</li>
+        </ul>
+        <div class="package-cta">
+          <a href="#contact" class="btn btn-secondary btn-block">Get Instant Quote</a>
+          <a href="reserve-home-care.html" class="link-arrow" style="justify-content:center">See Reserve details <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        </div>
+      </article>
+    </div>
+    <p class="package-note">Prices are per visit, include GST and apply to weekday visits; weekend and public-holiday visits are quoted on request. Your exact price, including extras such as a pool, study or extra bathroom, comes from your instant quote. Your first visit is priced at twice the package price because it brings the home to our standard, and this is shown before you book. Not included in any package, but available as priced extras: oven or fridge interior outside the rotation, upper-level exterior glass, carpet steam cleaning, wall washing and post-party or post-renovation cleans.</p>
   </div>
 </section>
 
@@ -227,9 +303,9 @@
       <div class="media-caption">Photography of presentation-standard interiors to be added</div>
     </div>
     <div>
-      <span class="eyebrow">Next Tier Up</span>
-      <h2>Want more done each visit?</h2>
-      <p>Signature Home Care builds on everything in Essential with linen changes, laundry, interior glass and a detailed kitchen &mdash; the same team, the same documented standard, more of the home handled on the same visit.</p>
+      <span class="eyebrow">Want More Done Each Visit?</span>
+      <h2>Step up to Signature or Reserve</h2>
+      <p>Signature Home Care builds on everything in Essential with linen changes, laundry, interior glass and a detailed kitchen. Reserve Home Care goes further with a deeper rotation of tasks, extra laundry and detailed bathrooms &mdash; the same team and documented standard throughout. <a href="#packages" class="text-link">Compare all three packages</a>.</p>
       <a href="signature-home-care.html" class="link-arrow">See Signature Home Care <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
     </div>
   </div>
@@ -248,8 +324,8 @@
         <div class="faq-a"><p>Your team cleans the kitchen, bathrooms and floors, dusts all surfaces, makes beds, empties bins, and covers every high-touch area in the home — then logs the visit against our documented inspection standard.</p></div>
       </div>
       <div class="faq-item">
-        <button class="faq-q">Is Essential enough, or should I choose Signature?</button>
-        <div class="faq-a"><p>Essential covers everything needed to keep a home consistently presentable day to day. If you want linen changes, laundry, interior glass, and rotational deep-clean tasks handled as part of the same visit, Signature Home Care builds on top of Essential.</p></div>
+        <button class="faq-q">Is Essential enough, or should I choose Signature or Reserve?</button>
+        <div class="faq-a"><p>Essential covers everything needed to keep a home consistently presentable day to day. If you want linen changes, laundry, interior glass, and rotational deep-clean tasks handled as part of the same visit, Signature Home Care builds on top of Essential, and Reserve Home Care goes further with two rotational tasks per visit, extra laundry and detailed bathrooms. <a href="#packages" class="text-link">Compare all three packages</a>.</p></div>
       </div>
       <div class="faq-item">
         <button class="faq-q">How often will the same cleaner come?</button>
@@ -257,7 +333,7 @@
       </div>
       <div class="faq-item">
         <button class="faq-q">Can I start with Essential and upgrade later?</button>
-        <div class="faq-a"><p>Yes — plans can move between Essential and Signature as your needs change. Just let your point of contact know.</p></div>
+        <div class="faq-a"><p>Yes — plans can move between Essential, Signature and Reserve as your needs change. Just let your point of contact know.</p></div>
       </div>
       <div class="faq-item">
         <button class="faq-q">Do I need to supply any cleaning products or equipment?</button>
@@ -314,7 +390,8 @@
         <ul>
           <li><a href="index.html">Essential Home Care</a></li>
           <li><a href="signature-home-care.html">Signature Home Care</a></li>
-          <li><a href="estate-care.html">Estate Care</a></li>
+          <li><a href="reserve-home-care.html">Reserve Home Care</a></li>
+          <li class="footer-sep"><a href="estate-care.html">Estate Care</a> <span class="footer-note">by private walkthrough</span></li>
           <li><a href="service-areas.html">Area</a></li>
           <li><a href="about.html">About Us</a></li>
           <li><a href="careers.html">Careers</a></li>
@@ -349,6 +426,7 @@
   </div>
 </footer>
 
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit" defer></script>
 <script src="assets/js/main.js"></script>
 </body>
 </html>

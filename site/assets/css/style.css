@@ -753,3 +753,76 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--n
 
 /* ===== Utility ===== */
 .center { text-align: center; }
+
+/* ===== Package comparison (home page) ===== */
+.btn-secondary { background: transparent; color: var(--navy); border: 2px solid var(--navy); }
+.btn-secondary:hover { background: var(--navy-wash); }
+.package-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  align-items: stretch;
+}
+.package-card {
+  position: relative;
+  display: flex; flex-direction: column;
+  background: var(--white);
+  border: 1px solid var(--smoke);
+  border-radius: var(--radius-lg);
+  padding: 34px 28px 28px;
+  box-shadow: var(--shadow-sm);
+}
+.package-card.featured {
+  border: 2px solid var(--navy);
+  box-shadow: var(--shadow-lg);
+}
+.package-badge {
+  position: absolute; top: -14px; left: 50%; transform: translateX(-50%);
+  background: var(--navy); color: var(--white);
+  font-size: 0.75rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase;
+  padding: 5px 16px; border-radius: var(--radius-pill);
+  white-space: nowrap;
+}
+.package-card h3 { margin: 0 0 4px; }
+.package-tag { color: var(--graphite); margin: 0 0 18px; font-size: 0.95rem; }
+.package-price { margin: 0; color: var(--navy); }
+.package-price .from { font-size: 0.9rem; font-weight: 700; color: var(--graphite); margin-right: 4px; }
+.package-price strong { font-size: 2.3rem; font-weight: 800; line-height: 1.1; }
+.package-price .per { font-size: 0.9rem; color: var(--graphite); margin-left: 4px; }
+.package-example {
+  margin: 12px 0 4px; padding: 10px 14px;
+  background: var(--navy-wash); border-radius: var(--radius-md);
+  font-size: 0.92rem; color: var(--arsenic);
+}
+.package-example strong { color: var(--navy); }
+.package-includes { font-weight: 700; font-size: 0.92rem; margin: 20px 0 6px; color: var(--navy); }
+.package-list { list-style: none; padding: 0; margin: 0 0 24px; }
+.package-list li {
+  position: relative; padding: 7px 0 7px 26px;
+  font-size: 0.95rem; color: var(--arsenic);
+}
+.package-list li::before {
+  content: ""; position: absolute; left: 2px; top: 13px;
+  width: 11px; height: 6px;
+  border-left: 2px solid var(--navy); border-bottom: 2px solid var(--navy);
+  transform: rotate(-45deg);
+}
+.package-card .package-cta { margin-top: auto; display: grid; gap: 12px; text-align: center; }
+.package-note { max-width: 860px; margin: 36px auto 0; text-align: center; font-size: 0.85rem; color: var(--graphite); }
+@media (max-width: 960px) {
+  .package-grid { grid-template-columns: 1fr; max-width: 520px; margin-inline: auto; gap: 34px; }
+}
+
+/* ===== Estate Care shown apart from the packages ===== */
+.main-nav > a.nav-estate {
+  border: 1px solid var(--smoke); border-radius: var(--radius-pill);
+  padding: 5px 14px;
+}
+.main-nav > a.nav-estate:hover, .main-nav > a.nav-estate.active { border-color: var(--navy); }
+.nav-sub { display: none; }
+.footer-sep { margin-top: 10px; padding-top: 10px; border-top: 1px solid rgba(255, 255, 255, .18); }
+.footer-note { display: block; font-size: 0.8rem; opacity: .75; }
+@media (max-width: 960px) {
+  .main-nav > a.nav-estate { border-radius: 0; border: none; border-bottom: 1px solid var(--cloud); padding: 9px 0; }
+  .nav-sub { display: block; font-size: 0.78rem; font-weight: 600; color: var(--graphite); }
+}
