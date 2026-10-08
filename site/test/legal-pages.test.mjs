@@ -94,6 +94,11 @@ const purposes = {
     'assess your application, check your right to work and, where a client site requires it, run screening checks', "we can't consider your application"],
 };
 
+test('every page with an assessment form has a collection-notice purpose mapped', () => {
+  const formPages = pages.filter((p) => /class="assessment-form"/.test(read(p)));
+  assert.deepEqual(formPages.filter((p) => !(p in purposes)), [], 'form pages missing from purposes');
+});
+
 for (const [page, [short]] of Object.entries(purposes)) {
   test(`${page}: one short collection notice before the submit button`, () => {
     const h = read(page);
