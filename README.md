@@ -4,19 +4,19 @@ Vantage Point Cleaning delivers professional, consistent, and quality-controlled
 ## Project structure
 
 ```
-serve.sh                  runs the local dev server (see below)
 site/                     the website (plain HTML/CSS/JS, no build step)
   index.html, about.html, contact.html, careers.html,
   service-areas.html, signature-home-care.html,
-  estate-care.html                        the seven pages
-  assets/css/style.css                    shared stylesheet (design tokens + components)
-  assets/js/main.js                       nav dropdown, mobile menu, FAQ accordion, form handling
-  assets/img/                             logo/emblem SVGs and favicons
-  dev-server.js                           local dev server with live reload (see below)
+  reserve-home-care.html, estate-care.html   the eight pages
+  privacy.html, terms.html                   the legal pages (10 pages in all)
+  assets/css/style.css                       shared stylesheet (design tokens + components)
+  assets/js/main.js                          nav dropdown, mobile menu, FAQ accordion, form handling
+  assets/img/                                logo/emblem SVGs and favicons
+  dev-server.js                              local dev server with live reload (see below)
+  test/                                      Node tests (`npm test`)
 
-Vantage Point Cleaning Design System/     design tokens, component reference and screenshots
-                                          the site was built against, for comparison
-docs/                     operating-system volumes and supporting business docs
+docs/                     deployment and operating notes (DEPLOYMENT.md, KNOWLEDGE.md);
+                          the business docs live in vpos (see docs/KNOWLEDGE.md)
 brand/                    client-supplied brand guidelines and source logo files
 ```
 
@@ -25,10 +25,10 @@ brand/                    client-supplied brand guidelines and source logo files
 The site is static HTML/CSS/JS — no build step and no dependencies to install.
 
 ```bash
-./serve.sh          # serves on http://localhost:8123, with live reload
-./serve.sh 3000      # or pass a port
+node site/dev-server.js        # serves on http://localhost:8080, with live reload
+node site/dev-server.js 3000   # or pass a port (or set PORT)
+npm test                       # runs the Node tests; no npm install needed
 ```
 
-Requires only [Node.js](https://nodejs.org/) (no `npm install` needed). `serve.sh` is a
-thin wrapper around `site/dev-server.js`; edit any file under `site/` and open browser
+Requires only [Node.js](https://nodejs.org/). Edit any file under `site/` and open browser
 tabs auto-refresh. See `site/dev-server.js` for how it works.

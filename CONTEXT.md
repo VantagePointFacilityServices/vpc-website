@@ -1,6 +1,6 @@
 # CONTEXT — Vantage Point Cleaning (Residential)
 
-Shared vocabulary for the residential operating system (`docs/volume-1` … `volume-5`), its companion documents, and the website in `site/`.
+Shared vocabulary for the residential operating system (the vpos plan volumes, `residential/docs/plan/`), its companion documents, and the website in `site/`.
 
 Three terms in the original suite carried two meanings each, and most of the cross-document contradictions found in the August 2026 audit trace back to that overloading. The definitions below are now authoritative. Where a volume disagrees, the volume is wrong.
 
@@ -77,9 +77,9 @@ The original Vol 1 §9.2 used **contract** to mean three different things — on
 
 **Essential, Signature and Reserve are sold as published flat-rate packages with instant quoting. Estate Care is not instant quoted** — it is reached through a paid walkthrough ($100, credited on booking) and custom quotes from $2,000 per visit. Pricing is per visit and uniform across all five zones.
 
-Full ladder, room model, increments and bounded inclusions: `docs/residential-package-and-pricing-model.md`. **Price per hour = $65 loaded labour cost × 2 = $130, GST-inclusive** (so a 2-hour job is $260); the $65 is the cost cap, not a price. Pay bands, the cost model, weekend rates and the subcontractor policy live in the vpos doc `residential-pay-and-workforce-model.md`; the research behind the three-package ladder and the Reserve name is in `residential-tier-structure-market-research.md`.
+Full ladder, room model, increments and bounded inclusions: vpos `residential/docs/specs/residential-package-and-pricing-model.md`. **Price per hour = $65 loaded labour cost × 2 = $130, GST-inclusive** (so a 2-hour job is $260); the $65 is the cost cap, not a price. Pay bands, the cost model, weekend rates and the subcontractor policy live in the vpos doc `residential-pay-and-workforce-model.md`; the research behind the three-package ladder and the Reserve name is in `residential-tier-structure-market-research.md`.
 
-**This revises an earlier decision in the same month.** The audit first resolved the suite to *assessment-first, no price shown*, on the evidence that instant online pricing is a Value-quadrant signal (`residential-direct-competitor-market-analysis.md`, Positioning Axis) and that no premium competitor in Zones 1–5 publishes pricing. That evidence still stands; the commercial decision changed. Audit finding S2 is retained and marked superseded rather than deleted.
+**This revises an earlier decision in the same month.** The audit first resolved the suite to *assessment-first, no price shown*, on the evidence that instant online pricing is a Value-quadrant signal (vpos `residential-direct-competitor-market-analysis.md`, Positioning Axis) and that no premium competitor in Zones 1–5 publishes pricing. That evidence still stands; the commercial decision changed. Audit finding S2 is retained and marked superseded rather than deleted.
 
 Two things follow, and both matter:
 
@@ -127,18 +127,18 @@ Service territory is five micro-territories (Vol 1 §2.7), worked for density ra
 
 | Document | Authority over |
 |---|---|
-| `docs/volume-1-...` | Strategy, positioning, pricing bands, segment phasing, financial model |
-| `docs/volume-2-...` | Org structure, SOP library, role activation triggers |
-| `docs/volume-3-...` | Pipelines, funnels, forms, nurture automation |
-| `docs/volume-4-...` | Technology stack, AIOS, **KPI definitions (§4)** |
-| `docs/volume-5-...` | Employee handbook, induction, training, incentives |
-| `docs/residential-direct-competitor-market-analysis.md` | Market structure and competitive positioning evidence |
-| `docs/landing-page-content-brief.md` | Page-by-page copy direction |
-| `docs/residential-package-and-pricing-model.md` | **Packages, prices, increments, bounded inclusions, quote logic** |
+| vpos `residential/docs/plan/` volume 1 | Strategy, positioning, pricing bands, segment phasing, financial model |
+| vpos `residential/docs/plan/` volume 2 | Org structure, SOP library, role activation triggers |
+| vpos `residential/docs/plan/` volume 3 | Pipelines, funnels, forms, nurture automation |
+| vpos `residential/docs/plan/` volume 4 | Technology stack, AIOS, **KPI definitions (§4)** |
+| vpos `residential/docs/plan/` volume 5 | Employee handbook, induction, training, incentives |
+| vpos `residential/docs/research/residential-direct-competitor-market-analysis.md` | Market structure and competitive positioning evidence |
+| vpos `residential/docs/specs/landing-page-content-brief.md` | Page-by-page copy direction |
+| vpos `residential/docs/specs/residential-package-and-pricing-model.md` | **Packages, prices, increments, bounded inclusions, quote logic** |
 | vpos `residential/docs/residential-pay-and-workforce-model.md` | Award-aligned pay bands, cost model, weekend rates, workforce and subcontractor policy |
 | vpos `residential/docs/residential-tier-structure-market-research.md` | Three-package and naming research, market rates |
-| `docs/scope-and-variance-protection.md` | T&Cs variance clause and OPS-16 |
-| `docs/tech-stack-execution-plan-and-mvp-checklist.md` | Build sequence and running costs (covers both brands) |
-| `docs/residential-operating-system-audit.md` | August 2026 audit findings and open items |
+| vpos `residential/docs/specs/scope-and-variance-protection.md` | T&Cs variance clause and OPS-16 |
+| vpos `residential/docs/plan/tech-stack-execution-plan-and-mvp-checklist.md` | Build sequence and running costs (covers both brands) |
+| vpos `residential/docs/research/residential-operating-system-audit.md` | August 2026 audit findings and open items |
 
 **KPI definitions live in Volume 4 §4 only.** Four documents previously pointed at a KPI dashboard in Volume 1 (§8, §10, §11); it never existed there.

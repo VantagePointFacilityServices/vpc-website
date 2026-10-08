@@ -7,9 +7,9 @@ which lessons from the VPFS build apply here. Read it before touching DNS, GHL, 
 |---|---|
 | Domain cutover (GoDaddy → Cloudflare → GitHub Pages), email-safe | [`DEPLOYMENT.md`](DEPLOYMENT.md) |
 | DNS zone file and sync script | [`../dns/README.md`](../dns/README.md) |
-| Estates Worker spec (`/capture`, `/gate`, `/enrich`) | `vpos` → `residential/docs/estate-lead-gate-and-worker-spec.md` |
-| GHL build (fields, tags, pipelines, calendars, workflows) | `vpos` → `shared/integrations/gohighlevel/KNOWLEDGE-residential.md` |
-| Full step-by-step build plan | `vpos` → `residential/docs/vpc-quick-scale-build-plan.md` |
+| Estates Worker spec (`/capture`, `/gate`, `/enrich`) | `vpos` → `residential/docs/specs/estate-lead-gate-and-worker-spec.md` |
+| GHL build (fields, tags, pipelines, calendars, workflows) | `vpos` → `residential/integrations/gohighlevel/KNOWLEDGE.md` |
+| Full step-by-step build plan | `vpos` → `residential/docs/playbooks/vpc-quick-scale-build-plan.md` |
 | The VPFS original of every pattern here | `vpfs-website/docs/` (ARCHITECTURE, WORKER, KNOWLEDGE) |
 
 ## 1. Where things live
@@ -22,7 +22,28 @@ which lessons from the VPFS build apply here. Read it before touching DNS, GHL, 
 | GHL sub-account | `vantagepointcleaning` — **not created**; location ID `—` |
 | Worker | `worker.vantagepointcleaning.com.au` (`vpc-lead-worker`) — **not built**. `/lead` comes first (Flow 1, D1). `/capture`, `/gate` and `/enrich` for Estates come after launch (D2) |
 | Phone | VPC Number A (07, voice) / Number B (04, SMS) — **not purchased** |
+| Legal pages | `site/privacy.html` (Privacy Policy and collection notice) and `site/terms.html` (residential T&Cs, **interim v1.0**) — linked from every page footer |
 | Secrets | `CLOUDFLARE_API_TOKEN` (repo) now; later `CLOUDFLARE_WORKER_API_TOKEN` (repo), `GHL_API_KEY` (Worker) |
+
+### Before switch-over
+
+- **Lawpath must review the residential T&Cs** (`site/terms.html`, interim v1.0) before the domain
+  is pointed at this site.
+- **The phone number goes into `terms.html` and `privacy.html`** with the VPC Number A swap.
+
+### Where the business docs live
+
+The business docs are no longer copied into this repo. They live in `vpos`:
+
+| Former `docs/` file | `vpos` path |
+|---|---|
+| `volume-1-business-plan-and-growth-strategy.md` … `volume-5-hr-training-and-employee-handbook.md` | `residential/docs/plan/` |
+| `tech-stack-execution-plan-and-mvp-checklist.md` | `residential/docs/plan/` |
+| `residential-package-and-pricing-model.md` | `residential/docs/specs/` |
+| `scope-and-variance-protection.md` | `residential/docs/specs/` |
+| `landing-page-content-brief.md` | `residential/docs/specs/` |
+| `residential-operating-system-audit.md` | `residential/docs/research/` |
+| `residential-direct-competitor-market-analysis.md` | `residential/docs/research/` |
 
 ## 2. Lessons from VPFS that apply unchanged
 

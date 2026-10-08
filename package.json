@@ -1,0 +1,7 @@
+{
+  "name": "vpc-website",
+  "private": true,
+  "scripts": {
+    "test": "node --test \"site/test/**/*.test.mjs\""
+  }
+}

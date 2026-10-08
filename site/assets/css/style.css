@@ -446,6 +446,7 @@ input, select, textarea {
 textarea { resize: vertical; min-height: 84px; }
 input:focus, select:focus, textarea:focus { outline: none; border-color: var(--navy); box-shadow: var(--ring-focus); }
 .form-note { font-size: 0.78rem; color: var(--graphite); margin-top: 12px; text-align: center; }
+.form-privacy-notice { font-size: 0.78rem; color: var(--graphite); margin: 0 0 12px; text-align: left; }
 .form-success {
   display: none;
   text-align: center;
@@ -826,3 +827,14 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--n
   .main-nav > a.nav-estate { border-radius: 0; border: none; border-bottom: 1px solid var(--cloud); padding: 9px 0; }
   .nav-sub { display: block; font-size: 0.78rem; font-weight: 600; color: var(--graphite); }
 }
+
+/* Legal pages: single readable text column */
+.legal-text { max-width: 760px; margin: 0 auto; }
+.legal-text h2 { margin-top: 2em; font-size: 1.35rem; }
+.legal-text ul { padding-left: 1.25em; }
+.legal-text li { margin-bottom: .4em; }
+.legal-text .table-scroll { overflow-x: auto; margin: 1em 0; }
+.legal-text table { border-collapse: collapse; width: 100%; font-size: .92rem; }
+.legal-text th, .legal-text td { border: 1px solid var(--smoke); padding: 8px 10px; text-align: left; vertical-align: top; }
+.legal-text th { background: var(--cloud); }
+.legal-text .legal-updated { margin-top: 2em; color: var(--graphite); }
