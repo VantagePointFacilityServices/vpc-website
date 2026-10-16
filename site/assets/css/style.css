@@ -838,3 +838,9 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--n
 .legal-text th, .legal-text td { border: 1px solid var(--smoke); padding: 8px 10px; text-align: left; vertical-align: top; }
 .legal-text th { background: var(--cloud); }
 .legal-text .legal-updated { margin-top: 2em; color: var(--graphite); }
+
+/* Brochure mode: forms stay in source (hidden) until the CRM exists; a contact CTA stands in */
+.assessment-form[hidden] { display: none !important; }
+.contact-cta { background: var(--white); border: 1px solid var(--cloud); border-radius: var(--radius-lg); padding: 28px; color: var(--phantom); text-align: center; }
+.contact-cta h3 { margin-bottom: 12px; }
+.contact-cta a { font-weight: 700; color: var(--navy); }
