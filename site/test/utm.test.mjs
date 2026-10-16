@@ -39,6 +39,8 @@ test('storage failures never throw', () => {
 
 test('every page loads utm.js', () => {
   for (const p of readdirSync(root).filter((f) => f.endsWith('.html'))) {
-    assert.match(readFileSync(join(root, p), 'utf8'), /<script src="assets\/js\/utm\.js"><\/script>/, p);
+    const html = readFileSync(join(root, p), 'utf8');
+    if (/<meta http-equiv="refresh"/.test(html)) continue; // redirect stub, not a page
+    assert.match(html, /<script src="assets\/js\/utm\.js"><\/script>/, p);
   }
 });

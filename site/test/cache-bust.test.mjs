@@ -24,6 +24,7 @@ test('bustSite versions every page, including utm.js', () => {
     assert.ok(pages.length > 5);
     for (const p of pages) {
       const html = readFileSync(join(dir, p), 'utf8');
+      if (/<meta http-equiv="refresh"/.test(html)) continue; // redirect stub, loads no assets
       assert.match(html, /assets\/js\/utm\.js\?v=deadbeef/, p);
       assert.doesNotMatch(html, /assets\/(css|js)\/[^"?]+"/, p);
     }

@@ -69,3 +69,21 @@ test('no visible CTA promises an instant quote while forms are hidden', () => {
     assert.doesNotMatch(visible, /<(a|button)[^>]*>\s*Get Instant Quote\s*<\/\1>/i, p);
   }
 });
+
+const VPFS = 'https://www.vantagepointfacilityservices.com.au';
+
+test('footer Careers and Subcontractors link to the shared VPFS recruiting pages', () => {
+  for (const p of pages.filter((f) => !/<meta http-equiv="refresh"/.test(read(f)))) {
+    const h = read(p), footer = h.slice(h.lastIndexOf('<footer'));
+    assert.ok(footer.includes(`<a href="${VPFS}/career.html">Careers</a>`), `${p}: Careers`);
+    assert.ok(footer.includes(`<a href="${VPFS}/subcontractor.html">Subcontractors</a>`), `${p}: Subcontractors`);
+    assert.ok(!/href="careers\.html"/.test(read(p)), `${p}: no link to the old careers.html`);
+  }
+});
+
+test('careers.html redirects to the VPFS careers page, keeping query and hash', () => {
+  const h = read('careers.html');
+  assert.ok(h.includes(`location.replace("${VPFS}/career.html" + location.search + location.hash)`));
+  assert.ok(h.includes(`<meta http-equiv="refresh" content="0; url=${VPFS}/career.html">`));
+  assert.ok(h.includes('<meta name="robots" content="noindex">'));
+});

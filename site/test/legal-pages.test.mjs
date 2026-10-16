@@ -5,8 +5,10 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const siteDir = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const pages = fs.readdirSync(siteDir).filter((f) => f.endsWith('.html')).sort();
 const read = (f) => fs.readFileSync(path.join(siteDir, f), 'utf8');
+// Redirect stubs (e.g. careers.html → the VPFS careers page) aren't full pages.
+const isRedirectStub = (html) => /<meta http-equiv="refresh"/.test(html);
+const pages = fs.readdirSync(siteDir).filter((f) => f.endsWith('.html') && !isRedirectStub(read(f))).sort();
 
 test('site has pages to check', () => {
   assert.ok(pages.includes('privacy.html'));
@@ -101,7 +103,7 @@ test('every page with an assessment form has a collection-notice purpose mapped'
   assert.deepEqual(formPages.filter((p) => !(p in purposes)), [], 'form pages missing from purposes');
 });
 
-for (const [page, [short]] of Object.entries(purposes)) {
+for (const [page, [short]] of Object.entries(purposes).filter(([p]) => pages.includes(p))) {
   test(`${page}: one short collection notice before the submit button`, () => {
     const h = read(page);
     const forms = [...h.matchAll(/<form class="assessment-form"[\s\S]*?<\/form>/g)].map((m) => m[0]);
