@@ -3,9 +3,10 @@
 # of truth — edit it, then run the sync script (dry-run by default).
 # See dns/README.md for the field reference.
 #
-# STATUS (2026-10-16): nameservers are Cloudflare. Email records below mirror
-# what is live (Google MX/SPF/DKIM, strict DMARC) so a --prune sync cannot regress
-# mail. Dry-run with --prune before any --apply; see docs/DEPLOYMENT.md Part 3.
+# STATUS (2026-10-16): APPLIED. Nameservers are Cloudflare and the site is live on
+# GitHub Pages with HTTPS enforced. Email records below mirror what is live
+# (Google MX/SPF/DKIM, strict DMARC) so a --prune sync cannot regress mail.
+# Dry-run with --prune before any --apply; see docs/DEPLOYMENT.md Part 3.
 
 zone: vantagepointcleaning.com.au
 
@@ -73,7 +74,9 @@ records:
   # --- Google DKIM — live; copied verbatim. ---
   - type: TXT
     name: google._domainkey.vantagepointcleaning.com.au
-    content: '"v=DKIM1; k=rsa; p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAoxsEaTgyPhdVewTZnwaXxhm8tRxYfkFRISnxK6IZmtLVuTequnh/2nrXX2Gxlmwswk9MzDK8ydIYgPHNaxm1Fl1myd9PrXHyL5527B005AmT6hogck+Xi+ybaguWIWRnKbDt2g9w5MVFikC4IMdAWwUgJsawGWhY2oUv0R/LBwyBJzCnOHi2P8GYE5mD19BTekbsQhgJOKL43XUsVpzBTyWRE/77RV4rry9Ftw/22pvNeRmgYdG7qmSmeXCOIqqHpjThbNLfIPlRLkzoNtnlQzFxGClzykD1WibebWTDBhsifyjKtV6ASDf2UzLiS6454ebg8vfqJ+YHkgfS3U2i/QIDAQAB"'
+    # Stored as two strings, split at 255 chars, exactly as Cloudflare holds it. A single
+    # string plans as a DELETE + CREATE of the same key on every sync.
+    content: '"v=DKIM1; k=rsa; p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAoxsEaTgyPhdVewTZnwaXxhm8tRxYfkFRISnxK6IZmtLVuTequnh/2nrXX2Gxlmwswk9MzDK8ydIYgPHNaxm1Fl1myd9PrXHyL5527B005AmT6hogck+Xi+ybaguWIWRnKbDt2g9w5MVFikC4IMdAWwUgJsawGWhY2oUv0R/LBwyBJzCnOHi2P8GYE5mD19BTe" "kbsQhgJOKL43XUsVpzBTyWRE/77RV4rry9Ftw/22pvNeRmgYdG7qmSmeXCOIqqHpjThbNLfIPlRLkzoNtnlQzFxGClzykD1WibebWTDBhsifyjKtV6ASDf2UzLiS6454ebg8vfqJ+YHkgfS3U2i/QIDAQAB"'
 
   # --- GoHighLevel email sending domain — not built yet (VPC sub-account doesn't exist). ---
   # --- Copy the records GHL shows under Settings > Email Services > dedicated domain for ---
