@@ -34,6 +34,7 @@ function fakeEl() {
 function fakeDialog() {
   const els = { '[data-quote-form]': fakeEl(), '[data-error]': fakeEl(), '[data-result]': fakeEl(), '[data-fields]': fakeEl(), '[data-close]': fakeEl(), '[data-inclusions]': fakeEl() };
   els['[data-error]'].hidden = true;
+  els['[data-result]'].hidden = true;
   const d = fakeEl();
   d.closed = 0; d.close = () => { d.closed++; };
   d.querySelector = (s) => els[s] || null;
@@ -100,6 +101,11 @@ test('submit posts to /quote and renders priced result, hiding fields', async ()
   assert.equal(r.els['[data-result]'].hidden, false);
   assert.equal(r.els['[data-fields]'].hidden, true);
   assert.equal(r.els['[data-error]'].hidden, true);
+  assert.equal(r.els['[data-result]'].focused, true);
+});
+
+test('result region is focusable so focus lands on it, not lost with the hidden fields', () => {
+  assert.match(q.dialogHTML(), /<div class="quote-result" data-result[^>]*tabindex="-1"/);
 });
 
 test('booking on: terms checkbox gates the booking button', async () => {
@@ -124,7 +130,7 @@ test('errors (network, non-2xx, bad shape) keep inputs and show fallback', async
     await r.ctl.submit({ preventDefault() {} });
     assert.equal(r.els['[data-error]'].hidden, false);
     assert.notEqual(r.els['[data-fields]'].hidden, true);
-    assert.equal(r.els['[data-result]'].hidden, false === true ? true : r.els['[data-result]'].hidden);
+    assert.equal(r.els['[data-result]'].hidden, true);
   }
   assert.match(q.dialogHTML(), /hello@vantagepointcleaning\.com\.au/);
   assert.match(q.dialogHTML(), /07 5651 2257/);

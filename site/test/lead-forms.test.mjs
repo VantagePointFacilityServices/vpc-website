@@ -76,17 +76,18 @@ function fakeDoc(on) {
   const fields = { style: {} };
   const success = { classList: { added: [], add(c) { this.added.push(c); } } };
   const cta = { classList: { contains: (c) => c === 'contact-cta' }, hidden: false };
+  const btn = { disabled: false };
   const form = {
     hidden: true, previousElementSibling: cta,
     addEventListener: (e, fn) => { listeners[e] = fn; },
     dispatchEvent: () => true,
-    querySelector: (s) => ({ '.form-fields': fields, '.form-success': success, '.form-error': err })[s] || fakeForm(good).querySelector(s),
+    querySelector: (s) => ({ '.form-fields': fields, '.form-success': success, '.form-error': err, '[type="submit"]': btn })[s] || fakeForm(good).querySelector(s),
   };
   const doc = {
     body: { getAttribute: () => (on ? 'on' : 'off') },
     querySelectorAll: (s) => (s === 'form[data-lead-form]' ? [form] : []),
   };
-  return { doc, form, cta, err, fields, success, listeners };
+  return { doc, form, cta, err, fields, success, listeners, btn };
 }
 
 test('switch off: form stays hidden, contact box shows, nothing wired to POST', () => {
@@ -112,4 +113,32 @@ test('switch on: form shows, contact box hidden; error keeps fields and shows me
   assert.equal(d.err.hidden, true);
   assert.equal(d.fields.style.display, 'none');
   assert.deepEqual(d.success.classList.added, ['show']);
+});
+
+test('double submit while in flight sends one POST; button disabled, re-enabled on error', async () => {
+  const d = fakeDoc(true);
+  let calls = 0;
+  let settle;
+  const fetch = () => { calls++; return new Promise((r) => { settle = r; }); };
+  lead.init(d.doc, { win, fetch, CustomEvent: class { constructor(t, o) { this.type = t; this.detail = o.detail; } } });
+  const tick = () => new Promise((r) => setTimeout(r, 0));
+  d.listeners.submit({ preventDefault() {} });
+  d.listeners.submit({ preventDefault() {} });
+  await tick();
+  assert.equal(calls, 1);
+  assert.equal(d.btn.disabled, true);
+  settle({ ok: false, status: 502 }); await tick();
+  assert.equal(d.btn.disabled, false);
+  assert.equal(d.err.hidden, false);
+  d.listeners.submit({ preventDefault() {} }); await tick();
+  assert.equal(calls, 2);
+  settle({ ok: true, json: async () => ({ contact_id: 'c', quote_token: 'q' }) }); await tick(); await tick();
+  assert.deepEqual(d.success.classList.added, ['show']);
+});
+
+test('service-areas success panel matches its coverage-check purpose; tick is decorative', () => {
+  const s = read('service-areas.html').match(/<div class="form-success">[\s\S]*?<\/div>/)[0];
+  assert.match(s, /let you know as soon as we cover your area/);
+  assert.doesNotMatch(s, /assessment/);
+  assert.match(s, /<svg [^>]*stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"/);
 });

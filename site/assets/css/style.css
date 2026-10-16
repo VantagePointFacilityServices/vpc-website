@@ -355,13 +355,12 @@ p { margin: 0 0 16px; font-size: var(--p1); color: var(--arsenic); }
 .hero-grid > * { min-width: 0; }
 .hero h1 { color: var(--white); margin-bottom: 18px; }
 
-/* Every hero H1 shares one size, sized off its own container rather than the
-   viewport so the one-column (.hero-form-single) and two-column (.hero-grid) hero layouts all read at the same scale. Max is
-   2.25x min, inside the 2.5x ceiling that keeps zoom and user font settings
-   usable. Headlines are no longer forced to one line — length varies per
-   page, so wrapping is left to flow naturally. */
-/* Every hero shares the .hero-form-page pattern (see below); containers are
-   sized off their own width so the H1 scales with the column. */
+/* Every hero shares the .hero-form-page pattern (see below). The copy column
+   is a size container so the H1 scales with its own width, not the viewport:
+   one- and two-column heroes read at the same scale. The size itself is
+   `.hero-form-page .hero-inner h1` — clamp(1.6rem, 6.8cqi, 2.75rem), max about
+   1.7x min, inside the 2.5x ceiling that keeps zoom and user font settings
+   usable. Headlines wrap naturally. */
 .hero-inner { container-type: inline-size; }
 .hero .lead { font-size: 1.2rem; color: var(--smoke); max-width: 540px; }
 /* Hero trust checks — sit between the lead and the CTAs. */
@@ -790,6 +789,12 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--n
 }
 .package-card .package-cta { margin-top: auto; display: grid; gap: 12px; text-align: center; }
 .package-note { max-width: 860px; margin: 36px auto 0; text-align: center; font-size: 0.85rem; color: var(--graphite); }
+/* Estate Care line (PRD D18): a footnote under the homepage comparison, and
+   inside the dark hero on reserve-home-care.html. */
+.estate-note { max-width: 860px; margin: 36px auto 0; text-align: center; font-size: 0.85rem; color: var(--graphite); }
+.estate-note + .package-note { margin-top: 12px; }
+.hero .estate-note { max-width: none; margin: 21px 0 0; text-align: left; color: var(--smoke); }
+.hero .estate-note a { color: var(--white); text-decoration: underline; }
 @media (max-width: 960px) {
   .package-grid { grid-template-columns: 1fr; max-width: 520px; margin-inline: auto; gap: 34px; }
 }

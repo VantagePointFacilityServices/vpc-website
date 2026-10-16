@@ -47,6 +47,8 @@ export const EXTRAS = {
 // are included above Essential.
 export const ESSENTIAL_ONLY_PRICED = ["linen_beds", "interior_glass"];
 export const ROTATION_EXTRAS = ["oven", "fridge"];
+// Input key → unit price (linen_beds is a count, interior_glass a flag).
+const ESSENTIAL_ONLY_RATES = { linen_beds: EXTRAS.linen_bed, interior_glass: EXTRAS.interior_glass };
 
 const assumedLiving = (beds) => (beds <= 2 ? 1 : beds <= 4 ? 2 : 3);
 
@@ -86,8 +88,7 @@ export function extrasPrice(pkg, e) {
   total += e.ironing_blocks * EXTRAS.ironing_block;
   total += e.reset_blocks * EXTRAS.reset_block;
   if (pkg === "essential") {
-    total += e.linen_beds * EXTRAS.linen_bed;
-    if (e.interior_glass) total += EXTRAS.interior_glass;
+    for (const k of ESSENTIAL_ONLY_PRICED) total += Number(e[k] || 0) * ESSENTIAL_ONLY_RATES[k];
   }
   return total;
 }

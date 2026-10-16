@@ -11,6 +11,7 @@ const TURNSTILE_SITEVERIFY_URL = "https://challenges.cloudflare.com/turnstile/v0
 
 const WEBSITE_LEAD_TAG = "website-lead";
 const OUT_OF_AREA_TAG = "out-of-area";
+const QUOTE_OUTCOME_TAGS = ["quote-priced", "quote-personal"];
 const TURNSTILE_UNVERIFIED_TAG = "turnstile-unverified";
 
 const QUOTE_TOKEN_TTL_MS = 60 * 60 * 1000;
@@ -268,7 +269,7 @@ export async function upsertContactInGHL(f, env) {
   const customFields = Object.entries({
     postcode: f.postcode,
     conversion_page: f.conversionPage,
-    channel: deriveLeadChannel(f),
+    lead_channel: deriveLeadChannel(f), // VPFS key (vpfs-website worker.js)
     utm_source: f.utm_source,
     utm_medium: f.utm_medium,
     utm_campaign: f.utm_campaign,
@@ -482,16 +483,21 @@ async function handleQuote(payload, env) {
     special_requests: q.requests,
     quote_extras: extrasSummary(q.pkg, q.extras),
     ...(prices ? { quoted_package_price: prices.package_price, first_visit_price: prices.first_visit_price } : {}),
-    ...(outcome === "personal_quote" ? { non_standard_reason: reason } : {}),
-    ...(outcome === "out_of_area" ? { non_standard_reason: "out_of_area" } : {}),
   };
   const customFields = Object.entries(fields)
     .filter(([, v]) => v !== "")
     .map(([key, value]) => ({ key, field_value: String(value) }));
+  // Always sent ("" when priced) so a re-quote clears a stale reason.
+  const nonStandardReason = outcome === "personal_quote" ? reason : outcome === "out_of_area" ? "out_of_area" : "";
+  customFields.push({ key: "non_standard_reason", field_value: nonStandardReason });
 
   const updated = await ghl(`/contacts/${contactId}`, "PUT", env, { customFields });
+  // Re-quote: drop the quote outcome tags that no longer apply. `out-of-area`
+  // is never removed here — /lead sets it from the postcode.
   const tag = outcome === "priced" ? "quote-priced" : outcome === "personal_quote" ? "quote-personal" : OUT_OF_AREA_TAG;
-  const tagged = await addTagsInGHL(contactId, [tag], env);
+  const stale = QUOTE_OUTCOME_TAGS.filter((t) => t !== tag);
+  const untagged = await ghl(`/contacts/${contactId}/tags`, "DELETE", env, { tags: stale });
+  const tagged = untagged ? await addTagsInGHL(contactId, [tag], env) : { success: false };
   if (!updated || !tagged.success) return fail(502, "Could not save your quote");
 
   if (outcome !== "out_of_area") {

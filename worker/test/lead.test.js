@@ -40,7 +40,7 @@ describe("POST /lead", () => {
     expect(up.locationId).toBe("loc");
     expect(up.firstName).toBe("Ann");
     const f = Object.fromEntries(up.customFields.map((x) => [x.key, x.field_value]));
-    expect(f).toMatchObject({ postcode: good.postcode, conversion_page: "home", channel: "paid_search", utm_source: "google", marketing_consent: "Yes" });
+    expect(f).toMatchObject({ postcode: good.postcode, conversion_page: "home", lead_channel: "paid_search", utm_source: "google", marketing_consent: "Yes" });
     expect(tagsCall().body.tags).toEqual(["website-lead"]);
   });
 

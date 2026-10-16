@@ -23,3 +23,13 @@ test('hero CSS: one height, padding and H1 size; old rules gone', () => {
   assert.match(css, /clamp\(1\.6rem, 6\.8cqi, 2\.75rem\)/);
   assert.doesNotMatch(css, /\.page-hero\s*\{|3\.6rem|\.hero-single\s*\{|\.hero-copy\s*\{/);
 });
+
+test('estate note is readable on the dark hero', () => {
+  assert.match(css, /\.estate-note\s*\{[^}]*font-size: 0\.85rem/);
+  assert.match(css, /\.hero \.estate-note\s*\{[^}]*color: var\(--smoke\)/);
+  assert.match(css, /\.hero \.estate-note a\s*\{[^}]*color: var\(--white\);[^}]*text-decoration: underline/);
+});
+
+test('hero H1 sizing comment matches the rule (no stale 2.25x ratio)', () => {
+  assert.doesNotMatch(css, /2\.25x/);
+});

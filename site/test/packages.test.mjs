@@ -62,3 +62,10 @@ test('no unqualified same-cleaner promise', () => {
   }
   assert.match(text(read('index.html')), /the same cleaner wherever possible, with a briefed replacement/i);
 });
+
+test('no doubled "the the" on any page, including commented-out copy', () => {
+  for (const p of pages) {
+    const raw = read(p).replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ');
+    assert.doesNotMatch(raw, /\bthe the\b/i, p);
+  }
+});

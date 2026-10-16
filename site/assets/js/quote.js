@@ -142,7 +142,7 @@
       '<button type="submit" class="btn btn-primary" data-submit>Get my quote</button>' +
       '</div>' +
       '<p class="form-error" role="alert" data-error hidden>' + MSG_ERROR + '</p>' +
-      '<div class="quote-result" data-result role="status" aria-live="polite" hidden></div>' +
+      '<div class="quote-result" data-result role="status" aria-live="polite" tabindex="-1" hidden></div>' +
       '</form>';
   }
 

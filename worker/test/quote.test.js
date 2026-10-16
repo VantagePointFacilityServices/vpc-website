@@ -1,7 +1,7 @@
 import { describe, it, expect, afterEach } from "vitest";
 import { vi } from "vitest";
 import worker, { signQuoteToken, SERVICE_ZONE_POSTCODES } from "../worker.js";
-import { LADDER, pickConfiguration, priceQuote } from "../pricing.js";
+import { LADDER, pickConfiguration, priceQuote, extrasPrice, ESSENTIAL_ONLY_PRICED } from "../pricing.js";
 
 const WWW = "https://www.vantagepointcleaning.com.au";
 const env = {
@@ -47,7 +47,8 @@ const reset = (pc = SERVICE_ZONE_POSTCODES[0]) => {
   mockGhl();
 };
 const fieldsOf = () => Object.fromEntries(calls.find((c) => c.method === "PUT" && c.url.endsWith("/contacts/c1")).body.customFields.map((f) => [f.key, f.field_value]));
-const tags = () => calls.find((c) => c.url.endsWith("/tags")).body.tags;
+const tags = () => calls.find((c) => c.method === "POST" && c.url.endsWith("/tags")).body.tags;
+const removedTags = () => calls.find((c) => c.method === "DELETE" && c.url.endsWith("/contacts/c1/tags"))?.body.tags;
 
 describe("price ladder", () => {
   const rungs = LADDER.flatMap((r) => ["essential", "signature", "reserve"].map((p) => [r.bedrooms, r.bathrooms, p, r[p]]));
@@ -101,6 +102,12 @@ describe("increments and extras", () => {
     const ex = { cabinets: true, interior_glass: true, linen_beds: 4, laundry_loads: 1, ironing_blocks: 2, reset_blocks: 1 };
     expect(priceQuote("reserve", base, ex).extras_price).toBe(99 + 45 + 130 + 65);
   });
+  it.each(ESSENTIAL_ONLY_PRICED)("ESSENTIAL_ONLY_PRICED %s: priced on Essential only", (k) => {
+    const ex = { laundry_loads: 0, linen_beds: 0, ironing_blocks: 0, reset_blocks: 0, [k]: 1 };
+    expect(extrasPrice("essential", ex)).toBeGreaterThan(0);
+    expect(extrasPrice("signature", ex)).toBe(0);
+    expect(extrasPrice("reserve", ex)).toBe(0);
+  });
   it("via the endpoint, writes extras summary and quoted fields", async () => {
     reset();
     const res = await quote({ ...base, extras: { oven: true, laundry_loads: 1 } });
@@ -130,6 +137,7 @@ describe("no-price outcomes", () => {
     const res = await quote(base);
     expect(await res.json()).toEqual({ outcome: "out_of_area" });
     expect(tags()).toEqual(["out-of-area"]);
+    expect(removedTags()).toEqual(["quote-priced", "quote-personal"]);
     expect(fieldsOf().non_standard_reason).toBe("out_of_area");
     expect(calls.some((c) => c.url.includes("/opportunities"))).toBe(false);
   });
@@ -156,8 +164,9 @@ describe("GHL writes for priced quote", () => {
       parking_access_notes: "Street parking", special_requests: "Mind the cat",
       quoted_package_price: "424", first_visit_price: "848",
     });
-    expect(f.non_standard_reason).toBeUndefined();
+    expect(f.non_standard_reason).toBe("");
     expect(tags()).toEqual(["quote-priced"]);
+    expect(removedTags()).toEqual(["quote-personal"]);
     const search = calls.find((c) => c.url.includes("/opportunities/search"));
     expect(search.url).toContain("contact_id=c1");
     const create = calls.find((c) => c.method === "POST" && c.url.endsWith("/opportunities/"));
@@ -237,6 +246,26 @@ describe("validation → 400", () => {
   });
 });
 
+describe("re-quote for the same contact", () => {
+  it("personal quote then priced quote clears the reason and the personal tag", async () => {
+    reset();
+    await quote({ ...base, weekend: true });
+    expect(removedTags()).toEqual(["quote-priced"]);
+    expect(tags()).toEqual(["quote-personal"]);
+    expect(fieldsOf().non_standard_reason).toBe("weekend");
+
+    mockGhl();
+    const res = await quote(base);
+    expect((await res.json()).outcome).toBe("priced");
+    expect(fieldsOf().non_standard_reason).toBe("");
+    expect(removedTags()).toEqual(["quote-personal"]);
+    expect(tags()).toEqual(["quote-priced"]);
+    const del = calls.findIndex((c) => c.method === "DELETE" && c.url.endsWith("/tags"));
+    const add = calls.findIndex((c) => c.method === "POST" && c.url.endsWith("/tags"));
+    expect(del).toBeLessThan(add);
+  });
+});
+
 describe("GHL failure → 502", () => {
   it("contact GET fails / returns no contact / throws", async () => {
     reset(); failOn = (u, m) => m === "GET" && u.includes("/contacts/");
@@ -252,6 +281,8 @@ describe("GHL failure → 502", () => {
   });
   it("tag fails", async () => {
     reset(); failOn = (u) => u.endsWith("/tags");
+    expect((await quote(base)).status).toBe(502);
+    reset(); failOn = (u, m) => m === "DELETE" && u.endsWith("/tags");
     expect((await quote(base)).status).toBe(502);
   });
   it("opportunity search / write fails", async () => {

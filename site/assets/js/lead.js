@@ -73,6 +73,11 @@
     doc.querySelectorAll('form[data-lead-form]').forEach(function (form) {
       form.addEventListener('submit', function (e) {
         e.preventDefault();
+        // One POST per submission: ignore re-submits while one is in flight.
+        if (form.vpcSubmitting) return;
+        form.vpcSubmitting = true;
+        var btn = form.querySelector('[type="submit"]');
+        if (btn) btn.disabled = true;
         var fields = form.querySelector('.form-fields');
         var success = form.querySelector('.form-success');
         var err = form.querySelector('.form-error');
@@ -83,6 +88,8 @@
           form.dispatchEvent(new (deps.CustomEvent || global.CustomEvent)('lead:submitted', { bubbles: true, detail: result }));
         }, function () {
           // Keep every field; offer the email/phone fallback.
+          form.vpcSubmitting = false;
+          if (btn) btn.disabled = false;
           if (err) err.hidden = false;
         });
       });
