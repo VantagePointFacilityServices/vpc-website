@@ -62,3 +62,10 @@ test('forms are hidden and each location shows email + phone', () => {
     }
   }
 });
+
+test('no visible CTA promises an instant quote while forms are hidden', () => {
+  for (const p of pages) {
+    const visible = read(p).replace(/<form class="assessment-form"[^>]*\bhidden\b[\s\S]*?<\/form>/g, '');
+    assert.doesNotMatch(visible, /<(a|button)[^>]*>\s*Get Instant Quote\s*<\/\1>/i, p);
+  }
+});

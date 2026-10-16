@@ -34,8 +34,8 @@ records:
     content: vantagepointfacilityservices.github.io
     proxied: false
 
-  # --- Google Workspace email — LIVE on GoDaddy DNS today. Values pulled from public ---
-  # --- DNS 2026-09-30. Must exist in Cloudflare before the nameserver switch, or mail stops. ---
+  # --- Google Workspace email — mirrors live Cloudflare DNS as of 2026-10-16. Removing ---
+  # --- any of these records stops mail for the domain. ---
   - type: MX
     name: vantagepointcleaning.com.au
     content: 'aspmx.l.google.com'
@@ -56,9 +56,9 @@ records:
     name: vantagepointcleaning.com.au
     content: 'alt4.aspmx.l.google.com'
     priority: 10
-  # SPF — the live GoDaddy record is "v=spf1 include:dc-aa8e722993._spfm.vantagepointcleaning.com.au ~all".
-  # That _spfm record only exists while GoDaddy hosts DNS; after the move it's NXDOMAIN and SPF
-  # permerrors (exactly what broke VPFS until 2026-09-29). This is the fixed value. Keep ONE SPF record.
+  # SPF — the old GoDaddy-era record was "v=spf1 include:dc-aa8e722993._spfm.vantagepointcleaning.com.au ~all".
+  # That _spfm include is NXDOMAIN off GoDaddy DNS and permerrors SPF (exactly what broke VPFS until
+  # 2026-09-29) — never restore it. This is the live value. Keep ONE SPF record.
   - type: TXT
     name: vantagepointcleaning.com.au
     content: '"v=spf1 include:_spf.google.com ~all"'
