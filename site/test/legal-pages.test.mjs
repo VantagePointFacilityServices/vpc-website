@@ -87,6 +87,8 @@ const purposes = {
   'index.html': ['prepare your quote', 'prepare your quote and contact you about it', "we can't prepare your quote"],
   'reserve-home-care.html': ['prepare your quote', 'prepare your quote and contact you about it', "we can't prepare your quote"],
   'signature-home-care.html': ['prepare your quote', 'prepare your quote and contact you about it', "we can't prepare your quote"],
+  'why-us.html': ['prepare your quote', 'prepare your quote and contact you about it', "we can't prepare your quote"],
+  'about.html': ['prepare your quote', 'prepare your quote and contact you about it', "we can't prepare your quote"],
   'estate-care.html': ['assess your property and offer a walkthrough', 'assess your property and offer a walkthrough', "we can't assess your property or book a walkthrough"],
   'contact.html': ['respond to your enquiry', 'respond to your enquiry', "we can't respond to your enquiry"],
   'service-areas.html': ['tell you when we cover your area', 'tell you when we cover your area', "we can't let you know when we cover your area"],

@@ -10,7 +10,7 @@ const read = (f) => readFileSync(join(root, f), 'utf8');
 const PHONE_TEL = 'tel:+61756512257';
 const EMAIL = 'hello@vantagepointcleaning.com.au';
 
-test('there are 10 pages', () => assert.equal(pages.length, 10));
+test('there are 11 pages', () => assert.equal(pages.length, 11));
 
 test('no dummy phone number anywhere', () => {
   for (const p of pages) assert.doesNotMatch(read(p), /5500 0000|0755000000|755000000/, p);

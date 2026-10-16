@@ -9,9 +9,11 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   // Nav dropdown — disclosure pattern. Desktop hover/focus opening is handled
-  // in CSS; this covers click, Escape and dismissal.
+  // in CSS; this covers click, Escape and dismissal. Packages is a button that
+  // toggles its menu; Locations is a real link with a separate chevron button
+  // (as on vpfs-website) so touch devices can still open its menu.
   document.querySelectorAll('.has-dropdown').forEach(function (item) {
-    var btn = item.querySelector('.nav-dropdown-toggle');
+    var btn = item.querySelector('button.nav-dropdown-toggle, .nav-dropdown-chevron');
     if (!btn) return;
 
     function setOpen(isOpen) {
