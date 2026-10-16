@@ -5,10 +5,10 @@ Vantage Point Cleaning delivers professional, consistent, and quality-controlled
 
 ```
 site/                     the website (plain HTML/CSS/JS, no build step)
-  index.html, about.html, contact.html, careers.html,
+  index.html, why-us.html, about.html, contact.html, careers.html,
   service-areas.html, signature-home-care.html,
-  reserve-home-care.html, estate-care.html   the eight pages
-  privacy.html, terms.html                   the legal pages (10 pages in all)
+  reserve-home-care.html, estate-care.html   the nine pages
+  privacy.html, terms.html                   the legal pages (11 pages in all)
   assets/css/style.css                       shared stylesheet (design tokens + components)
   assets/js/main.js                          nav dropdown, mobile menu, FAQ accordion, form handling
   assets/img/                                logo/emblem SVGs and favicons

@@ -71,14 +71,26 @@
           <a href="reserve-home-care.html">Reserve Home Care</a>
         </div>
       </div>
-      <a href="service-areas.html" class="active">Area</a>
-      <a href="about.html">About Us</a>
+      <div class="nav-item has-dropdown current">
+        <a href="service-areas.html" class="nav-dropdown-toggle">Locations</a>
+        <button class="nav-dropdown-chevron" aria-expanded="false" aria-controls="nav-locations" aria-label="Toggle Locations submenu">
+          <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+        <div class="nav-dropdown-menu" id="nav-locations">
+          <a href="service-areas.html#northern-gold-coast">Northern Gold Coast</a>
+          <a href="service-areas.html#central-gold-coast">Central Gold Coast</a>
+          <a href="service-areas.html#southern-gold-coast">Southern Gold Coast</a>
+          <a href="service-areas.html#hinterland-northern-nsw">Hinterland &amp; Northern NSW</a>
+        </div>
+      </div>
+      <a href="why-us.html">Why Us</a>
+      <a href="about.html">About</a>
       <a href="contact.html">Contact</a>
     </nav>
     <div class="header-cta">
-      <a class="header-phone" href="tel:+61756512257"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.12 4.2 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg><span>07 5651 2257</span></a>
+      <a class="header-phone" href="tel:+61756512257"><span class="phone-chip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.12 4.2 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span>07 5651 2257</a>
       <span class="nav-divider" aria-hidden="true"></span>
-      <a class="btn btn-primary btn-sm" href="contact.html">Get your quote</a>
+      <a class="btn btn-primary btn-sm" href="contact.html">Get your quote<span class="btn-chip"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
       <button class="nav-toggle" aria-label="Toggle menu"><span></span><span></span><span></span></button>
     </div>
   </div>
@@ -106,19 +118,19 @@
       <p>Pricing is per visit and uniform across every region — where you sit on the coast doesn't change what you pay.</p>
     </div>
     <div class="region-grid">
-      <div class="region-card">
+      <div class="region-card" id="northern-gold-coast">
         <div class="region-head"><svg class="region-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg><h3>Northern Gold Coast</h3></div>
         <div class="region-suburbs"><span class="suburb-tag">Coomera</span><span class="suburb-tag">Upper Coomera</span><span class="suburb-tag">Helensvale</span><span class="suburb-tag">Oxenford</span><span class="suburb-tag">Pacific Pines</span><span class="suburb-tag">Hope Island</span><span class="suburb-tag">Runaway Bay</span><span class="suburb-tag">Labrador</span></div>
       </div>
-      <div class="region-card">
+      <div class="region-card" id="central-gold-coast">
         <div class="region-head"><svg class="region-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 22V4a1 1 0 0 1 1-1h9a1 1 0 0 1 1 1v18Z"/><path d="M6 12H4a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h2"/><path d="M18 9h2a1 1 0 0 1 1 1v11a1 1 0 0 1-1 1h-2"/><path d="M10 6h4M10 10h4M10 14h4M10 18h4"/></svg><h3>Central Gold Coast</h3></div>
         <div class="region-suburbs"><span class="suburb-tag">Southport</span><span class="suburb-tag">Bundall</span><span class="suburb-tag">Ashmore</span><span class="suburb-tag">Surfers Paradise</span><span class="suburb-tag">Broadbeach</span><span class="suburb-tag">Mermaid Beach</span><span class="suburb-tag">Carrara</span><span class="suburb-tag">Nerang</span></div>
       </div>
-      <div class="region-card">
+      <div class="region-card" id="southern-gold-coast">
         <div class="region-head"><svg class="region-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 6c.6.5 1.2 1 2.5 1C7 7 7 5 9.5 5c2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/><path d="M2 12c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/><path d="M2 18c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 2.6 0 2.4 2 5 2 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/></svg><h3>Southern Gold Coast</h3></div>
         <div class="region-suburbs"><span class="suburb-tag">Robina</span><span class="suburb-tag">Varsity Lakes</span><span class="suburb-tag">Reedy Creek</span><span class="suburb-tag">Burleigh Heads</span><span class="suburb-tag">Miami</span><span class="suburb-tag">Palm Beach</span><span class="suburb-tag">Currumbin</span><span class="suburb-tag">Coolangatta</span></div>
       </div>
-      <div class="region-card">
+      <div class="region-card" id="hinterland-northern-nsw">
         <div class="region-head"><svg class="region-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg><h3>Hinterland &amp; Northern NSW</h3></div>
         <div class="region-suburbs"><span class="suburb-tag">Mudgeeraba</span><span class="suburb-tag">Worongary</span><span class="suburb-tag">Tallai</span><span class="suburb-tag">Advancetown</span><span class="suburb-tag">Tweed Heads</span><span class="suburb-tag">Banora Point</span><span class="suburb-tag">Kingscliff</span><span class="suburb-tag">Murwillumbah</span></div>
       </div>
@@ -226,16 +238,22 @@
         </div>
       </div>
       <div>
-        <h4>Browse</h4>
+        <h4>Packages</h4>
         <ul>
           <li><a href="index.html">Essential Home Care</a></li>
           <li><a href="signature-home-care.html">Signature Home Care</a></li>
           <li><a href="reserve-home-care.html">Reserve Home Care</a></li>
-          <li><a href="service-areas.html">Area</a></li>
-          <li><a href="about.html">About Us</a></li>
-          <li><a href="careers.html">Careers</a></li>
-          <li><a href="contact.html">Contact</a></li>
           <li><a href="index.html#faq">FAQ</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Company</h4>
+        <ul>
+          <li><a href="why-us.html">Why us</a></li>
+          <li><a href="about.html">About us</a></li>
+          <li><a href="service-areas.html">Locations</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="careers.html">Careers</a></li>
         </ul>
       </div>
       <div>
@@ -244,14 +262,8 @@
           <li><a href="tel:+61756512257">07 5651 2257</a></li>
           <li><a href="mailto:hello@vantagepointcleaning.com.au">hello@vantagepointcleaning.com.au</a></li>
           <li>Gold Coast, QLD</li>
-        </ul>
-      </div>
-      <div>
-        <h4>Hours</h4>
-        <ul>
-          <li>Mon–Fri: 8:00am – 5:00pm</li>
-          <li>Sat: By appointment</li>
-          <li>Sun: Closed</li>
+          <li>Mon&ndash;Fri 8am&ndash;5pm</li>
+          <li>Sat by appointment</li>
         </ul>
       </div>
     </div>
