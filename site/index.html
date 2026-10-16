@@ -52,7 +52,7 @@
 }
 </script>
 </head>
-<body>
+<body data-lead-forms="off" data-booking="off">
 
 <!-- ============ HEADER ============ -->
 <header class="site-header">
@@ -83,8 +83,8 @@
           <a href="service-areas.html#hinterland-northern-nsw">Hinterland &amp; Northern NSW</a>
         </div>
       </div>
-      <a href="why-us.html">Why Us</a>
-      <a href="about.html">About</a>
+      <a data-href="why-us.html" hidden>Why Us</a>
+      <a data-href="about.html" hidden>About</a>
       <a href="contact.html">Contact</a>
     </nav>
     <div class="header-cta">
@@ -97,15 +97,15 @@
 </header>
 
 <!-- ============ HERO ============ -->
-<section class="hero">
+<section class="hero hero-form-page">
   <div class="wrap hero-grid">
-    <div class="hero-copy">
+    <div class="hero-inner">
       <span class="eyebrow on-inverse">Residential Cleaning &middot; Gold Coast</span>
       <h1>Essential Home Care &mdash; Weekly Cleaning for Gold Coast Homes</h1>
       <p class="lead">For busy professionals and families who want a consistently clean home with a premium touch &mdash; without managing bookings, chasing quality, or a different face every visit.</p>
       <!--
       <ul class="hero-checks">
-        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Same cleaner or team every visit</span></li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>The same cleaner wherever possible, with a briefed replacement</span></li>
         <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Before-and-after photos every visit</span></li>
         <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Fully insured and police-checked</span></li>
         <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Products measured to the label, with safety data on file</span></li>
@@ -129,7 +129,7 @@
       <h3>Get in touch</h3>
       <p>Email <a href="mailto:hello@vantagepointcleaning.com.au">hello@vantagepointcleaning.com.au</a> or call <a href="tel:+61756512257">07 5651 2257</a> and we&rsquo;ll come back to you.</p>
     </div>
-    <form class="assessment-form" hidden>
+    <form class="assessment-form" data-lead-form hidden>
         <div class="form-fields">
           <h3>Request Instant Quote</h3>
           <div class="form-row">
@@ -143,6 +143,10 @@
             <div><label for="email">Email</label><input id="email" name="email" type="email" autocomplete="email" required></div>
           </div>
           <input type="hidden" name="tier" value="Essential Home Care">
+          <div class="form-row single">
+            <div><label for="postcode">Postcode</label><input id="postcode" name="postcode" type="text" inputmode="numeric" pattern="[0-9]{4}" maxlength="4" autocomplete="postal-code" placeholder="e.g. 4220" required></div>
+          </div>
+          <input type="hidden" name="conversion_page" value="/index.html">
           <div class="hp-field" aria-hidden="true">
             <label for="website-url">Website</label>
             <input id="website-url" name="website_url" type="text" tabindex="-1" autocomplete="off">
@@ -154,6 +158,7 @@
           <!-- Cloudflare Turnstile bot check; site key from the Turnstile dashboard -->
           <div class="turnstile-widget" data-sitekey=""></div>
           <p class="form-privacy-notice">We collect these details to prepare your quote. How we handle them: <a href="privacy.html#collection-notice">collection notice</a> · <a href="privacy.html">Privacy Policy</a>.</p>
+          <p class="form-error" role="alert" hidden>Sorry, we couldn&rsquo;t send that. Your details are still here &mdash; please try again, or email <a href="mailto:hello@vantagepointcleaning.com.au">hello@vantagepointcleaning.com.au</a> or call <a href="tel:+61756512257">07 5651 2257</a>.</p>
           <button type="submit" class="btn btn-primary btn-block">Request Instant Quote</button>
           <p class="form-note">Your information is secure and never shared.</p>
         </div>
@@ -172,7 +177,7 @@
   <div class="wrap trust-grid">
     <div class="trust-item">
       <div class="trust-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="7" r="3"/><path d="M2 21c0-3.9 3.1-7 7-7s7 3.1 7 7"/><circle cx="17" cy="8" r="2.5"/><path d="M22 21c0-2.8-1.7-5.2-4-6.2"/></svg></div>
-      <div><h4>The same cleaners</h4><p>Real consistency — no rotating strangers through your home.</p></div>
+      <div><h4>Consistent cleaners</h4><p>The same cleaner wherever possible, with a briefed replacement — no strangers sent in cold.</p></div>
     </div>
     <div class="trust-item">
       <div class="trust-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h3l2-3h6l2 3h3a1 1 0 0 1 1 1v11a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1z"/><circle cx="12" cy="13" r="4"/></svg></div>
@@ -203,7 +208,7 @@
     <div class="section-head center">
       <span class="eyebrow">Our Packages</span>
       <h2>Choose the right level of care for your home</h2>
-      <p>Three managed home care packages, each with the same cleaner, the same documented standard and before-and-after photos. Pick the amount of detail that suits your home &mdash; Signature is the one most households start with.</p>
+      <p>Three managed home care packages, each with the same cleaner wherever possible, with a briefed replacement, the same documented standard and before-and-after photos. Pick the amount of detail that suits your home &mdash; Signature is the one most households start with.</p>
     </div>
     <div class="package-grid">
       <article class="package-card">
@@ -217,9 +222,11 @@
           <li>All floors vacuumed, hard floors mopped</li>
           <li>Dusting of reachable surfaces, skirtings and sills</li>
           <li>Beds made and bins emptied</li>
+          <li>Dishes: dishwasher loaded or unloaded, or up to ~10 minutes of hand-washing</li>
           <li>High-touch surfaces sanitised</li>
-          <li>The same cleaner or team every visit</li>
+          <li>The same cleaner wherever possible, with a briefed replacement</li>
           <li>Before-and-after photos and a documented inspection</li>
+          <li>Linen change and interior glass available as extras</li>
         </ul>
         <div class="package-cta">
           <a href="#contact" class="btn btn-secondary btn-block">Get your quote</a>
@@ -237,7 +244,7 @@
           <li>One laundry load washed, dried and folded</li>
           <li>Interior glass at reachable height</li>
           <li>Detailed kitchen clean</li>
-          <li>One rotational deep-clean task every visit</li>
+          <li>One rotational deep-clean task every visit &mdash; the rotation includes oven and fridge interiors</li>
           <li>Consumable monitoring with a restock list</li>
           <li>Priority booking window</li>
         </ul>
@@ -256,6 +263,9 @@
           <li>Up to two laundry loads</li>
           <li>Detailed bathrooms every visit</li>
           <li>48-hour priority reschedule guarantee</li>
+          <li>Ironing up to 30 minutes</li>
+          <li>Presentation finish: cushions, throws, towels folded, toilet-roll fold</li>
+          <li>Replacement-cleaner guarantee: a briefed stand-in if your regular cleaner is away</li>
         </ul>
         <div class="package-cta">
           <a href="#contact" class="btn btn-secondary btn-block">Get your quote</a>
@@ -263,7 +273,29 @@
         </div>
       </article>
     </div>
-    <p class="package-note">Quoted prices are per visit, include GST and apply to weekday visits; weekend and public-holiday visits are quoted on request. Your exact price, including extras such as a pool, study or extra bathroom, is confirmed in your personalised quote. Not included in any package, but available as priced extras: oven or fridge interior outside the rotation, upper-level exterior glass, carpet steam cleaning, wall washing and post-party or post-renovation cleans.</p>
+    <p class="estate-note">Have a larger estate, or need more than Reserve covers? <a href="estate-care.html" class="text-link">Estate Care is arranged through a private walkthrough &rarr;</a></p>
+    <p class="package-note">Quoted prices are per visit, include GST and apply to weekday visits; weekend and public-holiday visits are quoted on request. Your exact price, including extras such as a pool, study or extra bathroom, is confirmed in your personalised quote. Extras are listed below.</p>
+  </div>
+</section>
+
+<section class="extras" id="extras">
+  <div class="wrap">
+    <div class="section-head center">
+      <span class="eyebrow">Extras</span>
+      <h2>Add what your home needs</h2>
+      <p>Priced extras you can add to any visit. Oven and fridge interiors are already part of the Signature and Reserve rotations; linen change and interior glass are included from Signature up.</p>
+    </div>
+    <ul class="extras-list">
+      <li data-extra="oven"><span>Oven interior</span> <strong>$129</strong></li>
+      <li data-extra="fridge"><span>Fridge interior</span> <strong>$65</strong></li>
+      <li data-extra="cabinets"><span>Inside cabinets</span> <strong>$99</strong></li>
+      <li data-extra="laundry_loads"><span>Extra laundry load</span> <strong>$45</strong></li>
+      <li data-extra="linen_beds"><span>Linen change (Essential)</span> <strong>$20 per bed</strong></li>
+      <li data-extra="interior_glass"><span>Interior glass (Essential)</span> <strong>$65</strong></li>
+      <li data-extra="ironing_blocks"><span>Ironing</span> <strong>$65 per 30 min</strong></li>
+      <li data-extra="reset_blocks"><span>Post-party reset</span> <strong>$65 per 30 min</strong></li>
+    </ul>
+    <p class="package-note">Carpet steam cleaning and upper-level exterior glass are quoted separately.</p>
   </div>
 </section>
 
@@ -315,7 +347,7 @@
     <div>
       <span class="eyebrow">Want More Done Each Visit?</span>
       <h2>Step up to Signature or Reserve</h2>
-      <p>Signature Home Care builds on everything in Essential with linen changes, laundry, interior glass and a detailed kitchen. Reserve Home Care goes further with a deeper rotation of tasks, extra laundry and detailed bathrooms &mdash; the same team and documented standard throughout. <a href="#packages" class="text-link">Compare all three packages</a>.</p>
+      <p>Signature Home Care builds on everything in Essential with linen changes, laundry, interior glass and a detailed kitchen. Reserve Home Care goes further with a deeper rotation of tasks, extra laundry and detailed bathrooms &mdash; with the same cleaner wherever possible, with a briefed replacement and the same documented standard throughout. <a href="#packages" class="text-link">Compare all three packages</a>.</p>
       <a href="signature-home-care.html" class="link-arrow">See Signature Home Care <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
     </div>
   </div>
@@ -338,8 +370,8 @@
         <div class="faq-a"><p>Essential covers everything needed to keep a home consistently presentable day to day. If you want linen changes, laundry, interior glass, and rotational deep-clean tasks handled as part of the same visit, Signature Home Care builds on top of Essential, and Reserve Home Care goes further with two rotational tasks per visit, extra laundry and detailed bathrooms. <a href="#packages" class="text-link">Compare all three packages</a>.</p></div>
       </div>
       <div class="faq-item">
-        <button class="faq-q">How often will the same cleaner come?</button>
-        <div class="faq-a"><p>We assign a consistent cleaner or small team to your home for the life of your plan, so you're not meeting someone new every visit.</p></div>
+        <button class="faq-q">How often will my regular cleaner come?</button>
+        <div class="faq-a"><p>We assign a regular cleaner or small team to your home and send the same cleaner wherever possible. If they're away, a briefed replacement covers the visit.</p></div>
       </div>
       <div class="faq-item">
         <button class="faq-q">Can I start with Essential and upgrade later?</button>
@@ -404,12 +436,12 @@
       <div>
         <h4>Company</h4>
         <ul>
-          <li><a href="why-us.html">Why us</a></li>
-          <li><a href="about.html">About us</a></li>
+          <li><a data-href="why-us.html" hidden>Why us</a></li>
+          <li><a data-href="about.html" hidden>About us</a></li>
           <li><a href="service-areas.html">Locations</a></li>
           <li><a href="contact.html">Contact</a></li>
-          <li><a href="https://www.vantagepointfacilityservices.com.au/career.html">Careers</a></li>
-          <li><a href="https://www.vantagepointfacilityservices.com.au/subcontractor.html">Subcontractors</a></li>
+          <li><a href="https://www.vantagepointfacilityservices.com.au/career.html">Career</a></li>
+          <li><a href="https://www.vantagepointfacilityservices.com.au/subcontractor.html">Subcontractor</a></li>
         </ul>
       </div>
       <div>
@@ -435,6 +467,8 @@
 
 <script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit" defer></script>
 <script src="assets/js/utm.js"></script>
+<script src="assets/js/lead.js"></script>
+<script src="assets/js/quote.js"></script>
 <script src="assets/js/main.js"></script>
 </body>
 </html>

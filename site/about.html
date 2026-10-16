@@ -5,6 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>About Us | Vantage Point Cleaning</title>
 <meta name="description" content="Vantage Point Cleaning is a founder-led Gold Coast home cleaning business. Meet founder Blake Warton and the standard behind every clean.">
+<!-- UNLISTED until Blake approves the copy. To relist (one PR): 1) delete this noindex meta; 2) in every page nav and footer change <a data-href="PAGE.html" hidden> to <a href="PAGE.html">; 3) add PAGE.html back to sitemap.xml. -->
+<meta name="robots" content="noindex">
 <link rel="canonical" href="https://www.vantagepointcleaning.com.au/about.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Vantage Point Cleaning">
@@ -52,7 +54,7 @@
 }
 </script>
 </head>
-<body>
+<body data-lead-forms="off" data-booking="off">
 
 <!-- ============ HEADER ============ -->
 <header class="site-header">
@@ -83,8 +85,8 @@
           <a href="service-areas.html#hinterland-northern-nsw">Hinterland &amp; Northern NSW</a>
         </div>
       </div>
-      <a href="why-us.html">Why Us</a>
-      <a href="about.html" class="active">About</a>
+      <a data-href="why-us.html" hidden>Why Us</a>
+      <a data-href="about.html" class="active" hidden>About</a>
       <a href="contact.html">Contact</a>
     </nav>
     <div class="header-cta">
@@ -102,7 +104,7 @@
     <div class="hero-inner">
       <span class="eyebrow on-inverse">About us</span>
       <h1>A Gold Coast Home Cleaning Business, Led by Its Founder</h1>
-      <p class="lead">We&rsquo;re a local team that does things properly. Founder-led and Gold Coast born and raised, we look after homes across the coast on a weekly or fortnightly plan. Want to see the standard we hold ourselves to? <a href="why-us.html" class="text-link" style="color:var(--white);">Start with Why us &rarr;</a></p>
+      <p class="lead">We&rsquo;re a local team that does things properly. Founder-led and Gold Coast born and raised, we look after homes across the coast on a weekly or fortnightly plan.</p>
       <p class="hero-details">Vantage Point Cleaning &middot; Gold Coast, QLD &middot; <a href="tel:+61756512257">07 5651 2257</a> &middot; Mon&ndash;Fri 8am&ndash;5pm</p>
     </div>
 
@@ -114,7 +116,7 @@
       <a href="mailto:hello@vantagepointcleaning.com.au" class="btn btn-secondary">Email us</a>
       <p class="form-note">You&rsquo;ll talk to the people who run the business, not a call centre.</p>
     </div>
-    <form class="assessment-form" hidden>
+    <form class="assessment-form" data-lead-form hidden>
         <div class="form-fields">
           <h3>Request Instant Quote</h3>
           <div class="form-row">
@@ -128,6 +130,10 @@
             <div><label for="email">Email</label><input id="email" name="email" type="email" autocomplete="email" required></div>
           </div>
           <input type="hidden" name="source_page" value="about">
+          <div class="form-row single">
+            <div><label for="postcode">Postcode</label><input id="postcode" name="postcode" type="text" inputmode="numeric" pattern="[0-9]{4}" maxlength="4" autocomplete="postal-code" placeholder="e.g. 4220" required></div>
+          </div>
+          <input type="hidden" name="conversion_page" value="/about.html">
           <div class="hp-field" aria-hidden="true">
             <label for="website-url">Website</label>
             <input id="website-url" name="website_url" type="text" tabindex="-1" autocomplete="off">
@@ -139,6 +145,7 @@
           <!-- Cloudflare Turnstile bot check; site key from the Turnstile dashboard -->
           <div class="turnstile-widget" data-sitekey=""></div>
           <p class="form-privacy-notice">We collect these details to prepare your quote. How we handle them: <a href="privacy.html#collection-notice">collection notice</a> · <a href="privacy.html">Privacy Policy</a>.</p>
+          <p class="form-error" role="alert" hidden>Sorry, we couldn&rsquo;t send that. Your details are still here &mdash; please try again, or email <a href="mailto:hello@vantagepointcleaning.com.au">hello@vantagepointcleaning.com.au</a> or call <a href="tel:+61756512257">07 5651 2257</a>.</p>
           <button type="submit" class="btn btn-primary btn-block">Request Instant Quote</button>
           <p class="form-note">Your information is secure and never shared.</p>
         </div>
@@ -267,7 +274,7 @@
         <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Employed by us, not contractors</span></li>
         <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Paid above the Cleaning Services Award</span></li>
         <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Police-checked before their first shift</span></li>
-        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>The same cleaner or team in your home</span></li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>The same cleaner wherever possible, with a briefed replacement</span></li>
       </ul>
       <p><a href="https://www.vantagepointfacilityservices.com.au/career.html" class="text-link">Work with us &rarr;</a></p>
     </div>
@@ -279,7 +286,7 @@
   <div class="wrap">
     <span class="eyebrow">Where we work</span>
     <h2>Close to home, on purpose</h2>
-    <p>We keep our cleaners working in tight areas of the coast rather than criss-crossing it. Less time in traffic means more time in your home, and it&rsquo;s what lets us keep the same faces on your visits. <a href="service-areas.html" class="text-link">See where we clean &rarr;</a></p>
+    <p>We keep our cleaners working in tight areas of the coast rather than criss-crossing it. Less time in traffic means more time in your home, and it&rsquo;s what lets us keep familiar faces on your visits wherever possible. <a href="service-areas.html" class="text-link">See where we clean &rarr;</a></p>
   </div>
 </section>
 
@@ -338,12 +345,12 @@
       <div>
         <h4>Company</h4>
         <ul>
-          <li><a href="why-us.html">Why us</a></li>
-          <li><a href="about.html">About us</a></li>
+          <li><a data-href="why-us.html" hidden>Why us</a></li>
+          <li><a data-href="about.html" hidden>About us</a></li>
           <li><a href="service-areas.html">Locations</a></li>
           <li><a href="contact.html">Contact</a></li>
-          <li><a href="https://www.vantagepointfacilityservices.com.au/career.html">Careers</a></li>
-          <li><a href="https://www.vantagepointfacilityservices.com.au/subcontractor.html">Subcontractors</a></li>
+          <li><a href="https://www.vantagepointfacilityservices.com.au/career.html">Career</a></li>
+          <li><a href="https://www.vantagepointfacilityservices.com.au/subcontractor.html">Subcontractor</a></li>
         </ul>
       </div>
       <div>
@@ -367,6 +374,8 @@
   </div>
 </footer>
 <script src="assets/js/utm.js"></script>
+<script src="assets/js/lead.js"></script>
+<script src="assets/js/quote.js"></script>
 <script src="assets/js/main.js"></script>
 </body>
 </html>

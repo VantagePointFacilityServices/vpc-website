@@ -52,7 +52,7 @@
 }
 </script>
 </head>
-<body>
+<body data-lead-forms="off" data-booking="off">
 
 <!-- ============ HEADER ============ -->
 <header class="site-header">
@@ -83,8 +83,8 @@
           <a href="service-areas.html#hinterland-northern-nsw">Hinterland &amp; Northern NSW</a>
         </div>
       </div>
-      <a href="why-us.html">Why Us</a>
-      <a href="about.html">About</a>
+      <a data-href="why-us.html" hidden>Why Us</a>
+      <a data-href="about.html" hidden>About</a>
       <a href="contact.html">Contact</a>
     </nav>
     <div class="header-cta">
@@ -97,12 +97,12 @@
 </header>
 
 <!-- ============ PAGE HERO ============ -->
-<section class="hero page-hero">
+<section class="hero hero-form-page hero-form-single">
   <div class="wrap">
-    <div class="hero-single">
+    <div class="hero-inner">
       <div class="breadcrumb"><a href="index.html">Home</a> / Area</div>
       <h1>Home Cleaning Areas We Service on the Gold Coast</h1>
-      <p class="lead">We work five tight micro-territories rather than spreading thin across the whole coast. Density is what lets us keep the same team on your home, arrive when we say we will, and hold a consistent standard visit after visit.</p>
+      <p class="lead">We work five tight micro-territories rather than spreading thin across the whole coast. Density is what lets us keep a consistent team on your home, arrive when we say we will, and hold a consistent standard visit after visit.</p>
       <div class="hero-social">
       </div>
     </div>
@@ -148,7 +148,7 @@
     <div class="values-grid">
       <div class="value-card">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="7" r="3"/><path d="M2 21c0-3.9 3.1-7 7-7s7 3.1 7 7"/><circle cx="17" cy="8" r="2.5"/><path d="M22 21c0-2.8-1.7-5.2-4-6.2"/></svg>
-        <div><h4>The same team</h4><p>Short distances between homes mean one team can hold a region — so you see the same faces, not whoever was free.</p></div>
+        <div><h4>A consistent team</h4><p>Short distances between homes mean one team can hold a region — so you see familiar faces wherever possible, not whoever was free.</p></div>
       </div>
       <div class="value-card">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
@@ -178,39 +178,44 @@
       <h3>Get in touch</h3>
       <p>Email <a href="mailto:hello@vantagepointcleaning.com.au">hello@vantagepointcleaning.com.au</a> or call <a href="tel:+61756512257">07 5651 2257</a> and we&rsquo;ll come back to you.</p>
     </div>
-    <form class="assessment-form" hidden>
-      <div class="form-fields">
-        <h3>Request a new area</h3>
-        <div class="form-row">
-          <div><label for="na-fname">First name</label><input id="na-fname" name="first_name" type="text" autocomplete="given-name" required></div>
-          <div><label for="na-lname">Last name</label><input id="na-lname" name="last_name" type="text" autocomplete="family-name" required></div>
+    <form class="assessment-form" data-lead-form hidden>
+        <div class="form-fields">
+          <h3>Check my area</h3>
+          <div class="form-row">
+            <div><label for="na-fname">First name</label><input id="na-fname" name="first_name" type="text" autocomplete="given-name" required></div>
+            <div><label for="na-lname">Last name</label><input id="na-lname" name="last_name" type="text" autocomplete="family-name" required></div>
+          </div>
+          <div class="form-row single">
+            <div><label for="na-phone">Phone</label><input id="na-phone" name="phone" type="tel" autocomplete="tel" required></div>
+          </div>
+          <div class="form-row single">
+            <div><label for="na-email">Email</label><input id="na-email" name="email" type="email" autocomplete="email" required></div>
+          </div>
+          <div class="form-row single">
+            <div><label for="na-postcode">Postcode</label><input id="na-postcode" name="postcode" type="text" inputmode="numeric" pattern="[0-9]{4}" maxlength="4" autocomplete="postal-code" placeholder="e.g. 4220" required></div>
+          </div>
+          <input type="hidden" name="conversion_page" value="/service-areas.html">
+          <div class="hp-field" aria-hidden="true">
+            <label for="na-website-url">Website</label>
+            <input id="na-website-url" name="website_url" type="text" tabindex="-1" autocomplete="off">
+          </div>
+          <div class="hp-field" aria-hidden="true">
+            <label for="na-company">Company</label>
+            <input id="na-company" name="company" type="text" tabindex="-1" autocomplete="off">
+          </div>
+          <!-- Cloudflare Turnstile bot check; site key from the Turnstile dashboard -->
+          <div class="turnstile-widget" data-sitekey=""></div>
+          <p class="form-privacy-notice">We collect these details to tell you when we cover your area. How we handle them: <a href="privacy.html#collection-notice">collection notice</a> · <a href="privacy.html">Privacy Policy</a>.</p>
+          <p class="form-error" role="alert" hidden>Sorry, we couldn&rsquo;t send that. Your details are still here &mdash; please try again, or email <a href="mailto:hello@vantagepointcleaning.com.au">hello@vantagepointcleaning.com.au</a> or call <a href="tel:+61756512257">07 5651 2257</a>.</p>
+          <button type="submit" class="btn btn-primary btn-block">Check my area</button>
+          <p class="form-note">Your information is secure and never shared.</p>
         </div>
-        <div class="form-row single">
-          <div><label for="na-email">Email</label><input id="na-email" name="email" type="email" autocomplete="email" required></div>
+        <div class="form-success">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+          <h3>Request received</h3>
+          <p class="small">Thanks — if we already cover your postcode you can get your quote straight away; if not, we&rsquo;ll let you know as soon as we cover your area.</p>
         </div>
-        <div class="form-row">
-          <div><label for="na-phone">Phone</label><input id="na-phone" name="phone" type="tel" autocomplete="tel" required></div>
-          <div><label for="na-suburb">Suburb / Postcode</label><input id="na-suburb" name="suburb" type="text" placeholder="e.g. Coolangatta 4225" required></div>
-        </div>
-        <div class="hp-field" aria-hidden="true">
-          <label for="na-website-url">Website</label>
-          <input id="na-website-url" name="website_url" type="text" tabindex="-1" autocomplete="off">
-        </div>
-        <div class="hp-field" aria-hidden="true">
-          <label for="na-company">Company</label>
-          <input id="na-company" name="company" type="text" tabindex="-1" autocomplete="off">
-        </div>
-        <!-- Cloudflare Turnstile bot check; site key from the Turnstile dashboard -->
-        <div class="turnstile-widget" data-sitekey=""></div>
-        <p class="form-privacy-notice">We collect these details to tell you when we cover your area. How we handle them: <a href="privacy.html#collection-notice">collection notice</a> · <a href="privacy.html">Privacy Policy</a>.</p>
-        <button type="submit" class="btn btn-primary btn-block">Request this area</button>
-      </div>
-      <div class="form-success">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
-        <h3>Request received</h3>
-        <p class="small">Thanks — we'll check coverage for your suburb and get back to you shortly.</p>
-      </div>
-    </form>
+      </form>
   </div>
 </section>
 
@@ -249,12 +254,12 @@
       <div>
         <h4>Company</h4>
         <ul>
-          <li><a href="why-us.html">Why us</a></li>
-          <li><a href="about.html">About us</a></li>
+          <li><a data-href="why-us.html" hidden>Why us</a></li>
+          <li><a data-href="about.html" hidden>About us</a></li>
           <li><a href="service-areas.html">Locations</a></li>
           <li><a href="contact.html">Contact</a></li>
-          <li><a href="https://www.vantagepointfacilityservices.com.au/career.html">Careers</a></li>
-          <li><a href="https://www.vantagepointfacilityservices.com.au/subcontractor.html">Subcontractors</a></li>
+          <li><a href="https://www.vantagepointfacilityservices.com.au/career.html">Career</a></li>
+          <li><a href="https://www.vantagepointfacilityservices.com.au/subcontractor.html">Subcontractor</a></li>
         </ul>
       </div>
       <div>
@@ -279,6 +284,8 @@
 </footer>
 <script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit" defer></script>
 <script src="assets/js/utm.js"></script>
+<script src="assets/js/lead.js"></script>
+<script src="assets/js/quote.js"></script>
 <script src="assets/js/main.js"></script>
 </body>
 </html>

@@ -24,7 +24,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/css/style.css">
 </head>
-<body>
+<body data-lead-forms="off" data-booking="off">
 
 <!-- ============ HEADER ============ -->
 <header class="site-header">
@@ -55,8 +55,8 @@
           <a href="service-areas.html#hinterland-northern-nsw">Hinterland &amp; Northern NSW</a>
         </div>
       </div>
-      <a href="why-us.html">Why Us</a>
-      <a href="about.html">About</a>
+      <a data-href="why-us.html" hidden>Why Us</a>
+      <a data-href="about.html" hidden>About</a>
       <a href="contact.html">Contact</a>
     </nav>
     <div class="header-cta">
@@ -69,9 +69,9 @@
 </header>
 
 <!-- ============ PAGE HERO ============ -->
-<section class="hero page-hero">
+<section class="hero hero-form-page hero-form-single">
   <div class="wrap">
-    <div class="hero-single">
+    <div class="hero-inner">
       <div class="breadcrumb"><a href="index.html">Home</a> / Terms &amp; Conditions</div>
       <h1>Terms &amp; Conditions</h1>
     </div>
@@ -165,12 +165,12 @@
       <div>
         <h4>Company</h4>
         <ul>
-          <li><a href="why-us.html">Why us</a></li>
-          <li><a href="about.html">About us</a></li>
+          <li><a data-href="why-us.html" hidden>Why us</a></li>
+          <li><a data-href="about.html" hidden>About us</a></li>
           <li><a href="service-areas.html">Locations</a></li>
           <li><a href="contact.html">Contact</a></li>
-          <li><a href="https://www.vantagepointfacilityservices.com.au/career.html">Careers</a></li>
-          <li><a href="https://www.vantagepointfacilityservices.com.au/subcontractor.html">Subcontractors</a></li>
+          <li><a href="https://www.vantagepointfacilityservices.com.au/career.html">Career</a></li>
+          <li><a href="https://www.vantagepointfacilityservices.com.au/subcontractor.html">Subcontractor</a></li>
         </ul>
       </div>
       <div>
@@ -194,6 +194,8 @@
   </div>
 </footer>
 <script src="assets/js/utm.js"></script>
+<script src="assets/js/lead.js"></script>
+<script src="assets/js/quote.js"></script>
 <script src="assets/js/main.js"></script>
 </body>
 </html>
