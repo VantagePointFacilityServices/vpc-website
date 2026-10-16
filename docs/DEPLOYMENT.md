@@ -5,16 +5,19 @@ live at `https://www.vantagepointcleaning.com.au`. It's the VPC copy of
 `vpfs-website/docs/DEPLOYMENT.md`, the runbook VPFS went live on, rewritten for this domain.
 It includes the fixes VPFS only found after launch (GoDaddy leftover records and the SPF include).
 
-## Where things stand (checked 2026-09-30)
+## Where things stand (checked 2026-10-16) — LIVE
 
 | Item | State |
 |---|---|
-| Nameservers | **GoDaddy** (`ns73`/`ns74.domaincontrol.com`), not Cloudflare |
-| Apex + `www` | Serve a **GoDaddy Website Builder** page (`76.223.105.230`, `13.248.243.5`); `www` 301s to the apex |
-| GitHub Pages | Enabled (`build_type: workflow`), custom domain `www.vantagepointcleaning.com.au`, HTTPS not enforced. It can't get a cert until DNS points at GitHub |
-| Email | Google Workspace MX is live. SPF uses GoDaddy's `_spfm` include, which breaks after the move. No Google DKIM. DMARC is `p=quarantine`, with reports going to GoDaddy |
-| Zone file | `dns/zones/vantagepointcleaning.com.au.yaml` has the website records, the email records and the fixed SPF |
+| Nameservers | **Cloudflare** (`nora`/`memphis.ns.cloudflare.com`) |
+| Apex + `www` | Apex A ×4 → GitHub Pages (`185.199.108–111.153`), `www` CNAME → `vantagepointfacilityservices.github.io`, all DNS-only. GoDaddy Website Builder A records and `_domainconnect` deleted 2026-10-16 |
+| GitHub Pages | Custom domain `www.vantagepointcleaning.com.au`, Let's Encrypt cert for apex + `www`, **HTTPS enforced**. Apex 301s to `https://www.…` |
+| Email | Google Workspace MX, SPF `include:_spf.google.com`, Google DKIM (`google._domainkey`, stored as two 255-char strings), DMARC `p=reject pct=10 adkim=s aspf=s` |
+| Zone file | `dns/zones/vantagepointcleaning.com.au.yaml` matches the live zone: `sync-dns --prune` dry run shows no CREATE/UPDATE/DELETE |
+| Secrets | `CLOUDFLARE_API_TOKEN` (VPC zone only) set as a repo secret and in local `dns/.env` |
 | `vantagepointcleaning.com` | **Not ours.** It belongs to an unrelated US company ("Vantage Point Cleaning and Maintenance", GreenGeeks DNS). There's no `.com` redirect to build, unlike VPFS |
+
+Parts 1–7 below are the one-time cutover as it was run; keep them for rebuilding the zone or onboarding another domain.
 
 ## Part 1 — Add the domain to Cloudflare
 
