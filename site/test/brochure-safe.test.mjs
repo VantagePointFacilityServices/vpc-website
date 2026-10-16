@@ -75,8 +75,8 @@ const VPFS = 'https://www.vantagepointfacilityservices.com.au';
 test('footer Careers and Subcontractors link to the shared VPFS recruiting pages', () => {
   for (const p of pages.filter((f) => !/<meta http-equiv="refresh"/.test(read(f)))) {
     const h = read(p), footer = h.slice(h.lastIndexOf('<footer'));
-    assert.ok(footer.includes(`<a href="${VPFS}/career.html">Careers</a>`), `${p}: Careers`);
-    assert.ok(footer.includes(`<a href="${VPFS}/subcontractor.html">Subcontractors</a>`), `${p}: Subcontractors`);
+    assert.ok(footer.includes(`<a href="${VPFS}/career.html">Career</a>`), `${p}: Career`);
+    assert.ok(footer.includes(`<a href="${VPFS}/subcontractor.html">Subcontractor</a>`), `${p}: Subcontractor`);
     assert.ok(!/href="careers\.html"/.test(read(p)), `${p}: no link to the old careers.html`);
   }
 });
