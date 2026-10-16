@@ -30,6 +30,10 @@ jobs:
       - name: Configure Pages
         uses: actions/configure-pages@v5
 
+      # GitHub Pages caches for 10 min; version asset URLs so new HTML never pairs with old JS/CSS.
+      - name: Version asset URLs (cache busting)
+        run: node site/scripts/cache-bust.mjs site "${GITHUB_SHA::8}"
+
       - name: Upload site/ as the Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:

@@ -3,10 +3,9 @@
 # of truth — edit it, then run the sync script (dry-run by default).
 # See dns/README.md for the field reference.
 #
-# STATUS (2026-09-30): NOT APPLIED. The domain's nameservers are still
-# GoDaddy (ns73/ns74.domaincontrol.com) and the apex serves a GoDaddy
-# Website Builder page. Cut over with docs/DEPLOYMENT.md, and dry-run with
-# --prune before any --apply.
+# STATUS (2026-10-16): nameservers are Cloudflare. Email records below mirror
+# what is live (Google MX/SPF/DKIM, strict DMARC) so a --prune sync cannot regress
+# mail. Dry-run with --prune before any --apply; see docs/DEPLOYMENT.md Part 3.
 
 zone: vantagepointcleaning.com.au
 
@@ -35,8 +34,8 @@ records:
     content: vantagepointfacilityservices.github.io
     proxied: false
 
-  # --- Google Workspace email — LIVE on GoDaddy DNS today. Values pulled from public ---
-  # --- DNS 2026-09-30. Must exist in Cloudflare before the nameserver switch, or mail stops. ---
+  # --- Google Workspace email — mirrors live Cloudflare DNS as of 2026-10-16. Removing ---
+  # --- any of these records stops mail for the domain. ---
   - type: MX
     name: vantagepointcleaning.com.au
     content: 'aspmx.l.google.com'
@@ -57,27 +56,24 @@ records:
     name: vantagepointcleaning.com.au
     content: 'alt4.aspmx.l.google.com'
     priority: 10
-  # SPF — the live GoDaddy record is "v=spf1 include:dc-aa8e722993._spfm.vantagepointcleaning.com.au ~all".
-  # That _spfm record only exists while GoDaddy hosts DNS; after the move it's NXDOMAIN and SPF
-  # permerrors (exactly what broke VPFS until 2026-09-29). This is the fixed value. Keep ONE SPF record.
+  # SPF — the old GoDaddy-era record was "v=spf1 include:dc-aa8e722993._spfm.vantagepointcleaning.com.au ~all".
+  # That _spfm include is NXDOMAIN off GoDaddy DNS and permerrors SPF (exactly what broke VPFS until
+  # 2026-09-29) — never restore it. This is the live value. Keep ONE SPF record.
   - type: TXT
     name: vantagepointcleaning.com.au
     content: '"v=spf1 include:_spf.google.com ~all"'
-  # DMARC — copied as live. rua points at GoDaddy's onsecureserver.net reporting, which stops being
-  # useful after the move: replace rua with a mailbox you read once DKIM (below) is on.
+  # DMARC — copied verbatim from the live record.
   - type: TXT
     name: _dmarc.vantagepointcleaning.com.au
-    content: '"v=DMARC1; p=quarantine; adkim=r; aspf=r; rua=mailto:dmarc_rua@onsecureserver.net;"'
+    content: '"v=DMARC1; p=reject; rua=mailto:blake@vantagepointcleaning.com.au, mailto:dmarc@vantagepointcleaning.com.au; pct=10; adkim=s; aspf=s"'
   - type: TXT
     name: vantagepointcleaning.com.au
     content: '"google-site-verification=xL3KMvrrqw-DI3buMNQlwVSSVZEdZZ2XqjcpSABwaQE"'
 
-  # --- Google DKIM — NOT set up (no google._domainkey record exists). Generate it in ---
-  # --- Google Admin > Apps > Gmail > Authenticate email, paste it here, apply, then ---
-  # --- click "Start authentication" in Google Admin. ---
-  # - type: TXT
-  #   name: google._domainkey.vantagepointcleaning.com.au
-  #   content: '"v=DKIM1; k=rsa; p=REPLACE_WITH_GOOGLE_ADMIN_KEY"'
+  # --- Google DKIM — live; copied verbatim. ---
+  - type: TXT
+    name: google._domainkey.vantagepointcleaning.com.au
+    content: '"v=DKIM1; k=rsa; p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAoxsEaTgyPhdVewTZnwaXxhm8tRxYfkFRISnxK6IZmtLVuTequnh/2nrXX2Gxlmwswk9MzDK8ydIYgPHNaxm1Fl1myd9PrXHyL5527B005AmT6hogck+Xi+ybaguWIWRnKbDt2g9w5MVFikC4IMdAWwUgJsawGWhY2oUv0R/LBwyBJzCnOHi2P8GYE5mD19BTekbsQhgJOKL43XUsVpzBTyWRE/77RV4rry9Ftw/22pvNeRmgYdG7qmSmeXCOIqqHpjThbNLfIPlRLkzoNtnlQzFxGClzykD1WibebWTDBhsifyjKtV6ASDf2UzLiS6454ebg8vfqJ+YHkgfS3U2i/QIDAQAB"'
 
   # --- GoHighLevel email sending domain — not built yet (VPC sub-account doesn't exist). ---
   # --- Copy the records GHL shows under Settings > Email Services > dedicated domain for ---
