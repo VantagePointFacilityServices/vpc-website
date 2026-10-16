@@ -330,7 +330,6 @@ p { margin: 0 0 16px; font-size: var(--p1); color: var(--arsenic); }
   background: linear-gradient(160deg, var(--navy) 0%, var(--navy-700) 65%, var(--navy-800) 100%);
   color: var(--white);
   overflow: hidden;
-  padding: 48px 0 55px;
 }
 .hero::after {
   content: "";
@@ -357,29 +356,13 @@ p { margin: 0 0 16px; font-size: var(--p1); color: var(--arsenic); }
 .hero h1 { color: var(--white); margin-bottom: 18px; }
 
 /* Every hero H1 shares one size, sized off its own container rather than the
-   viewport so the one-column (.hero-single), two-column (.hero-grid), and
-   homepage (.hero-copy) hero layouts all read at the same scale. Max is
+   viewport so the one-column (.hero-form-single) and two-column (.hero-grid) hero layouts all read at the same scale. Max is
    2.25x min, inside the 2.5x ceiling that keeps zoom and user font settings
    usable. Headlines are no longer forced to one line — length varies per
    page, so wrapping is left to flow naturally. */
-.hero-copy, .hero-single, .hero-grid > div:first-child {
-  container-type: inline-size;
-}
-.hero-copy {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-.hero-copy .eyebrow,
-.hero-copy h1,
-.hero-copy .lead,
-.hero-copy .hero-ctas,
-.hero-copy .hero-social {
-  margin: 0;
-}
-.hero-copy h1, .hero-single h1, .hero-grid > div:first-child h1 {
-  font-size: clamp(1.6rem, 9.4cqi, 3.6rem);
-}
+/* Every hero shares the .hero-form-page pattern (see below); containers are
+   sized off their own width so the H1 scales with the column. */
+.hero-inner { container-type: inline-size; }
 .hero .lead { font-size: 1.2rem; color: var(--smoke); max-width: 540px; }
 /* Hero trust checks — sit between the lead and the CTAs. */
 .hero-checks {
@@ -457,7 +440,6 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--n
 
 @media (max-width: 960px) {
   .hero-grid { grid-template-columns: 1fr; }
-  .hero { padding: 24px 0 32px; }
 }
 
 /* ===== Trust bar ===== */
@@ -709,14 +691,12 @@ input:focus, select:focus, textarea:focus { outline: none; border-color: var(--n
 @media (max-width: 900px) { .footer-grid { grid-template-columns: 1fr 1fr; } }
 @media (max-width: 560px) { .footer-grid { grid-template-columns: 1fr; } }
 
-/* ===== Page hero (tier pages) ===== */
-.page-hero { padding: 64px 0 72px; }
-.page-hero .breadcrumb { font-size: 0.85rem; color: var(--smoke); margin-bottom: 16px; }
-.page-hero .breadcrumb a { color: var(--white); font-weight: 700; }
+.hero .breadcrumb { font-size: 0.85rem; color: var(--smoke); margin-bottom: 16px; }
+.hero .breadcrumb a { color: var(--white); font-weight: 700; }
 
 /* Single-column hero for pages that carry no inline form. */
-.hero-single { position: relative; z-index: 1; max-width: 760px; }
-.hero-single .lead { font-size: 1.2rem; color: var(--smoke); }
+.hero-form-single > .wrap { position: relative; z-index: 1; padding-top: 56px; padding-bottom: 56px; }
+@media (max-width: 960px) { .hero-form-single > .wrap { padding-top: 28px; padding-bottom: 40px; } }
 
 /* ===== Contact page ===== */
 .contact-grid { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 80px; align-items: start; }
@@ -893,9 +873,9 @@ a.nav-dropdown-toggle { cursor: pointer; }
   padding-top: 56px;
   padding-bottom: 56px;
 }
-.hero-form-page .hero-inner { max-width: 640px; display: flex; flex-direction: column; gap: 24px; }
+.hero-form-page .hero-inner { max-width: 640px; min-width: 0; display: flex; flex-direction: column; gap: 24px; }
 .hero-form-page .hero-inner > * { margin: 0; }
-.hero-form-page .hero-grid .hero-inner h1 { font-size: clamp(1.6rem, 6.8cqi, 2.75rem); }
+.hero-form-page .hero-inner h1 { font-size: clamp(1.6rem, 6.8cqi, 2.75rem); }
 .hero-form-page .lead { font-size: 1.125rem; }
 .hero-form-page .hero-checks { margin: 0; }
 .hero-form-page .hero-checks li { font-size: 0.95rem; }
@@ -1000,3 +980,22 @@ a.nav-dropdown-toggle { cursor: pointer; }
 .reach-block a { color: var(--navy); }
 .region-card[id] { scroll-margin-top: 96px; }
 .contact-cta p { overflow-wrap: anywhere; }
+.extras-list { list-style: none; max-width: 640px; margin: 0 auto; padding: 0; display: grid; gap: 0; }
+.extras-list li { display: flex; justify-content: space-between; gap: 16px; padding: 12px 0; border-bottom: 1px solid rgba(0,0,0,.12); }
+.form-error { margin: 12px 0 0; padding: 10px 12px; border: 1px solid #b3261e; border-radius: 6px; color: #b3261e; font-size: 14px; background: #fff; }
+.form-error[hidden], .contact-cta[hidden] { display: none !important; }
+
+/* Step 2 instant-quote dialog */
+.quote-dialog { border: 0; border-radius: var(--radius-lg); padding: 24px; width: min(640px, calc(100vw - 24px)); max-height: calc(100dvh - 24px); overflow-y: auto; color: var(--phantom); box-shadow: var(--shadow-md); }
+.quote-dialog::backdrop { background: rgba(15, 48, 96, 0.55); }
+.quote-form { position: relative; display: grid; gap: 12px; }
+.quote-form label { display: grid; gap: 4px; font-size: 14px; }
+.quote-form fieldset { border: 1px solid var(--smoke); border-radius: 8px; padding: 12px; display: grid; gap: 8px; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); }
+.quote-form legend { font-weight: 600; padding: 0 6px; }
+.quote-form select, .quote-form input[type="text"], .quote-form textarea { margin-bottom: 0; }
+.quote-form label.quote-check, .quote-form label.quote-pkg, .quote-form label.quote-terms { display: flex; gap: 8px; align-items: center; }
+.quote-form label.quote-terms { align-items: flex-start; }
+.quote-form [hidden] { display: none !important; }
+.quote-close { position: absolute; top: -8px; right: -8px; width: 44px; height: 44px; border: 0; background: none; font-size: 28px; cursor: pointer; color: var(--charcoal); }
+.quote-price { font-size: 1.4rem; margin: 0; }
+.quote-form .btn[aria-disabled="true"] { opacity: 0.5; pointer-events: none; }

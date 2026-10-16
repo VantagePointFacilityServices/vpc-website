@@ -139,7 +139,7 @@ test('privacy.html collection notice section', () => {
   assert.equal((sec.split('<h2>1. About')[0].match(/<tr>/g) || []).length, 6);
 });
 
-test('docs/ holds only DEPLOYMENT.md and KNOWLEDGE.md', () => {
+test('docs/ holds only DEPLOYMENT.md, KNOWLEDGE.md and WORKER.md', () => {
   const docsDir = path.resolve(siteDir, '..', 'docs');
-  assert.deepEqual(fs.readdirSync(docsDir).sort(), ['DEPLOYMENT.md', 'KNOWLEDGE.md']);
+  assert.deepEqual(fs.readdirSync(docsDir).sort(), ['DEPLOYMENT.md', 'KNOWLEDGE.md', 'WORKER.md']);
 });

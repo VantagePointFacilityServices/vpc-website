@@ -8,6 +8,7 @@ const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const pages = readdirSync(root).filter((f) => f.endsWith('.html'));
 const read = (f) => readFileSync(join(root, f), 'utf8');
 const PHONE_TEL = 'tel:+61756512257';
+const ESTATE_LINE = 'Have a larger estate, or need more than Reserve covers? <a href="estate-care.html" class="text-link">Estate Care is arranged through a private walkthrough &rarr;</a>';
 const EMAIL = 'hello@vantagepointcleaning.com.au';
 
 test('there are 11 pages', () => assert.equal(pages.length, 11));
@@ -32,7 +33,7 @@ test('no placeholder social links', () => {
 });
 
 test('Estate Care is not promoted but still exists', () => {
-  for (const p of pages) assert.doesNotMatch(read(p), /<a [^>]*href="estate-care\.html"[^>]*>\s*Estate Care/, p);
+  for (const p of pages) assert.doesNotMatch(read(p).replace(ESTATE_LINE, ''), /<a [^>]*href="estate-care\.html"[^>]*>\s*Estate Care/, p);
   assert.doesNotMatch(readFileSync(join(root, 'sitemap.xml'), 'utf8'), /estate-care/);
   assert.ok(existsSync(join(root, 'estate-care.html')));
 });
@@ -86,4 +87,34 @@ test('careers.html redirects to the VPFS careers page, keeping query and hash', 
   assert.ok(h.includes(`location.replace("${VPFS}/career.html" + location.search + location.hash)`));
   assert.ok(h.includes(`<meta http-equiv="refresh" content="0; url=${VPFS}/career.html">`));
   assert.ok(h.includes('<meta name="robots" content="noindex">'));
+});
+
+
+test('Estate line appears on index and reserve pages only, nav/footer stay Estate-free', () => {
+  for (const p of pages) {
+    const h = read(p);
+    const has = h.includes(ESTATE_LINE);
+    assert.equal(has, ['index.html', 'reserve-home-care.html'].includes(p), p);
+    const nav = h.match(/<header[\s\S]*?<\/header>/), footer = h.slice(h.lastIndexOf('<footer'));
+    if (nav) assert.doesNotMatch(nav[0], /estate-care/, `${p}: nav`);
+    assert.doesNotMatch(footer, /estate-care/, `${p}: footer`);
+  }
+});
+
+test('no testimonial or review markup on any page (terms legal quotes excluded)', () => {
+  for (const p of pages.filter((f) => f !== 'terms.html')) {
+    const h = read(p).replace(/<!--[\s\S]*?-->/g, '');
+    assert.doesNotMatch(h, /quiet-quote|testimonial|class="attrib"|Private client/i, p);
+    if (p !== 'about.html') assert.doesNotMatch(h, /<blockquote/, p);
+  }
+});
+
+test('estate-care.html makes no Supervisor claims', () => {
+  assert.doesNotMatch(read('estate-care.html'), /supervisor/i);
+});
+
+test('every cancellation-window mention says 48h', () => {
+  for (const p of pages.filter((f) => f !== 'terms.html')) {
+    assert.doesNotMatch(read(p), /24[ -]hours?/i, p);
+  }
 });

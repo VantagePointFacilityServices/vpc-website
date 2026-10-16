@@ -1,0 +1,25 @@
+name = "vpc-lead-worker"
+main = "worker.js"
+compatibility_date = "2024-09-23"
+
+# Secrets (never in this file) — set in this order, TURNSTILE_SECRET_KEY LAST:
+#   wrangler secret put GHL_API_KEY
+#   wrangler secret put QUOTE_TOKEN_SECRET
+#   wrangler secret put TURNSTILE_SECRET_KEY
+# See docs/WORKER.md. Nothing here is shared with the VPFS Worker.
+
+[vars]
+# VPC GHL sub-account contacts are created in. Placeholder until issue 01
+# creates the sub-account; replace with the real Location ID before deploy.
+GHL_LOCATION_ID = "REPLACE_WITH_VPC_GHL_LOCATION_ID"
+
+# Supplied by issue 01 (PRD D10). Placeholders until the GHL setup exists.
+GHL_PIPELINE_ID = "REPLACE_WITH_RESIDENTIAL_PIPELINE_ID"
+GHL_STAGE_QUOTED_ID = "REPLACE_WITH_QUOTED_STAGE_ID"
+GHL_STAGE_NEEDS_QUOTE_ID = "REPLACE_WITH_NEEDS_QUOTE_STAGE_ID"
+GHL_POSTCODE_FIELD_ID = "REPLACE_WITH_POSTCODE_CUSTOM_FIELD_ID"
+
+# Cloudflare manages the DNS record on deploy — do not add it to dns/zones/*.yaml.
+[[routes]]
+pattern = "worker.vantagepointcleaning.com.au"
+custom_domain = true

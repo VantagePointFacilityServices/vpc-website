@@ -4,18 +4,20 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Why Us | Vantage Point Cleaning</title>
-<meta name="description" content="Why Gold Coast households choose Vantage Point Cleaning: the same cleaner every visit, a written standard, before-and-after photos, employed and police-checked cleaners, and no lock-in.">
+<meta name="description" content="Why Gold Coast households choose Vantage Point Cleaning: the same cleaner wherever possible, a written standard, before-and-after photos, employed and police-checked cleaners, and no lock-in.">
+<!-- UNLISTED until Blake approves the copy. To relist (one PR): 1) delete this noindex meta; 2) in every page nav and footer change <a data-href="PAGE.html" hidden> to <a href="PAGE.html">; 3) add PAGE.html back to sitemap.xml. -->
+<meta name="robots" content="noindex">
 <link rel="canonical" href="https://www.vantagepointcleaning.com.au/why-us.html">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Vantage Point Cleaning">
 <meta property="og:title" content="Why Us | Vantage Point Cleaning">
-<meta property="og:description" content="Why Gold Coast households choose Vantage Point Cleaning: the same cleaner every visit, a written standard, before-and-after photos, employed and police-checked cleaners, and no lock-in.">
+<meta property="og:description" content="Why Gold Coast households choose Vantage Point Cleaning: the same cleaner wherever possible, a written standard, before-and-after photos, employed and police-checked cleaners, and no lock-in.">
 <meta property="og:url" content="https://www.vantagepointcleaning.com.au/why-us.html">
 <meta property="og:image" content="https://www.vantagepointcleaning.com.au/assets/img/logo-navy.svg">
 <meta property="og:locale" content="en_AU">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Why Us | Vantage Point Cleaning">
-<meta name="twitter:description" content="Why Gold Coast households choose Vantage Point Cleaning: the same cleaner every visit, a written standard, before-and-after photos, employed and police-checked cleaners, and no lock-in.">
+<meta name="twitter:description" content="Why Gold Coast households choose Vantage Point Cleaning: the same cleaner wherever possible, a written standard, before-and-after photos, employed and police-checked cleaners, and no lock-in.">
 <meta name="twitter:image" content="https://www.vantagepointcleaning.com.au/assets/img/logo-navy.svg">
 <link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon-32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="assets/img/favicon-16.png">
@@ -52,7 +54,7 @@
 }
 </script>
 </head>
-<body>
+<body data-lead-forms="off" data-booking="off">
 
 <!-- ============ HEADER ============ -->
 <header class="site-header">
@@ -83,8 +85,8 @@
           <a href="service-areas.html#hinterland-northern-nsw">Hinterland &amp; Northern NSW</a>
         </div>
       </div>
-      <a href="why-us.html" class="active">Why Us</a>
-      <a href="about.html">About</a>
+      <a data-href="why-us.html" class="active" hidden>Why Us</a>
+      <a data-href="about.html" hidden>About</a>
       <a href="contact.html">Contact</a>
     </nav>
     <div class="header-cta">
@@ -102,9 +104,9 @@
     <div class="hero-inner">
       <span class="eyebrow on-inverse">Why Vantage Point</span>
       <h1>Why Gold Coast Households Choose Vantage Point for Home Cleaning</h1>
-      <p class="lead">Plenty of cleaners can make a home shine once. The real test is the tenth visit: the same faces, the same checklist, the same result. That&rsquo;s what we&rsquo;ve built the business around.</p>
+      <p class="lead">Plenty of cleaners can make a home shine once. The real test is the tenth visit: a consistent cleaner, the same checklist, the same result. That&rsquo;s what we&rsquo;ve built the business around.</p>
       <ul class="hero-checks">
-        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>The same cleaner or team every visit</span></li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>The same cleaner wherever possible, with a briefed replacement</span></li>
         <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Before-and-after photos on every clean</span></li>
         <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>Police-checked cleaners we employ</span></li>
         <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg><span>No lock-in contract</span></li>
@@ -119,7 +121,7 @@
       <a href="mailto:hello@vantagepointcleaning.com.au" class="btn btn-secondary">Email us</a>
       <p class="form-note">You&rsquo;ll talk to the people who run the business, not a call centre.</p>
     </div>
-    <form class="assessment-form" hidden>
+    <form class="assessment-form" data-lead-form hidden>
         <div class="form-fields">
           <h3>Request Instant Quote</h3>
           <div class="form-row">
@@ -133,6 +135,10 @@
             <div><label for="email">Email</label><input id="email" name="email" type="email" autocomplete="email" required></div>
           </div>
           <input type="hidden" name="source_page" value="why-us">
+          <div class="form-row single">
+            <div><label for="postcode">Postcode</label><input id="postcode" name="postcode" type="text" inputmode="numeric" pattern="[0-9]{4}" maxlength="4" autocomplete="postal-code" placeholder="e.g. 4220" required></div>
+          </div>
+          <input type="hidden" name="conversion_page" value="/why-us.html">
           <div class="hp-field" aria-hidden="true">
             <label for="website-url">Website</label>
             <input id="website-url" name="website_url" type="text" tabindex="-1" autocomplete="off">
@@ -144,6 +150,7 @@
           <!-- Cloudflare Turnstile bot check; site key from the Turnstile dashboard -->
           <div class="turnstile-widget" data-sitekey=""></div>
           <p class="form-privacy-notice">We collect these details to prepare your quote. How we handle them: <a href="privacy.html#collection-notice">collection notice</a> · <a href="privacy.html">Privacy Policy</a>.</p>
+          <p class="form-error" role="alert" hidden>Sorry, we couldn&rsquo;t send that. Your details are still here &mdash; please try again, or email <a href="mailto:hello@vantagepointcleaning.com.au">hello@vantagepointcleaning.com.au</a> or call <a href="tel:+61756512257">07 5651 2257</a>.</p>
           <button type="submit" class="btn btn-primary btn-block">Request Instant Quote</button>
           <p class="form-note">Your information is secure and never shared.</p>
         </div>
@@ -170,9 +177,9 @@
       <div class="commitment-card">
         <div class="commitment-head">
           <div class="commitment-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="7" r="3"/><path d="M2 21c0-3.9 3.1-7 7-7s7 3.1 7 7"/><circle cx="17" cy="8" r="2.5"/><path d="M22 21c0-2.8-1.7-5.2-4-6.2"/></svg></div>
-          <h4>The same faces in your home</h4>
+          <h4>A consistent cleaner in your home</h4>
         </div>
-        <p>You get the same cleaner or team every visit, not whoever an app sends this week. They learn your home, your priorities and the little things you care about.</p>
+        <p>You get the same cleaner wherever possible, with a briefed replacement, not whoever an app sends this week. They learn your home, your priorities and the little things you care about.</p>
       </div>
       <div class="commitment-card">
         <div class="commitment-head">
@@ -226,7 +233,7 @@
       <li><strong>We write up your home notes.</strong> Before the first visit we confirm access, pets, anything fragile or off limits, and what matters most to you. Your cleaner reads them before they arrive, so nothing is left to guesswork on the day.</li>
       <li><strong>Your first visit resets the home.</strong> It brings everything up to the standard we&rsquo;ll then keep. It takes longer, so it&rsquo;s priced at twice a regular visit, and we tell you that up front.</li>
       <li><strong>We check in after your first clean.</strong> We&rsquo;ll ask how it went and sort out anything that isn&rsquo;t right before we settle into the routine.</li>
-      <li><strong>Then the same team, every visit.</strong> Same checklist, same photos, on your weekly or fortnightly day.</li>
+      <li><strong>Then the same cleaner wherever possible, every visit.</strong> Same checklist, same photos, on your weekly or fortnightly day.</li>
     </ol>
   </div>
 </section>
@@ -320,7 +327,7 @@
   <div class="wrap">
     <span class="eyebrow">Who&rsquo;s behind it</span>
     <h2>Founder-led, Gold Coast local</h2>
-    <p>Vantage Point is run by its founder, Blake Warton, who grew up on the southern Gold Coast. We&rsquo;re a young business, and we&rsquo;d rather show you how we work than make big claims. <a href="about.html" class="text-link">Read our story &rarr;</a></p>
+    <p>Vantage Point is run by its founder, Blake Warton, who grew up on the southern Gold Coast. We&rsquo;re a young business, and we&rsquo;d rather show you how we work than make big claims.</p>
   </div>
 </section>
 
@@ -334,8 +341,8 @@
     <div class="straight-answers">
       <h3>Am I locked in?</h3>
       <p>No. Cancel any time, with no fee, by giving us at least 48 hours&rsquo; notice before your next visit.</p>
-      <h3>Will it be the same cleaner every time?</h3>
-      <p>Yes. You get the same cleaner or team. If they&rsquo;re ever away, we&rsquo;ll tell you who&rsquo;s coming before they arrive.</p>
+      <h3>Will I get a regular cleaner?</h3>
+      <p>The same cleaner wherever possible. If they&rsquo;re ever away, a briefed replacement covers the visit and we&rsquo;ll tell you who&rsquo;s coming before they arrive.</p>
       <h3>Do I need to be home?</h3>
       <p>No. Most clients aren&rsquo;t. We agree access before your first visit, whether that&rsquo;s a key, a lockbox or someone at home.</p>
       <h3>What about my pets?</h3>
@@ -343,7 +350,7 @@
       <h3>What if something&rsquo;s missed?</h3>
       <p>Tell us within 48 hours and we&rsquo;ll come back within 3 days to fix it, at no charge. That&rsquo;s our guarantee.</p>
       <h3>What if I need to reschedule?</h3>
-      <p>Give us at least 24 hours&rsquo; notice and there&rsquo;s no charge. Late changes are charged at half the visit, because your cleaner&rsquo;s time was set aside for you.</p>
+      <p>Give us at least 48 hours&rsquo; notice and there&rsquo;s no charge. Late changes are charged at half the visit, because your cleaner&rsquo;s time was set aside for you.</p>
       <h3>How do I get ready for a clean?</h3>
       <p>Put away valuables and anything fragile, settle the pets, and tell us about anything we should know, like a broken tile or a room to skip. You don&rsquo;t need to tidy up for us.</p>
       <h3>What will it cost?</h3>
@@ -415,8 +422,8 @@
       <div>
         <h4>Company</h4>
         <ul>
-          <li><a href="why-us.html">Why us</a></li>
-          <li><a href="about.html">About us</a></li>
+          <li><a data-href="why-us.html" hidden>Why us</a></li>
+          <li><a data-href="about.html" hidden>About us</a></li>
           <li><a href="service-areas.html">Locations</a></li>
           <li><a href="contact.html">Contact</a></li>
           <li><a href="https://www.vantagepointfacilityservices.com.au/career.html">Careers</a></li>
@@ -444,6 +451,8 @@
   </div>
 </footer>
 <script src="assets/js/utm.js"></script>
+<script src="assets/js/lead.js"></script>
+<script src="assets/js/quote.js"></script>
 <script src="assets/js/main.js"></script>
 </body>
 </html>

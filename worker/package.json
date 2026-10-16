@@ -1,0 +1,14 @@
+{
+  "name": "vpc-lead-worker",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "vitest run",
+    "deploy": "wrangler deploy"
+  },
+  "devDependencies": {
+    "@vitest/coverage-v8": "^2.1.0",
+    "vitest": "^2.1.0",
+    "wrangler": "^3.78.0"
+  }
+}

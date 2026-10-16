@@ -53,41 +53,8 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
 
-  // Cloudflare Turnstile bot check. api.js loads with `defer`, so it has run
-  // by DOMContentLoaded. Rendering adds a hidden `cf-turnstile-response`
-  // input to the form; the token is worthless until a server verifies it,
-  // so the future CRM POST must send it on to a Worker that does.
-  document.querySelectorAll('.assessment-form .turnstile-widget').forEach(function (el) {
-    if (!el.dataset.sitekey || !window.turnstile) return;
-    window.turnstile.render(el, {
-      sitekey: el.dataset.sitekey,
-      action: 'lead',
-      appearance: 'interaction-only'
-    });
-  });
-
-  // Assessment request form(s) — placeholder submit handler until CRM is wired up
-  document.querySelectorAll('.assessment-form').forEach(function (form) {
-    form.addEventListener('submit', function (e) {
-      e.preventDefault();
-
-      // Honeypot: a real user never sees these, so anything in them is a bot.
-      // Show the normal success state so the bot has no signal it was caught.
-      var trap = form.querySelector('.hp-field input[name="website_url"]');
-      var trap2 = form.querySelector('.hp-field input[name="company"]');
-      var caught = (trap && trap.value) || (trap2 && trap2.value);
-
-      var body = form.querySelector('.form-fields');
-      var success = form.querySelector('.form-success');
-
-      // TODO: POST to the CRM here — send only when `caught` is false, and
-      // include the form's `cf-turnstile-response` value for server-side
-      // verification (see the Turnstile block above).
-      form.setAttribute('data-lead-ready', caught ? 'false' : 'true');
-
-      // The success state shows either way, so a bot gets no signal.
-      if (body) body.style.display = 'none';
-      if (success) success.classList.add('show');
-    });
-  });
+  // Stage 1 lead forms: switch, Turnstile, submit (see lead.js)
+  if (window.vpcLead) window.vpcLead.init(document);
+  // Step 2 instant-quote dialog opens on a successful /lead (see quote.js)
+  if (window.vpcQuote) window.vpcQuote.init(document);
 });

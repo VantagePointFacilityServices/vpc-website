@@ -52,7 +52,7 @@
 }
 </script>
 </head>
-<body>
+<body data-lead-forms="off" data-booking="off">
 
 <!-- ============ HEADER ============ -->
 <header class="site-header">
@@ -83,8 +83,8 @@
           <a href="service-areas.html#hinterland-northern-nsw">Hinterland &amp; Northern NSW</a>
         </div>
       </div>
-      <a href="why-us.html">Why Us</a>
-      <a href="about.html">About</a>
+      <a data-href="why-us.html" hidden>Why Us</a>
+      <a data-href="about.html" hidden>About</a>
       <a href="contact.html" class="active">Contact</a>
     </nav>
     <div class="header-cta">
@@ -97,9 +97,9 @@
 </header>
 
 <!-- ============ PAGE HERO ============ -->
-<section class="hero page-hero">
+<section class="hero hero-form-page hero-form-single">
   <div class="wrap">
-    <div class="hero-single">
+    <div class="hero-inner">
       <div class="breadcrumb"><a href="index.html">Home</a> / Contact</div>
       <h1>Contact Vantage Point Cleaning &mdash; Gold Coast Quotes</h1>
       <p class="lead">Call us, email us, or send the form below and we&rsquo;ll come back to you with your published price. We&rsquo;d love to hear from you.</p>
@@ -120,7 +120,7 @@
       <h3>Get in touch</h3>
       <p>Email <a href="mailto:hello@vantagepointcleaning.com.au">hello@vantagepointcleaning.com.au</a> or call <a href="tel:+61756512257">07 5651 2257</a> and we&rsquo;ll come back to you.</p>
     </div>
-    <form class="assessment-form" hidden>
+    <form class="assessment-form" data-lead-form hidden>
         <div class="form-fields">
           <div class="form-row">
             <div><label for="fname">First name</label><input id="fname" name="first_name" type="text" autocomplete="given-name" required></div>
@@ -129,9 +129,6 @@
           <div class="form-row">
             <div><label for="phone">Phone</label><input id="phone" name="phone" type="tel" autocomplete="tel" required></div>
             <div><label for="email">Email</label><input id="email" name="email" type="email" autocomplete="email" required></div>
-          </div>
-          <div class="form-row single">
-            <div><label for="suburb">Suburb</label><input id="suburb" name="suburb" type="text" autocomplete="address-level2" placeholder="e.g. Burleigh Heads" required></div>
           </div>
           <div class="form-row">
             <div>
@@ -152,6 +149,10 @@
               </select>
             </div>
           </div>
+          <div class="form-row single">
+            <div><label for="postcode">Postcode</label><input id="postcode" name="postcode" type="text" inputmode="numeric" pattern="[0-9]{4}" maxlength="4" autocomplete="postal-code" placeholder="e.g. 4220" required></div>
+          </div>
+          <input type="hidden" name="conversion_page" value="/contact.html">
           <div class="hp-field" aria-hidden="true">
             <label for="website-url">Website</label>
             <input id="website-url" name="website_url" type="text" tabindex="-1" autocomplete="off">
@@ -163,6 +164,7 @@
           <!-- Cloudflare Turnstile bot check; site key from the Turnstile dashboard -->
           <div class="turnstile-widget" data-sitekey=""></div>
           <p class="form-privacy-notice">We collect these details to respond to your enquiry. How we handle them: <a href="privacy.html#collection-notice">collection notice</a> · <a href="privacy.html">Privacy Policy</a>.</p>
+          <p class="form-error" role="alert" hidden>Sorry, we couldn&rsquo;t send that. Your details are still here &mdash; please try again, or email <a href="mailto:hello@vantagepointcleaning.com.au">hello@vantagepointcleaning.com.au</a> or call <a href="tel:+61756512257">07 5651 2257</a>.</p>
           <button type="submit" class="btn btn-primary">Request Instant Quote</button>
           <p class="form-note" style="text-align:left">Your information is secure and never shared.</p>
         </div>
@@ -226,8 +228,8 @@
       <div>
         <h4>Company</h4>
         <ul>
-          <li><a href="why-us.html">Why us</a></li>
-          <li><a href="about.html">About us</a></li>
+          <li><a data-href="why-us.html" hidden>Why us</a></li>
+          <li><a data-href="about.html" hidden>About us</a></li>
           <li><a href="service-areas.html">Locations</a></li>
           <li><a href="contact.html">Contact</a></li>
           <li><a href="https://www.vantagepointfacilityservices.com.au/career.html">Careers</a></li>
@@ -257,6 +259,8 @@
 
 <script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit" defer></script>
 <script src="assets/js/utm.js"></script>
+<script src="assets/js/lead.js"></script>
+<script src="assets/js/quote.js"></script>
 <script src="assets/js/main.js"></script>
 </body>
 </html>
