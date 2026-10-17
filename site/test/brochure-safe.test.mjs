@@ -50,12 +50,21 @@ test('no visible From $ price; package note has no instant-quote promise', () =>
   assert.match(read('index.html'), /Get your quote/);
 });
 
-test('forms are hidden and each location shows email + phone', () => {
+// PRD D2: the public form pages show their form; every other form stays hidden behind email + phone.
+const FORM_PAGES = ['index.html', 'signature-home-care.html', 'reserve-home-care.html', 'service-areas.html', 'contact.html'];
+
+test('forms are visible on the D2 pages and hidden elsewhere; hidden forms show email + phone', () => {
   for (const p of pages) {
     const h = read(p);
     const forms = [...h.matchAll(/<form class="assessment-form"([^>]*)>/g)];
-    for (const f of forms) assert.match(f[1], /\bhidden\b/, p);
     const ctas = [...h.matchAll(/<div class="contact-cta">[\s\S]*?<\/div>/g)];
+    if (FORM_PAGES.includes(p)) {
+      assert.equal(forms.length, 1, p);
+      assert.doesNotMatch(forms[0][1], /\bhidden\b/, p);
+      assert.equal(ctas.length, 0, `${p}: contact box removed`);
+      continue;
+    }
+    for (const f of forms) assert.match(f[1], /\bhidden\b/, p);
     assert.equal(ctas.length, forms.length, p);
     for (const c of ctas) {
       assert.ok(c[0].includes(`mailto:${EMAIL}`), p);
@@ -64,9 +73,9 @@ test('forms are hidden and each location shows email + phone', () => {
   }
 });
 
-test('no visible CTA promises an instant quote while forms are hidden', () => {
+test('no "Get Instant Quote" marketing CTA outside the forms', () => {
   for (const p of pages) {
-    const visible = read(p).replace(/<form class="assessment-form"[^>]*\bhidden\b[\s\S]*?<\/form>/g, '');
+    const visible = read(p).replace(/<form class="assessment-form"[\s\S]*?<\/form>/g, '');
     assert.doesNotMatch(visible, /<(a|button)[^>]*>\s*Get Instant Quote\s*<\/\1>/i, p);
   }
 });

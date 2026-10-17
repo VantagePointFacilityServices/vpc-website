@@ -9,13 +9,17 @@ const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const read = (f) => readFileSync(join(root, f), 'utf8');
 const lead = createRequire(import.meta.url)('../assets/js/lead.js');
 const LEAD_PAGES = ['index', 'signature-home-care', 'reserve-home-care', 'service-areas', 'contact', 'why-us', 'about'];
+// PRD D2: forms are public on these pages; why-us/about keep theirs hidden, estate-care has none.
+const ON_PAGES = ['index', 'signature-home-care', 'reserve-home-care', 'service-areas', 'contact'];
+const SITEKEY = '0x4AAAAAAFZN2if54_39FaOz';
 const ALL = ['index', 'signature-home-care', 'reserve-home-care', 'service-areas', 'contact', 'why-us', 'about', 'estate-care', 'privacy', 'terms'];
 
 test('lead pages have fields, honeypots, turnstile container, notice, conversion_page', () => {
   for (const p of LEAD_PAGES) {
     const h = read(`${p}.html`);
-    const form = h.match(/<form class="assessment-form" data-lead-form hidden>[\s\S]*?<\/form>/)?.[0];
+    const form = h.match(/<form class="assessment-form" data-lead-form( hidden)?>[\s\S]*?<\/form>/)?.[0];
     assert.ok(form, p);
+    assert.equal(/data-lead-form hidden>/.test(form), !ON_PAGES.includes(p), `${p}: hidden`);
     for (const n of ['first_name', 'last_name', 'email', 'phone', 'postcode', 'website_url', 'company', 'conversion_page'])
       assert.match(form, new RegExp(`name="${n}"`), `${p}: ${n}`);
     assert.doesNotMatch(form, /name="suburb"/, p);
@@ -26,9 +30,38 @@ test('lead pages have fields, honeypots, turnstile container, notice, conversion
   }
 });
 
-test('estate-care stays email/phone only; every page defaults the switch off', () => {
+test('estate-care stays email/phone only; forms on for D2 pages only; booking off everywhere', () => {
   assert.doesNotMatch(read('estate-care.html'), /<form[^>]*data-lead-form|name="postcode"/);
-  for (const p of ALL) assert.match(read(`${p}.html`), /<body data-lead-forms="off" data-booking="off">/, p);
+  for (const p of ALL) {
+    const on = ON_PAGES.includes(p) ? 'on' : 'off';
+    assert.match(read(`${p}.html`), new RegExp(`<body data-lead-forms="${on}" data-booking="off">`), p);
+  }
+});
+
+test('the VPC Turnstile site key lives in lead.js, the one shared place', () => {
+  assert.equal(lead.TURNSTILE_SITEKEY, SITEKEY);
+  for (const p of ALL) assert.doesNotMatch(read(`${p}.html`), /data-sitekey="0x/, `${p}: key belongs in lead.js only`);
+});
+
+function fakeWidgetDoc() {
+  const widget = { attrs: {}, setAttribute(k, v) { this.attrs[k] = v; }, getAttribute(k) { return this.attrs[k] || ''; } };
+  const d = fakeDoc(true);
+  const qsa = d.doc.querySelectorAll;
+  d.doc.querySelectorAll = (s) => (s === '.assessment-form .turnstile-widget' ? [widget] : qsa(s));
+  return { ...d, widget };
+}
+
+test('switch on: widget gets the site key and renders for action "lead"; a failed submit resets the single-use token', async () => {
+  const d = fakeWidgetDoc();
+  const rendered = [], resets = [];
+  const turnstile = { render: (el, o) => { rendered.push(o); return 'w1'; }, reset: (id) => resets.push(id) };
+  lead.init(d.doc, { win: { ...win, turnstile }, fetch: async () => ({ ok: false, status: 403 }), CustomEvent: class {} });
+  assert.equal(d.widget.attrs['data-sitekey'], SITEKEY);
+  assert.equal(rendered.length, 1);
+  assert.equal(rendered[0].sitekey, SITEKEY);
+  assert.equal(rendered[0].action, 'lead');
+  await d.listeners.submit({ preventDefault() {} }); await new Promise((r) => setTimeout(r, 0));
+  assert.deepEqual(resets, ['w1']);
 });
 
 test('placeholder handler and TODO are gone; lead.js loads before main.js', () => {

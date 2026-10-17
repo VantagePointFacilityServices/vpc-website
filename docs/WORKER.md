@@ -15,7 +15,7 @@ honeypots `website_url` / `company`.
 | `200 {contact_id, quote_token}` | Contact upserted in the VPC GHL location; tags `website-lead`, plus `out-of-area` (postcode not in `SERVICE_ZONE_POSTCODES`) and `turnstile-unverified` (Cloudflare unreachable, fail-open) |
 | `200 {ok:true}` | Honeypot filled — no GHL call |
 | `400` | Missing first name / email / phone / postcode, or invalid JSON |
-| `403` | Turnstile rejected |
+| `403` | Turnstile rejected: missing or invalid token, or a token solved for another `action` (must be `lead`) or hostname (must be `vantagepointcleaning.com.au` or `www.`; never `localhost`) |
 | `502` | GHL upsert failed |
 
 All errors are JSON `{error}`. `quote_token` = base64url(`contact_id.exp`) + `.` + HMAC-SHA256 signature
@@ -31,7 +31,7 @@ CORS: only `https://www.vantagepointcleaning.com.au` and `http://localhost[:port
 ## Secrets (`wrangler secret put <NAME>`, run in `worker/`)
 - `GHL_VPC_API_KEY` — GHL Private Integration "VPC – Cloudflare Worker – Lead Gate & Quote", created inside the VPC sub-account; scopes `contacts.write`, `contacts.readonly`, `opportunities.write`, `opportunities.readonly`. Locally: one line `GHL_VPC_API_KEY=...` in `worker/.env` (gitignored; never `.dev.vars`, which is not).
 - `QUOTE_TOKEN_SECRET` — random string (e.g. `openssl rand -hex 32`).
-- `TURNSTILE_SECRET_KEY` — Turnstile widget secret for `vantagepointcleaning.com.au`.
+- `TURNSTILE_SECRET_KEY` — secret of the Turnstile widget "VPC – Website Lead Forms" (site key `0x4AAAAAAFZN2if54_39FaOz`, set in `site/assets/js/lead.js`).
 
 Repo secrets for CI: `CLOUDFLARE_WORKER_API_TOKEN`, `CLOUDFLARE_ACCOUNT_ID`.
 

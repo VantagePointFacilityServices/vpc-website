@@ -8,6 +8,10 @@ import { PACKAGES, ROTATION_EXTRAS, personalQuoteReason, priceQuote } from "./pr
 const GHL_API_BASE = "https://services.leadconnectorhq.com";
 const GHL_API_VERSION = "2021-07-28";
 const TURNSTILE_SITEVERIFY_URL = "https://challenges.cloudflare.com/turnstile/v0/siteverify";
+// A solved token only counts for the lead form on the live site: the widget
+// renders with action "lead", and localhost is never accepted in production.
+const TURNSTILE_ACTION = "lead";
+const TURNSTILE_HOSTNAMES = ["vantagepointcleaning.com.au", "www.vantagepointcleaning.com.au"];
 
 const WEBSITE_LEAD_TAG = "website-lead";
 const OUT_OF_AREA_TAG = "out-of-area";
@@ -222,7 +226,8 @@ export async function verifyTurnstile(token, remoteIp, env) {
     });
     if (!res.ok) return "unverified";
     const data = await res.json();
-    return data.success ? "passed" : "rejected";
+    const valid = data.success === true && data.action === TURNSTILE_ACTION && TURNSTILE_HOSTNAMES.includes(data.hostname);
+    return valid ? "passed" : "rejected";
   } catch {
     return "unverified";
   }
