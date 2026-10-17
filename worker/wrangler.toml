@@ -9,14 +9,14 @@ compatibility_date = "2024-09-23"
 # See docs/WORKER.md. Nothing here is shared with the VPFS Worker.
 
 [vars]
-# VPC GHL sub-account contacts are created in. Placeholder until issue 01
-# creates the sub-account; replace with the real Location ID before deploy.
+# VPC GHL sub-account contacts are created in (issue 01).
 GHL_VPC_LOCATION_ID = "J81Ybf7bB8Eo2jfKD095"
 
-# Supplied by issue 01 (PRD D10). Placeholders until the GHL setup exists.
-GHL_PIPELINE_ID = "REPLACE_WITH_RESIDENTIAL_PIPELINE_ID"
-GHL_STAGE_QUOTED_ID = "REPLACE_WITH_QUOTED_STAGE_ID"
-GHL_STAGE_NEEDS_QUOTE_ID = "REPLACE_WITH_NEEDS_QUOTE_STAGE_ID"
+# Residential Pipeline and its stages (issue 01, PRD D10). Priced quotes go to
+# "Quoted"; ones the site can't price go to "Needs Quote".
+GHL_PIPELINE_ID = "xhvI68oMdZkoWGqc3zhm"
+GHL_STAGE_QUOTED_ID = "d6981eb8-72de-447e-a80f-c6a3439c1756"
+GHL_STAGE_NEEDS_QUOTE_ID = "4e4a420b-85c3-4a10-9433-4fa78ab61989"
 GHL_POSTCODE_FIELD_ID = "rHWHdSNW7Vvm1YaxJGkE"
 
 # Cloudflare manages the DNS record on deploy — do not add it to dns/zones/*.yaml.
