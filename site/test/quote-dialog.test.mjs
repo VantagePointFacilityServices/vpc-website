@@ -213,3 +213,20 @@ test('running total renders into the dialog and follows housekeeping prompt', ()
   assert.match(nodes['[data-running-total]'].textContent, /\$314 incl\. GST/);
   assert.match(nodes['[data-first-visit]'].textContent, /\$583 incl\. GST/);
 });
+
+test('running total shows no price for homes the Worker sends to a personal quote', () => {
+  const cases = [
+    { bedrooms: '6', bathrooms: '2' },
+    { bedrooms: '3', bathrooms: '5' },
+    { bedrooms: '3', bathrooms: '2', property_condition: 'high' },
+    { bedrooms: '3', bathrooms: '2', day_type: 'weekend' },
+  ];
+  for (const c of cases) {
+    const nodes = { '[data-running-total]': { textContent: 'Estimated $1 per visit' }, '[data-first-visit]': { textContent: 'Your first visit: $2' } };
+    const dlg = { querySelector: (s) => nodes[s] || null };
+    const r = q.updateRunning(dlg, fakeForm({ package: 'essential', ...c }), { pricing: P });
+    assert.equal(r, null, JSON.stringify(c));
+    assert.doesNotMatch(nodes['[data-running-total]'].textContent, /\$\d/, JSON.stringify(c));
+    assert.equal(nodes['[data-first-visit]'].textContent, '', JSON.stringify(c));
+  }
+});

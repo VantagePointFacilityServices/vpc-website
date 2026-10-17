@@ -190,6 +190,11 @@
     Array.prototype.forEach.call(nodes, function (n) { n.hidden = pkg !== n.getAttribute('data-extra-for'); });
   }
 
+  // Mirrors personalQuoteReason in worker/pricing.js: these homes get a personal quote, not a price.
+  function needsPersonalQuote(body) {
+    return body.bedrooms > 5 || body.bathrooms > 4 || body.property_condition === 'high' || !!body.weekend;
+  }
+
   function updateRunning(dialog, form, deps) {
     var P = (deps && deps.pricing) || (global && global.VPC_PRICING);
     var tot = dialog.querySelector('[data-running-total]');
@@ -198,6 +203,11 @@
     var body = buildQuoteBody(form, '');
     var hk = form.querySelector('[name="housekeeping"]');
     if (hk && !hk.checked) ['laundry_loads', 'linen_beds', 'ironing_blocks'].forEach(function (k) { body.extras[k] = 0; });
+    if (needsPersonalQuote(body)) {
+      tot.textContent = 'We’ll prepare this quote personally.';
+      first.textContent = '';
+      return null;
+    }
     var r = computeTotal(P, body);
     if (!r) return null;
     tot.textContent = 'Estimated ' + formatAUD(r.per_visit_price) + ' per visit';

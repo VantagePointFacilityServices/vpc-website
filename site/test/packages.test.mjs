@@ -52,7 +52,7 @@ test('extras list with approved prices on homepage and package pages', () => {
       assert.equal(cells.length, 3, `${p} ${key} cells`);
       cells.forEach((c, i) => {
         if ((INCLUDED[key] || []).includes(i)) assert.equal(c, 'Included', `${p} ${key} col ${i}`);
-        else assert.match(c, /^\$\d/, `${p} ${key} col ${i}`);
+        else assert.equal(c, price, `${p} ${key} col ${i}`);
       });
     }
     assert.match(text(h), /Housekeeping add-ons/, p);
