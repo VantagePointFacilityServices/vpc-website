@@ -35,12 +35,20 @@ CORS: only `https://www.vantagepointcleaning.com.au` and `http://localhost[:port
 
 Repo secrets for CI: `CLOUDFLARE_WORKER_API_TOKEN`, `CLOUDFLARE_ACCOUNT_ID`.
 
+`CLOUDFLARE_WORKER_API_TOKEN` is the Cloudflare API token "VPC – GitHub Actions – Worker Deploy" (My Profile → API Tokens). It needs:
+- **Account → Workers Scripts → Edit** (your account)
+- **Zone → Workers Routes → Edit**, **Zone → DNS → Edit** and **Zone → Zone → Read**, limited to the `vantagepointcleaning.com.au` zone
+
+The zone permissions are needed because `wrangler.toml` attaches the custom domain `worker.vantagepointcleaning.com.au`. With only Workers Scripts, the deploy uploads the code but then fails with "No access to the specified resource" on `/zones/…/workers/routes`, leaving the domain unattached (first deploy, 2026-10-17).
+
 ## Setup order
 1. Create the VPC GHL sub-account, token, custom fields and tags (issue 01); set `GHL_VPC_LOCATION_ID`.
 2. Add the repo secrets above; merge to `main` so `deploy-worker.yml` deploys the Worker.
 3. `wrangler secret put GHL_VPC_API_KEY`, then `QUOTE_TOKEN_SECRET`.
 4. Set `TURNSTILE_SECRET_KEY` **last** — with the secret set but no widget on the site, every lead is rejected.
    (Without it the Worker skips the bot check.)
+
+Secrets can be set before the first deploy: `wrangler secret put` offers to create the Worker if it doesn't exist yet. That avoids a window where the site's forms are live but the Worker has no GHL token.
 
 ## CI
 `.github/workflows/deploy-worker.yml` runs `npm test` on PRs and pushes; vitest enforces 95% coverage
