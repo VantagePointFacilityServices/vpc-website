@@ -413,6 +413,10 @@ p { margin: 0 0 16px; font-size: var(--p1); color: var(--arsenic); }
 .hero-form .small { color: var(--graphite); margin-bottom: 20px; }
 .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 .form-row.single { grid-template-columns: 1fr; }
+/* Icon inside a field (email, phone, postcode), matching the VPFS contact form */
+.input-icon-wrap { position: relative; margin-bottom: 14px; }
+.input-icon-wrap svg { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); width: 18px; height: 18px; color: var(--graphite); pointer-events: none; }
+.input-icon-wrap input { padding-left: 42px; margin-bottom: 0; }
 label { font-size: 0.82rem; font-weight: 700; color: var(--arsenic); display: block; margin-bottom: 6px; }
 input, select, textarea {
   width: 100%;

@@ -30,6 +30,23 @@ test('lead pages have fields, honeypots, turnstile container, notice, conversion
   }
 });
 
+test('every lead form matches the VPFS contact form: name row, email row, phone + postcode row, with icons', () => {
+  const icon = (id) => new RegExp(`<label for="${id}">[^<]+</label>\\s*<div class="input-icon-wrap">\\s*<svg [^>]*aria-hidden="true">[\\s\\S]*?</svg>\\s*<input id="${id}"`);
+  for (const p of LEAD_PAGES) {
+    const form = read(`${p}.html`).match(/<form class="assessment-form"[\s\S]*?<\/form>/)[0];
+    const pre = p === 'service-areas' ? 'na-' : '';
+    const rows = [...form.matchAll(/<div class="form-row( single)?">([\s\S]*?)\n\s*<\/div>\n(?=\s*<(?:div class="form-row|input|div class="hp-field))/g)];
+    assert.equal(rows.length, 3, `${p}: three field rows`);
+    assert.match(rows[0][2], new RegExp(`id="${pre}fname"[\\s\\S]*id="${pre}lname"`), `${p}: names`);
+    assert.equal(rows[1][1], ' single', `${p}: email row is full width`);
+    assert.match(rows[1][2], icon(`${pre}email`), `${p}: email icon`);
+    assert.match(rows[2][2], icon(`${pre}phone`), `${p}: phone icon`);
+    assert.match(rows[2][2], icon(`${pre}postcode`), `${p}: postcode icon`);
+    assert.doesNotMatch(form, /<select/, `${p}: no extra fields`);
+  }
+  assert.match(read('assets/css/style.css'), /\.input-icon-wrap svg \{[^}]*position: absolute/);
+});
+
 test('estate-care stays email/phone only; forms on for D2 pages only; booking off everywhere', () => {
   assert.doesNotMatch(read('estate-care.html'), /<form[^>]*data-lead-form|name="postcode"/);
   for (const p of ALL) {
