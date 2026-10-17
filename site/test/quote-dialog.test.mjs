@@ -134,7 +134,7 @@ test('errors (network, non-2xx, bad shape) keep inputs and show fallback', async
     assert.equal(r.els['[data-result]'].hidden, true);
   }
   assert.match(q.dialogHTML(), /hello@vantagepointcleaning\.com\.au/);
-  assert.match(q.dialogHTML(), /07 5651 2257/);
+  assert.match(q.dialogHTML(), /0422 908 188/);
 });
 
 test('close button closes and returns focus; cancel (Escape) returns focus', () => {

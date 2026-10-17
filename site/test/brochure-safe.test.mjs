@@ -7,7 +7,7 @@ import { fileURLToPath } from 'node:url';
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const pages = readdirSync(root).filter((f) => f.endsWith('.html'));
 const read = (f) => readFileSync(join(root, f), 'utf8');
-const PHONE_TEL = 'tel:+61756512257';
+const PHONE_TEL = 'tel:+61422908188';
 const ESTATE_LINE = 'Have a larger estate, or need more than Reserve covers? <a href="estate-care.html" class="text-link">Estate Care is arranged through a private walkthrough &rarr;</a>';
 const EMAIL = 'hello@vantagepointcleaning.com.au';
 
@@ -22,8 +22,8 @@ test('JSON-LD telephone matches the displayed number', () => {
     const h = read(p);
     const m = h.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/);
     if (!m) continue;
-    assert.equal(JSON.parse(m[1]).telephone, '+61756512257', p);
-    assert.match(h, /07 5651 2257/, p);
+    assert.equal(JSON.parse(m[1]).telephone, '+61422908188', p);
+    assert.match(h, /0422 908 188/, p);
     assert.ok(h.includes(PHONE_TEL), p);
   }
 });
