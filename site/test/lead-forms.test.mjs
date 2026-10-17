@@ -84,7 +84,7 @@ test('switch on: widget gets the site key and renders for action "lead"; a faile
 test('placeholder handler and TODO are gone; lead.js loads before main.js', () => {
   const m = read('assets/js/main.js');
   assert.doesNotMatch(m, /TODO|placeholder|data-lead-ready/);
-  for (const p of ALL) assert.match(read(`${p}.html`), /lead\.js"><\/script>\s*<script src="assets\/js\/quote\.js"><\/script>\s*<script src="assets\/js\/main\.js"/, p);
+  for (const p of ALL) assert.match(read(`${p}.html`), /lead\.js"><\/script>\s*<script src="assets\/js\/pricing-data\.js"><\/script>\s*<script src="assets\/js\/quote\.js"><\/script>\s*<script src="assets\/js\/main\.js"/, p);
 });
 
 // --- behaviour with a minimal fake form / document ---
