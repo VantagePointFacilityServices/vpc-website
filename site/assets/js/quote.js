@@ -10,7 +10,7 @@
   var INCLUSIONS = {
     essential: 'Kitchen, bathrooms, floors, dusting, surfaces, beds, bins, high-touch areas and dishes.',
     signature: 'Everything in Essential, plus a rotation that includes oven and fridge interiors.',
-    reserve: 'Everything in Signature, plus ironing up to 30 minutes, a presentation finish and a replacement-cleaner guarantee.'
+    reserve: 'Everything in Signature, plus two rotational tasks each visit, detailed bathrooms, a presentation finish and a replacement-cleaner guarantee.'
   };
   var TERMS_TEXT = 'I confirm the details above are accurate and understand that Vantage Point Cleaning’s Terms & Conditions apply if the property’s actual size or condition differs materially from what I’ve declared.';
   var MSG_PERSONAL = 'We’ll prepare your quote personally — Blake will be in touch within one business day.';
@@ -19,7 +19,33 @@
   var BOOL_FIELDS = ['study', 'media_room', 'multi_level', 'outdoor_alfresco', 'pool_surrounds', 'garage_serviced'];
   var COUNT_EXTRAS = ['laundry_loads', 'linen_beds', 'ironing_blocks', 'reset_blocks'];
   var BOOL_EXTRAS = ['oven', 'fridge', 'cabinets', 'interior_glass'];
-  var ESSENTIAL_ONLY = ['oven', 'fridge', 'linen_beds', 'interior_glass']; // PRD D14: in Signature/Reserve already
+  var ESSENTIAL_ONLY = ['oven', 'fridge', 'interior_glass']; // in the Signature/Reserve rotation already; linen is offered on every package
+
+  // Running total: same rules as worker/pricing.js, from window.VPC_PRICING. The Worker's
+  // /quote result stays authoritative; this is only the live estimate.
+  var EXTRA_KEY = { oven: 'oven', fridge: 'fridge', cabinets: 'cabinets', interior_glass: 'interior_glass', laundry_loads: 'laundry_load', linen_beds: 'linen_bed', ironing_blocks: 'ironing_block', reset_blocks: 'reset_block' };
+
+  function computeTotal(P, body) {
+    var pkg = body.package, ladder = P.ladder, inc = P.increments, cfg = null;
+    ladder.forEach(function (r) { if (r.bedrooms <= body.bedrooms && r.bathrooms <= body.bathrooms) cfg = r; });
+    if (!cfg) return null;
+    var i = function (k) { return inc[k][pkg]; };
+    var price = cfg.computed[pkg];
+    price += (body.bedrooms - cfg.bedrooms) * i('extra_bedroom');
+    price += (body.bathrooms - cfg.bathrooms) * i('extra_bathroom');
+    price += body.powder_rooms * i('powder_room');
+    price += Math.max(0, body.living_areas - cfg.living_areas) * i('extra_living_area');
+    ['study', 'media_room', 'multi_level', 'outdoor_alfresco', 'pool_surrounds', 'garage_serviced'].forEach(function (k) { if (body[k]) price += i(k); });
+    price += body.balconies_count * i('balcony') + body.walk_in_robes_count * i('walk_in_robe');
+    price = Math.max(price, P.tiers[pkg].minimum);
+    var extras = 0;
+    Object.keys(EXTRA_KEY).forEach(function (input) {
+      var def = P.extras[EXTRA_KEY[input]];
+      if (def.essential_only && pkg !== 'essential') return;
+      extras += Number(body.extras[input] || 0) * def.price;
+    });
+    return { package_price: price, extras_price: extras, per_visit_price: price + extras, first_visit_price: P.first_visit_multiple * price + extras };
+  }
 
   function esc(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;'); }
 
@@ -40,7 +66,11 @@
     var essential = pkg === 'essential';
     var extras = {};
     BOOL_EXTRAS.forEach(function (k) { extras[k] = (ESSENTIAL_ONLY.indexOf(k) < 0 || essential) && chk(form, k); });
-    COUNT_EXTRAS.forEach(function (k) { extras[k] = (ESSENTIAL_ONLY.indexOf(k) < 0 || essential) ? num(form, k, 0) : 0; });
+    var hkOn = !field(form, 'housekeeping') || chk(form, 'housekeeping');
+    COUNT_EXTRAS.forEach(function (k) {
+      var hk = k !== 'reset_blocks';
+      extras[k] = ((ESSENTIAL_ONLY.indexOf(k) < 0 || essential) && (!hk || hkOn)) ? num(form, k, 0) : 0;
+    });
     var body = {
       quote_token: token,
       package: pkg,
@@ -133,9 +163,15 @@
       '<label>Frequency<select name="preferred_frequency"><option value="weekly">Weekly</option><option value="fortnightly" selected>Fortnightly</option></select></label>' +
       '<label>Preferred days<select name="day_type"><option value="weekday" selected>Weekday</option><option value="weekend">Weekend</option></select></label>' +
       '<fieldset><legend>Extras (each visit)</legend>' +
+      '<fieldset class="quote-group" data-group="housekeeping"><legend>Housekeeping add-ons</legend>' +
+      check('housekeeping', 'Add housekeeping?') +
+      '<div data-housekeeping hidden>' +
+      count('laundry_loads', 'Laundry loads', 3) + count('linen_beds', 'Linen changes (beds)', 6) + count('ironing_blocks', 'Ironing blocks', 4) +
+      '</div></fieldset>' +
+      '<fieldset class="quote-group" data-group="detail"><legend>Detail extras</legend>' +
       check('oven', 'Oven', 'essential') + check('fridge', 'Fridge', 'essential') + check('cabinets', 'Cabinets') + check('interior_glass', 'Interior glass', 'essential') +
-      count('laundry_loads', 'Laundry loads', 3) + count('linen_beds', 'Linen changes (beds)', 6, 'essential') +
-      count('ironing_blocks', 'Ironing blocks', 4) + count('reset_blocks', 'Reset blocks', 4) + '</fieldset>' +
+      count('reset_blocks', 'Reset blocks', 4) + '</fieldset></fieldset>' +
+      '<div class="quote-running" data-running aria-live="polite"><p data-running-total></p><p data-first-visit></p></div>' +
       '<label>Pets on site<input type="text" name="pets_on_site" maxlength="500"></label>' +
       '<label>Parking / access notes (please don’t include alarm or door codes)<input type="text" name="parking_access_notes" maxlength="500"></label>' +
       '<label>Special requests (no codes)<textarea name="special_requests" maxlength="500"></textarea></label>' +
@@ -152,6 +188,31 @@
     if (inc) inc.textContent = INCLUSIONS[pkg] || '';
     var nodes = dialog.querySelectorAll ? dialog.querySelectorAll('[data-extra-for]') : [];
     Array.prototype.forEach.call(nodes, function (n) { n.hidden = pkg !== n.getAttribute('data-extra-for'); });
+  }
+
+  // Mirrors personalQuoteReason in worker/pricing.js: these homes get a personal quote, not a price.
+  function needsPersonalQuote(body) {
+    return body.bedrooms > 5 || body.bathrooms > 4 || body.property_condition === 'high' || !!body.weekend;
+  }
+
+  function updateRunning(dialog, form, deps) {
+    var P = (deps && deps.pricing) || (global && global.VPC_PRICING);
+    var tot = dialog.querySelector('[data-running-total]');
+    var first = dialog.querySelector('[data-first-visit]');
+    if (!P || !tot || !first) return null;
+    var body = buildQuoteBody(form, '');
+    var hk = form.querySelector('[name="housekeeping"]');
+    if (hk && !hk.checked) ['laundry_loads', 'linen_beds', 'ironing_blocks'].forEach(function (k) { body.extras[k] = 0; });
+    if (needsPersonalQuote(body)) {
+      tot.textContent = 'We’ll prepare this quote personally.';
+      first.textContent = '';
+      return null;
+    }
+    var r = computeTotal(P, body);
+    if (!r) return null;
+    tot.textContent = 'Estimated ' + formatAUD(r.per_visit_price) + ' per visit';
+    first.textContent = 'Your first visit: ' + formatAUD(r.first_visit_price);
+    return r;
   }
 
   // Wire a dialog element. Returns the controller; `suburb` comes from step 1 when known.
@@ -172,10 +233,18 @@
     // Escape fires 'cancel' on a native <dialog>; the browser closes it, we restore focus.
     dialog.addEventListener('cancel', function () { if (opener && opener.focus) opener.focus(); });
 
+    function refresh() {
+      var hkBox = form.querySelector('[name="housekeeping"]');
+      var hkPanel = dialog.querySelector('[data-housekeeping]');
+      if (hkPanel && hkBox) hkPanel.hidden = !hkBox.checked;
+      updateRunning(dialog, form, deps);
+    }
     dialog.addEventListener('change', function (e) {
       if (e && e.target && e.target.name === 'package') syncPackage(dialog, e.target.value);
+      refresh();
     });
     syncPackage(dialog, 'signature');
+    refresh();
 
     function onSubmit(e) {
       if (e && e.preventDefault) e.preventDefault();
@@ -239,7 +308,7 @@
 
   var api = {
     ENDPOINT: ENDPOINT, TERMS_TEXT: TERMS_TEXT, MSG_PERSONAL: MSG_PERSONAL, MSG_CALL: MSG_CALL,
-    formatAUD: formatAUD, buildQuoteBody: buildQuoteBody, postQuote: postQuote, renderOutcome: renderOutcome,
+    formatAUD: formatAUD, computeTotal: computeTotal, updateRunning: updateRunning, buildQuoteBody: buildQuoteBody, postQuote: postQuote, renderOutcome: renderOutcome,
     dialogHTML: dialogHTML, wire: wire, openQuoteDialog: openQuoteDialog, handleLeadSubmitted: handleLeadSubmitted, init: init
   };
   if (typeof module !== 'undefined' && module.exports) module.exports = api;

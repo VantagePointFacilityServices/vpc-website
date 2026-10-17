@@ -4,6 +4,7 @@ import { readFileSync, readdirSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { createRequire } from 'node:module';
+import vm from 'node:vm';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const q = createRequire(import.meta.url)('../assets/js/quote.js');
@@ -14,7 +15,7 @@ test('pages default booking off and load quote.js after lead.js', () => {
     const h = readFileSync(join(root, f), 'utf8');
     if (/<meta http-equiv="refresh"/.test(h)) continue;
     assert.match(h, /<body data-lead-forms="(on|off)" data-booking="off">/, f);
-    assert.match(h, /lead\.js"><\/script>\s*<script src="assets\/js\/quote\.js"><\/script>/, f);
+    assert.match(h, /lead\.js"><\/script>\s*<script src="assets\/js\/pricing-data\.js"><\/script>\s*<script src="assets\/js\/quote\.js"><\/script>/, f);
   }
 });
 
@@ -49,7 +50,7 @@ test('body: Signature default, D7 shape, essential-only extras suppressed', () =
   assert.equal(b.bedrooms, 4);
   assert.equal(b.weekend, false);
   assert.equal(b.extras.oven, false);
-  assert.equal(b.extras.linen_beds, 0);
+  assert.equal(b.extras.linen_beds, 3);
   assert.equal(b.extras.cabinets, true);
   assert.equal(b.extras.laundry_loads, 2);
   assert.equal(b.special_requests, 'x');
@@ -167,6 +168,65 @@ test('dialog markup: Signature preselected, ranges, extras flagged essential-onl
   assert.match(h, /<option value="0" >?[^<]*Studio|Studio/);
   assert.match(h, /6\+/);
   assert.match(h, /5\+/);
-  for (const n of ['oven', 'fridge', 'interior_glass', 'linen_beds']) assert.match(h, new RegExp(`data-extra-for="essential"[^]*?name="${n}"`));
+  for (const n of ['oven', 'fridge', 'interior_glass']) assert.match(h, new RegExp(`data-extra-for="essential"[^]*?name="${n}"`));
   assert.doesNotMatch(h, /most popular/i);
+  assert.doesNotMatch(h, /data-extra-for="[a-z]+"[^>]*>Linen/);
+  // Price copy is limited to the running total and first-visit line.
+  assert.doesNotMatch(h, /\$\d/);
+  assert.match(h, /data-running-total/);
+  assert.match(h, /data-first-visit/);
+  assert.match(h, /Add housekeeping\?/);
+  assert.match(h, /data-housekeeping hidden[^]*name="laundry_loads"[^]*name="linen_beds"[^]*name="ironing_blocks"/);
+});
+
+const sb = { window: {} };
+vm.runInNewContext(readFileSync(join(root, 'assets/js/pricing-data.js'), 'utf8'), sb);
+const P = sb.window.VPC_PRICING;
+const home = { bedrooms: 3, bathrooms: 2, powder_rooms: 0, living_areas: 1, balconies_count: 0, walk_in_robes_count: 0 };
+const tot = (pkg, h, extras) => q.computeTotal(P, { package: pkg, ...home, ...h, extras: extras || {} });
+
+test('running total pins to the Worker: 3b2b Essential + one laundry load', () => {
+  const r = tot('essential', {}, { laundry_loads: 1 });
+  assert.equal(r.per_visit_price, 314);
+  assert.equal(r.first_visit_price, 583);
+});
+
+test('running total: Reserve case, floor case, essential-only extras ignored above Essential', () => {
+  const r = tot('reserve', { study: true, bedrooms: 4 }, { linen_beds: 2, oven: 1 });
+  const base = tot('reserve', { study: true, bedrooms: 4 }, {});
+  assert.equal(r.extras_price, 40);
+  assert.equal(r.first_visit_price, 2 * base.package_price + 40);
+  const f = tot('reserve', { bedrooms: 0, bathrooms: 1 }, {});
+  assert.equal(f.package_price, P.tiers.reserve.minimum);
+});
+
+test('running total renders into the dialog and follows housekeeping prompt', () => {
+  const nodes = { '[data-running-total]': {}, '[data-first-visit]': {} };
+  const dlg = { querySelector: (s) => nodes[s] || null };
+  const vals = { package: 'essential', bedrooms: '3', bathrooms: '2', laundry_loads: '1', housekeeping: false };
+  const form = fakeForm(vals);
+  let r = q.updateRunning(dlg, form, { pricing: P });
+  assert.equal(r.per_visit_price, 269);
+  vals.housekeeping = true;
+  r = q.updateRunning(dlg, form, { pricing: P });
+  assert.equal(r.per_visit_price, 314);
+  assert.match(nodes['[data-running-total]'].textContent, /\$314 incl\. GST/);
+  assert.match(nodes['[data-first-visit]'].textContent, /\$583 incl\. GST/);
+});
+
+test('running total shows no price for homes the Worker sends to a personal quote', () => {
+  const cases = [
+    { bedrooms: '6', bathrooms: '2' },
+    { bedrooms: '3', bathrooms: '5' },
+    { bedrooms: '3', bathrooms: '2', property_condition: 'high' },
+    { bedrooms: '3', bathrooms: '2', day_type: 'weekend' },
+  ];
+  for (const c of cases) {
+    const nodes = { '[data-running-total]': { textContent: 'Estimated $1 per visit' }, '[data-first-visit]': { textContent: 'Your first visit: $2' } };
+    const dlg = { querySelector: (s) => nodes[s] || null };
+    const r = q.updateRunning(dlg, fakeForm({ package: 'essential', ...c }), { pricing: P });
+    assert.equal(r, null, JSON.stringify(c));
+    assert.doesNotMatch(nodes['[data-running-total]'].textContent, /\$\d/, JSON.stringify(c));
+    assert.equal(nodes['[data-first-visit]'].textContent, '', JSON.stringify(c));
+  }
 });
