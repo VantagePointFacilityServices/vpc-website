@@ -14,7 +14,7 @@
   };
   var TERMS_TEXT = 'I confirm the details above are accurate and understand that Vantage Point Cleaning’s Terms & Conditions apply if the property’s actual size or condition differs materially from what I’ve declared.';
   var MSG_PERSONAL = 'We’ll prepare your quote personally — Blake will be in touch within one business day.';
-  var MSG_ERROR = 'Sorry, we couldn’t get your quote. Your answers are still here — please try again, or email hello@vantagepointcleaning.com.au or call 07 5651 2257.';
+  var MSG_ERROR = 'Sorry, we couldn’t get your quote. Your answers are still here — please try again, or email hello@vantagepointcleaning.com.au or call 0422 908 188.';
   var MSG_CALL = 'Blake will call to confirm your First Clean.';
   var BOOL_FIELDS = ['study', 'media_room', 'multi_level', 'outdoor_alfresco', 'pool_surrounds', 'garage_serviced'];
   var COUNT_EXTRAS = ['laundry_loads', 'linen_beds', 'ironing_blocks', 'reset_blocks'];
