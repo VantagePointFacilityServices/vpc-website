@@ -23,22 +23,22 @@ All errors are JSON `{error}`. `quote_token` = base64url(`contact_id.exp`) + `.`
 
 CORS: only `https://www.vantagepointcleaning.com.au` and `http://localhost[:port]`.
 
-`SERVICE_ZONE_POSTCODES` in `worker.js` is a **placeholder** until issue 01 confirms zones 1–5.
+`SERVICE_ZONE_POSTCODES` in `worker.js` is the VPFS launch area: Gold Coast 4207–4230 + Tweed Shire 2484–2490.
 
 ## Vars (`wrangler.toml`, not secret)
-- `GHL_LOCATION_ID` — VPC GHL sub-account Location ID (placeholder until issue 01).
+- `GHL_VPC_LOCATION_ID` — VPC GHL sub-account Location ID (`J81Ybf7bB8Eo2jfKD095`).
 
 ## Secrets (`wrangler secret put <NAME>`, run in `worker/`)
-- `GHL_API_KEY` — VPC Private Integration token.
+- `GHL_VPC_API_KEY` — GHL Private Integration "VPC – Cloudflare Worker – Lead Gate & Quote", created inside the VPC sub-account; scopes `contacts.write`, `contacts.readonly`, `opportunities.write`, `opportunities.readonly`. Locally: one line `GHL_VPC_API_KEY=...` in `worker/.env` (gitignored; never `.dev.vars`, which is not).
 - `QUOTE_TOKEN_SECRET` — random string (e.g. `openssl rand -hex 32`).
 - `TURNSTILE_SECRET_KEY` — Turnstile widget secret for `vantagepointcleaning.com.au`.
 
 Repo secrets for CI: `CLOUDFLARE_WORKER_API_TOKEN`, `CLOUDFLARE_ACCOUNT_ID`.
 
 ## Setup order
-1. Create the VPC GHL sub-account, token, custom fields and tags (issue 01); set `GHL_LOCATION_ID`.
+1. Create the VPC GHL sub-account, token, custom fields and tags (issue 01); set `GHL_VPC_LOCATION_ID`.
 2. Add the repo secrets above; merge to `main` so `deploy-worker.yml` deploys the Worker.
-3. `wrangler secret put GHL_API_KEY`, then `QUOTE_TOKEN_SECRET`.
+3. `wrangler secret put GHL_VPC_API_KEY`, then `QUOTE_TOKEN_SECRET`.
 4. Set `TURNSTILE_SECRET_KEY` **last** — with the secret set but no widget on the site, every lead is rejected.
    (Without it the Worker skips the bot check.)
 

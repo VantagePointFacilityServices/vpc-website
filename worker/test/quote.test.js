@@ -5,7 +5,7 @@ import { LADDER, pickConfiguration, priceQuote, extrasPrice, ESSENTIAL_ONLY_PRIC
 
 const WWW = "https://www.vantagepointcleaning.com.au";
 const env = {
-  GHL_API_KEY: "k", GHL_LOCATION_ID: "loc", QUOTE_TOKEN_SECRET: "sek",
+  GHL_VPC_API_KEY: "k", GHL_VPC_LOCATION_ID: "loc", QUOTE_TOKEN_SECRET: "sek",
   GHL_PIPELINE_ID: "pipe", GHL_STAGE_QUOTED_ID: "st-quoted", GHL_STAGE_NEEDS_QUOTE_ID: "st-needs",
   GHL_POSTCODE_FIELD_ID: "pc-id",
 };

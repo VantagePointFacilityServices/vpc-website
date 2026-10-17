@@ -5,7 +5,7 @@ import worker, {
 } from "../worker.js";
 
 const WWW = "https://www.vantagepointcleaning.com.au";
-const env = { GHL_API_KEY: "k", GHL_LOCATION_ID: "loc", QUOTE_TOKEN_SECRET: "sek" };
+const env = { GHL_VPC_API_KEY: "k", GHL_VPC_LOCATION_ID: "loc", QUOTE_TOKEN_SECRET: "sek" };
 const good = { first_name: " Ann ", last_name: "Lee", email: "a@b.co", phone: "0400000000", postcode: SERVICE_ZONE_POSTCODES[0] };
 
 let calls;

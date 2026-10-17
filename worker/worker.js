@@ -16,12 +16,14 @@ const TURNSTILE_UNVERIFIED_TAG = "turnstile-unverified";
 
 const QUOTE_TOKEN_TTL_MS = 60 * 60 * 1000;
 
-// PLACEHOLDER service-area postcodes (zones 1-5) until issue 01 confirms the list.
+// Service-area postcodes: the same Gold Coast + Tweed launch area as the VPFS
+// Worker's LAUNCH_AREA_POSTCODES (vpos Vol 1 §2.7b; Blake, 2026-10-17).
+// - Gold Coast 4207-4230 (4207 is shared with Logan, kept as on VPFS).
+// - Tweed Shire 2484-2490.
+// 2483 (mostly Byron Shire) and the 4270-4275 hinterland are left out.
 export const SERVICE_ZONE_POSTCODES = [
-  "4000", "4005", "4006", "4007", "4008", "4010", "4011", "4012", "4013", "4017",
-  "4030", "4031", "4051", "4053", "4054", "4059", "4060", "4064", "4065", "4066",
-  "4067", "4068", "4069", "4070", "4101", "4102", "4103", "4104", "4105", "4106",
-  "4151", "4152", "4153", "4169", "4170", "4171", "4172", "4173", "4178",
+  ...Array.from({ length: 24 }, (_, i) => String(4207 + i)), // Gold Coast 4207-4230
+  ...Array.from({ length: 7 }, (_, i) => String(2484 + i)), // Tweed Shire 2484-2490
 ];
 
 const ALLOWED_ORIGINS = ["https://www.vantagepointcleaning.com.au"];
@@ -259,7 +261,7 @@ async function handleLead(payload, env, request) {
 
 function ghlHeaders(env) {
   return {
-    Authorization: `Bearer ${env.GHL_API_KEY}`,
+    Authorization: `Bearer ${env.GHL_VPC_API_KEY}`,
     "Content-Type": "application/json",
     Version: GHL_API_VERSION,
   };
@@ -291,7 +293,7 @@ export async function upsertContactInGHL(f, env) {
       method: "POST",
       headers: ghlHeaders(env),
       body: JSON.stringify({
-        locationId: env.GHL_LOCATION_ID,
+        locationId: env.GHL_VPC_LOCATION_ID,
         firstName: f.firstName,
         lastName: f.lastName,
         email: f.email,
@@ -422,7 +424,7 @@ async function contactPostcode(contactId, env) {
 }
 
 async function upsertOpportunity(contactId, stageId, price, env) {
-  const q = new URLSearchParams({ location_id: env.GHL_LOCATION_ID, pipeline_id: env.GHL_PIPELINE_ID, contact_id: contactId });
+  const q = new URLSearchParams({ location_id: env.GHL_VPC_LOCATION_ID, pipeline_id: env.GHL_PIPELINE_ID, contact_id: contactId });
   const found = await ghl(`/opportunities/search?${q}`, "GET", env);
   if (!found) return false;
   const existing = (found.opportunities || [])[0];
@@ -430,7 +432,7 @@ async function upsertOpportunity(contactId, stageId, price, env) {
   const res = existing
     ? await ghl(`/opportunities/${existing.id}`, "PUT", env, common)
     : await ghl("/opportunities/", "POST", env, {
-        ...common, locationId: env.GHL_LOCATION_ID, contactId, name: "Website instant quote",
+        ...common, locationId: env.GHL_VPC_LOCATION_ID, contactId, name: "Website instant quote",
       });
   return Boolean(res);
 }
