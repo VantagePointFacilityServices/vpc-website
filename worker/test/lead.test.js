@@ -5,7 +5,7 @@ import worker, {
 } from "../worker.js";
 
 const WWW = "https://www.vantagepointcleaning.com.au";
-const env = { GHL_API_KEY: "k", GHL_LOCATION_ID: "loc", QUOTE_TOKEN_SECRET: "sek" };
+const env = { GHL_VPC_API_KEY: "k", GHL_VPC_LOCATION_ID: "loc", QUOTE_TOKEN_SECRET: "sek" };
 const good = { first_name: " Ann ", last_name: "Lee", email: "a@b.co", phone: "0400000000", postcode: SERVICE_ZONE_POSTCODES[0] };
 
 let calls;
@@ -99,6 +99,7 @@ describe("POST /lead", () => {
 
 describe("Turnstile", () => {
   const tenv = { ...env, TURNSTILE_SECRET_KEY: "ts" };
+  const SOLVED = { success: true, action: "lead", hostname: "www.vantagepointcleaning.com.au" };
   const tpost = (body, headers) => worker.fetch(new Request("https://w.test/lead", { method: "POST", headers, body: JSON.stringify(body) }), tenv);
 
   it("403 when token missing or rejected", async () => {
@@ -108,11 +109,20 @@ describe("Turnstile", () => {
   });
 
   it("passes and forwards remote ip", async () => {
-    mockFetch((url) => (String(url).includes("siteverify") ? new Response(JSON.stringify({ success: true })) : okGhl(url)));
+    mockFetch((url) => (String(url).includes("siteverify") ? new Response(JSON.stringify(SOLVED)) : okGhl(url)));
     const res = await tpost({ ...good, "cf-turnstile-response": "t" }, { "CF-Connecting-IP": "1.2.3.4" });
     expect(res.status).toBe(200);
     expect(calls[0].body.remoteip).toBe("1.2.3.4");
     expect(tagsCall().body.tags).toEqual(["website-lead"]);
+  });
+
+  it("403 when the token was solved for another action or hostname", async () => {
+    for (const bad of [{ action: "quote" }, { hostname: "evil.example" }, { hostname: "localhost" }, { action: undefined }]) {
+      mockFetch((url) => (String(url).includes("siteverify") ? new Response(JSON.stringify({ ...SOLVED, ...bad })) : okGhl(url)));
+      expect((await tpost({ ...good, "cf-turnstile-response": "t" })).status).toBe(403);
+    }
+    mockFetch((url) => (String(url).includes("siteverify") ? new Response(JSON.stringify({ ...SOLVED, hostname: "vantagepointcleaning.com.au" })) : okGhl(url)));
+    expect((await tpost({ ...good, "cf-turnstile-response": "t" })).status).toBe(200);
   });
 
   it("fail-open tags turnstile-unverified", async () => {

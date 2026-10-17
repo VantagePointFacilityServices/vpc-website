@@ -23,7 +23,7 @@ which lessons from the VPFS build apply here. Read it before touching DNS, GHL, 
 | Worker | `worker.vantagepointcleaning.com.au` (`vpc-lead-worker`) — **not built**. `/lead` comes first (Flow 1, D1). `/capture`, `/gate` and `/enrich` for Estates come after launch (D2) |
 | Phone | VPC Number A (07, voice) / Number B (04, SMS) — **not purchased** |
 | Legal pages | `site/privacy.html` (Privacy Policy and collection notice) and `site/terms.html` (residential T&Cs, **interim v1.0**) — linked from every page footer |
-| Secrets | `CLOUDFLARE_API_TOKEN` (repo) now; later `CLOUDFLARE_WORKER_API_TOKEN` (repo), `GHL_API_KEY` (Worker) |
+| Secrets | `CLOUDFLARE_API_TOKEN` (repo) now; later `CLOUDFLARE_WORKER_API_TOKEN` (repo), `GHL_VPC_API_KEY` (Worker) |
 
 ### Before switch-over
 
@@ -64,7 +64,7 @@ The business docs are no longer copied into this repo. They live in `vpos`:
 - **Inbound Webhook triggers are premium (per run) and can't return a contact ID.** That's why
   Flow 1's Stage 1 posts to this repo's Worker `/lead` (decided 2026-09-30, plan D1), the same
   pattern VPFS uses.
-- **The Worker secret is named exactly `GHL_API_KEY`**. A `401 Invalid JWT` means it's
+- **The Worker secret is named exactly `GHL_VPC_API_KEY`**. A `401 Invalid JWT` means it's
   missing or wrong. Private Integration tokens are created inside the sub-account.
 - **Test with marker contacts** ("Claude Test Lead - delete me",
   `blake+claude-test-<n>@…`, `0491 570 006`) and delete them afterwards.

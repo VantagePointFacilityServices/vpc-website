@@ -1,11 +1,12 @@
 // Vantage Point Cleaning — Stage 1 lead form submit (PRD D5).
 // submitLead(form) POSTs the lead to the Worker and resolves { contact_id, quote_token }
 // (step 2 chains the quote dialog onto this). Forms stay hidden while
-// <body data-lead-forms="off"> and the .contact-cta box shows instead (PRD D4).
+// <body data-lead-forms="off"> and the .contact-cta box shows instead (PRD D4);
+// the PRD D2 pages ship with the switch on and no contact box (issue 11).
 (function (global) {
   var ENDPOINT = 'https://worker.vantagepointcleaning.com.au/lead';
-  // One shared place for the Turnstile site key. Empty until the VPC widget exists (issue 11).
-  var TURNSTILE_SITEKEY = '';
+  // One shared place for the Turnstile site key: widget "VPC – Website Lead Forms".
+  var TURNSTILE_SITEKEY = '0x4AAAAAAFZN2if54_39FaOz';
   var FIELDS = ['first_name', 'last_name', 'email', 'phone', 'postcode', 'website_url', 'company', 'conversion_page'];
 
   function val(form, name) {
@@ -64,11 +65,13 @@
   function init(doc, deps) {
     deps = deps || {};
     var on = applySwitch(doc);
+    var win = deps.win || global;
+    // Turnstile tokens are single-use, so keep each widget's id to reset it before a retry.
+    var widgetIds = [];
     doc.querySelectorAll('.assessment-form .turnstile-widget').forEach(function (el) {
       if (TURNSTILE_SITEKEY) el.setAttribute('data-sitekey', TURNSTILE_SITEKEY);
-      var win = deps.win || global;
       if (!on || !el.getAttribute('data-sitekey') || !win.turnstile) return;
-      win.turnstile.render(el, { sitekey: el.getAttribute('data-sitekey'), action: 'lead', appearance: 'interaction-only' });
+      widgetIds.push(win.turnstile.render(el, { sitekey: el.getAttribute('data-sitekey'), action: 'lead', appearance: 'interaction-only' }));
     });
     doc.querySelectorAll('form[data-lead-form]').forEach(function (form) {
       form.addEventListener('submit', function (e) {
@@ -87,8 +90,9 @@
           if (success) success.classList.add('show');
           form.dispatchEvent(new (deps.CustomEvent || global.CustomEvent)('lead:submitted', { bubbles: true, detail: result }));
         }, function () {
-          // Keep every field; offer the email/phone fallback.
+          // Keep every field; offer the email/phone fallback and a fresh token.
           form.vpcSubmitting = false;
+          if (win.turnstile) widgetIds.forEach(function (id) { win.turnstile.reset(id); });
           if (btn) btn.disabled = false;
           if (err) err.hidden = false;
         });

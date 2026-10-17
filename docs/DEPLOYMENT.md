@@ -97,8 +97,8 @@ Not built yet. It needs the `vantagepointcleaning` GHL sub-account first. Build 
 Flow 1's Stage 1 capture (plan D1) upserts the contact, adds the `website-lead` tag and returns
 the contact ID. Add the Estates endpoints after launch (D2), following
 `vpos/residential/docs/estate-lead-gate-and-worker-spec.md`. Build it as `worker/` in this repo,
-copying the layout of `vpfs-website/worker/` (wrangler.toml with its own `GHL_LOCATION_ID`,
-the `GHL_API_KEY` secret, `deploy-worker.yml` gated on tests) and `vpfs-website/docs/WORKER.md` §8
+copying the layout of `vpfs-website/worker/` (wrangler.toml with its own `GHL_VPC_LOCATION_ID`,
+the `GHL_VPC_API_KEY` secret, `deploy-worker.yml` gated on tests) and `vpfs-website/docs/WORKER.md` §8
 for the setup order. Don't share a Worker, token or secret with VPFS.
 
 ## Troubleshooting

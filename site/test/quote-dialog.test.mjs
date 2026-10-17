@@ -13,7 +13,7 @@ test('pages default booking off and load quote.js after lead.js', () => {
   for (const f of readdirSync(root).filter((x) => x.endsWith('.html'))) {
     const h = readFileSync(join(root, f), 'utf8');
     if (/<meta http-equiv="refresh"/.test(h)) continue;
-    assert.match(h, /<body data-lead-forms="off" data-booking="off">/, f);
+    assert.match(h, /<body data-lead-forms="(on|off)" data-booking="off">/, f);
     assert.match(h, /lead\.js"><\/script>\s*<script src="assets\/js\/quote\.js"><\/script>/, f);
   }
 });
