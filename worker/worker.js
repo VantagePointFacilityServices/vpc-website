@@ -259,6 +259,9 @@ async function handleLead(payload, env, request) {
   if (turnstile === "unverified") tags.push(TURNSTILE_UNVERIFIED_TAG);
   // The contact exists already; a failed tag call must not block step 2.
   await addTagsInGHL(result.contactId, tags, env);
+  // In-area leads show on the board from step 1, so one who never quotes isn't lost.
+  // Best effort, like the tags: a failed Opportunity call must not block step 2.
+  if (SERVICE_ZONE_POSTCODES.includes(f.postcode)) await createOpportunityIfNone(result.contactId, env);
 
   const quoteToken = await signQuoteToken(result.contactId, env);
   return json({ contact_id: result.contactId, quote_token: quoteToken });
@@ -428,18 +431,36 @@ async function contactPostcode(contactId, env) {
   return String(field?.value ?? field?.field_value ?? c.postalCode ?? "").trim();
 }
 
-async function upsertOpportunity(contactId, stageId, price, env) {
+// undefined = the search failed; null = the contact has no Opportunity yet.
+async function findOpportunity(contactId, env) {
   const q = new URLSearchParams({ location_id: env.GHL_VPC_LOCATION_ID, pipeline_id: env.GHL_PIPELINE_ID, contact_id: contactId });
   const found = await ghl(`/opportunities/search?${q}`, "GET", env);
-  if (!found) return false;
-  const existing = (found.opportunities || [])[0];
-  const common = { pipelineId: env.GHL_PIPELINE_ID, pipelineStageId: stageId, status: "open", monetaryValue: price };
+  if (!found) return undefined;
+  return (found.opportunities || [])[0] || null;
+}
+
+async function createOpportunity(contactId, stageId, price, env) {
+  return ghl("/opportunities/", "POST", env, {
+    pipelineId: env.GHL_PIPELINE_ID, pipelineStageId: stageId, status: "open", monetaryValue: price,
+    locationId: env.GHL_VPC_LOCATION_ID, contactId, name: "Website instant quote",
+  });
+}
+
+async function upsertOpportunity(contactId, stageId, price, env) {
+  const existing = await findOpportunity(contactId, env);
+  if (existing === undefined) return false;
   const res = existing
-    ? await ghl(`/opportunities/${existing.id}`, "PUT", env, common)
-    : await ghl("/opportunities/", "POST", env, {
-        ...common, locationId: env.GHL_VPC_LOCATION_ID, contactId, name: "Website instant quote",
-      });
+    ? await ghl(`/opportunities/${existing.id}`, "PUT", env, {
+        pipelineId: env.GHL_PIPELINE_ID, pipelineStageId: stageId, status: "open", monetaryValue: price,
+      })
+    : await createOpportunity(contactId, stageId, price, env);
   return Boolean(res);
+}
+
+// /lead never moves an existing Opportunity: a returning client stays at their stage.
+async function createOpportunityIfNone(contactId, env) {
+  const existing = await findOpportunity(contactId, env);
+  if (existing === null) await createOpportunity(contactId, env.GHL_STAGE_NEW_ENQUIRY_ID, 0, env);
 }
 
 async function handleQuote(payload, env) {
@@ -489,7 +510,15 @@ async function handleQuote(payload, env) {
     parking_access_notes: q.parking,
     special_requests: q.requests,
     quote_extras: extrasSummary(q.pkg, q.extras),
-    ...(prices ? { quoted_package_price: prices.package_price, first_visit_price: prices.first_visit_price } : {}),
+    ...(prices
+      ? {
+          quoted_package_price: prices.package_price,
+          first_visit_price: prices.first_visit_price,
+          // Package + extras: what each later visit is charged (quoted_package_price excludes extras).
+          per_visit_price: prices.per_visit_price,
+          quote_issued_at: new Date().toISOString(),
+        }
+      : {}),
   };
   const customFields = Object.entries(fields)
     .filter(([, v]) => v !== "")
