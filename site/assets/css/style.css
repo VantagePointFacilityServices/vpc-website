@@ -174,17 +174,17 @@ p { margin: 0 0 16px; font-size: var(--p1); color: var(--arsenic); }
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 9px 0;
-  gap: 24px;
+  padding: 9px 1.6px;
+  gap: 32px;
 }
 .logo img { height: 48px; width: auto; }
-.main-nav { display: flex; align-items: center; gap: 22px; }
+.main-nav { display: flex; align-items: center; gap: 40px; }
 .main-nav > a, .nav-dropdown-toggle {
   font-family: var(--font);
   font-weight: 600;
   font-size: 0.95rem;
   color: var(--arsenic);
-  padding: 5px 0;
+  padding: 6px 0;
   border: none;
   border-bottom: 2px solid transparent;
 }
@@ -198,7 +198,7 @@ p { margin: 0 0 16px; font-size: var(--p1); color: var(--arsenic); }
 .nav-dropdown-toggle {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
   background: none;
   cursor: pointer;
   line-height: inherit;
@@ -207,11 +207,11 @@ p { margin: 0 0 16px; font-size: var(--p1); color: var(--arsenic); }
 .has-dropdown.open .chev { transform: rotate(180deg); }
 .nav-dropdown-menu { display: none; }
 .has-dropdown.open > .nav-dropdown-menu { display: block; }
-.header-cta { display: flex; align-items: center; gap: 16px; }
+.header-cta { display: flex; align-items: center; gap: 4px; }
 .header-phone {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
   font-weight: 700;
   color: var(--navy);
   font-size: 0.95rem;
@@ -222,6 +222,7 @@ p { margin: 0 0 16px; font-size: var(--p1); color: var(--arsenic); }
   height: 22px;
   background: var(--smoke);
   flex: none;
+  margin: 0 15px;
 }
 .nav-toggle {
   display: none;
@@ -858,8 +859,11 @@ a.nav-dropdown-toggle { cursor: pointer; }
 @media (min-width: 961px) {
   .has-dropdown { display: flex; align-items: center; flex: none; }
   .main-nav > a, .main-nav .nav-dropdown-toggle { white-space: nowrap; }
+  /* The button toggle has no chevron button after it; this stands in for that
+     button's 6px padding so the next gap matches the split items. */
+  button.nav-dropdown-toggle { margin-right: 6px; }
 }
-@media (min-width: 961px) and (max-width: 1240px) { .main-nav { gap: 16px; } }
+@media (min-width: 961px) and (max-width: 1240px) { .main-nav { gap: 28px; } }
 @media (max-width: 960px) {
   .has-dropdown { display: flex; flex-wrap: wrap; align-items: center; border-bottom: 1px solid var(--cloud); }
   .has-dropdown .nav-dropdown-toggle { flex: 1; width: auto; border-bottom: none; }
