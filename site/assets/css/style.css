@@ -182,7 +182,7 @@ p { margin: 0 0 16px; font-size: var(--p1); color: var(--arsenic); }
 .main-nav > a, .nav-dropdown-toggle {
   font-family: var(--font);
   font-weight: 600;
-  font-size: 0.95rem;
+  font-size: 0.98rem;
   color: var(--arsenic);
   padding: 6px 0;
   border: none;
@@ -214,7 +214,7 @@ p { margin: 0 0 16px; font-size: var(--p1); color: var(--arsenic); }
   gap: 6px;
   font-weight: 700;
   color: var(--navy);
-  font-size: 0.95rem;
+  font-size: 0.98rem;
 }
 .header-phone svg { width: 16px; height: 16px; flex: none; }
 .nav-divider {
