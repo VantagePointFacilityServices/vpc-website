@@ -232,7 +232,7 @@ describe("GHL writes for priced quote", () => {
     expect(Date.now() - Date.parse(f.quote_issued_at)).toBeLessThan(60_000);
     expect(f.non_standard_reason).toBe("");
     expect(tags()).toEqual(["quote-priced"]);
-    expect(removedTags()).toEqual(["quote-personal"]);
+    expect(removedTags()).toEqual(["quote-priced", "quote-personal"]);
     const search = calls.find((c) => c.url.includes("/opportunities/search"));
     expect(search.url).toContain("contact_id=c1");
     const create = calls.find((c) => c.method === "POST" && c.url.endsWith("/opportunities/"));
@@ -313,10 +313,22 @@ describe("validation → 400", () => {
 });
 
 describe("re-quote for the same contact", () => {
+  it("a second priced quote removes then re-adds quote-priced, so GHL's Tag Added fires again", async () => {
+    reset();
+    await quote(base);
+    mockGhl();
+    await quote({ ...base, extras: { oven: true } });
+    expect(removedTags()).toEqual(["quote-priced", "quote-personal"]);
+    expect(tags()).toEqual(["quote-priced"]);
+    const del = calls.findIndex((c) => c.method === "DELETE" && c.url.endsWith("/tags"));
+    const add = calls.findIndex((c) => c.method === "POST" && c.url.endsWith("/tags"));
+    expect(del).toBeLessThan(add);
+  });
+
   it("personal quote then priced quote clears the reason and the personal tag", async () => {
     reset();
     await quote({ ...base, weekend: true });
-    expect(removedTags()).toEqual(["quote-priced"]);
+    expect(removedTags()).toEqual(["quote-priced", "quote-personal"]);
     expect(tags()).toEqual(["quote-personal"]);
     expect(fieldsOf().non_standard_reason).toBe("weekend");
 
@@ -324,7 +336,7 @@ describe("re-quote for the same contact", () => {
     const res = await quote(base);
     expect((await res.json()).outcome).toBe("priced");
     expect(fieldsOf().non_standard_reason).toBe("");
-    expect(removedTags()).toEqual(["quote-personal"]);
+    expect(removedTags()).toEqual(["quote-priced", "quote-personal"]);
     expect(tags()).toEqual(["quote-priced"]);
     const del = calls.findIndex((c) => c.method === "DELETE" && c.url.endsWith("/tags"));
     const add = calls.findIndex((c) => c.method === "POST" && c.url.endsWith("/tags"));

@@ -528,11 +528,11 @@ async function handleQuote(payload, env) {
   customFields.push({ key: "non_standard_reason", field_value: nonStandardReason });
 
   const updated = await ghl(`/contacts/${contactId}`, "PUT", env, { customFields });
-  // Re-quote: drop the quote outcome tags that no longer apply. `out-of-area`
-  // is never removed here — /lead sets it from the postcode.
+  // Remove both outcome tags, then add the current one: re-adding a tag that is
+  // already there doesn't fire GHL's Tag Added, so a priced re-quote would never
+  // re-send workflow 01. `out-of-area` is never removed here — /lead sets it.
   const tag = outcome === "priced" ? "quote-priced" : outcome === "personal_quote" ? "quote-personal" : OUT_OF_AREA_TAG;
-  const stale = QUOTE_OUTCOME_TAGS.filter((t) => t !== tag);
-  const untagged = await ghl(`/contacts/${contactId}/tags`, "DELETE", env, { tags: stale });
+  const untagged = await ghl(`/contacts/${contactId}/tags`, "DELETE", env, { tags: QUOTE_OUTCOME_TAGS });
   const tagged = untagged ? await addTagsInGHL(contactId, [tag], env) : { success: false };
   if (!updated || !tagged.success) return fail(502, "Could not save your quote");
 
