@@ -432,7 +432,7 @@ input, select, textarea {
 textarea { resize: vertical; min-height: 84px; }
 input:focus, select:focus, textarea:focus { outline: none; border-color: var(--navy); box-shadow: var(--ring-focus); }
 .form-note { font-size: 0.78rem; color: var(--graphite); margin-top: 12px; text-align: center; }
-.form-privacy-notice { font-size: 0.78rem; color: var(--graphite); margin: 0 0 12px; text-align: left; }
+.turnstile-widget { display: flex; justify-content: center; }
 .form-success {
   display: none;
   text-align: center;
