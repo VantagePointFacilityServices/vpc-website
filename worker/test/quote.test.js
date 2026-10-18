@@ -174,6 +174,8 @@ describe("increments and extras", () => {
     const res = await quote({ ...base, extras: { oven: true, laundry_loads: 1 } });
     expect((await res.json()).extras_price).toBe(109 + 45);
     expect(fieldsOf().quote_extras).toBe("oven, laundry_loads=1");
+    // per_visit_price carries the extras; quoted_package_price does not.
+    expect(fieldsOf()).toMatchObject({ quoted_package_price: "269", per_visit_price: "423", first_visit_price: "692" });
   });
 });
 
@@ -189,6 +191,8 @@ describe("no-price outcomes", () => {
     expect(await res.json()).toEqual({ outcome: "personal_quote", reason });
     expect(tags()).toEqual(["quote-personal"]);
     expect(fieldsOf().non_standard_reason).toBe(reason);
+    expect(fieldsOf().per_visit_price).toBeUndefined();
+    expect(fieldsOf().quote_issued_at).toBeUndefined();
     const opp = calls.find((c) => c.url.endsWith("/opportunities/"));
     expect(opp.body.pipelineStageId).toBe("st-needs");
   });
@@ -223,8 +227,9 @@ describe("GHL writes for priced quote", () => {
       preferred_frequency: "weekly", property_condition: "medium", multi_level: "No", study: "Yes",
       balconies_count: "0", walk_in_robes_count: "0", garage_serviced: "No", pets_on_site: "dog",
       parking_access_notes: "Street parking", special_requests: "Mind the cat",
-      quoted_package_price: "289", first_visit_price: "578",
+      quoted_package_price: "289", first_visit_price: "578", per_visit_price: "289",
     });
+    expect(Date.now() - Date.parse(f.quote_issued_at)).toBeLessThan(60_000);
     expect(f.non_standard_reason).toBe("");
     expect(tags()).toEqual(["quote-priced"]);
     expect(removedTags()).toEqual(["quote-personal"]);
