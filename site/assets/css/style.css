@@ -212,7 +212,7 @@ p { margin: 0 0 16px; font-size: var(--p1); color: var(--arsenic); }
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  font-weight: 700;
+  font-weight: 600;
   color: var(--navy);
   font-size: 0.98rem;
 }
