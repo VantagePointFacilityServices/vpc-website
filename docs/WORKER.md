@@ -23,7 +23,7 @@ All errors are JSON `{error}`. `quote_token` = base64url(`contact_id.exp`) + `.`
 
 CORS: only `https://www.vantagepointcleaning.com.au` and `http://localhost[:port]`.
 
-`/quote` (priced) also writes `per_visit_price` (package + extras, what each later visit is charged — `quoted_package_price` excludes extras) and `quote_issued_at`, and moves the Opportunity to Quoted or Needs Quote.
+`/quote` (priced) also writes `per_visit_price` (package + extras, what each later visit is charged — `quoted_package_price` excludes extras) and `quote_issued_at`, and moves the Opportunity to Quoted or Needs Quote. On every call it removes both `quote-priced` and `quote-personal` before adding the current one, so a re-quote fires GHL's Tag Added again (workflows 01 / 45).
 
 `SERVICE_ZONE_POSTCODES` in `worker.js` is the VPFS launch area: Gold Coast 4207–4230 + Tweed Shire 2484–2490.
 
