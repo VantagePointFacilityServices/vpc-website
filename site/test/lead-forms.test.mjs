@@ -24,7 +24,7 @@ test('lead pages have fields, honeypots, turnstile container, notice, conversion
       assert.match(form, new RegExp(`name="${n}"`), `${p}: ${n}`);
     assert.doesNotMatch(form, /name="suburb"/, p);
     assert.match(form, /class="turnstile-widget" data-sitekey=""/, p);
-    assert.match(form, /privacy\.html#collection-notice/, p);
+    assert.doesNotMatch(form, /form-privacy-notice/, p);
     assert.match(form, /class="form-error" role="alert" hidden/, p);
     assert.match(form, new RegExp(`name="conversion_page" value="/${p}\\.html"`), p);
   }
