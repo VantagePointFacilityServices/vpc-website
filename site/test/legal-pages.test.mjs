@@ -103,20 +103,11 @@ test('every page with an assessment form has a collection-notice purpose mapped'
   assert.deepEqual(formPages.filter((p) => !(p in purposes)), [], 'form pages missing from purposes');
 });
 
-for (const [page, [short]] of Object.entries(purposes).filter(([p]) => pages.includes(p))) {
-  test(`${page}: one short collection notice before the submit button`, () => {
-    const h = read(page);
-    const forms = [...h.matchAll(/<form class="assessment-form"[\s\S]*?<\/form>/g)].map((m) => m[0]);
+for (const page of Object.keys(purposes).filter((p) => pages.includes(p))) {
+  test(`${page}: no inline collection notice on the form`, () => {
+    const forms = [...read(page).matchAll(/<form class="assessment-form"[\s\S]*?<\/form>/g)].map((m) => m[0]);
     assert.equal(forms.length, 1);
-    const f = forms[0];
-    const notices = [...f.matchAll(/<p class="form-privacy-notice">([\s\S]*?)<\/p>/g)];
-    assert.equal(notices.length, 1);
-    assert.ok(f.indexOf('form-privacy-notice') < f.indexOf('type="submit"'), 'notice before submit');
-    assert.ok(notices[0][1].includes('<a href="privacy.html#collection-notice">'));
-    assert.ok(/<a href="privacy\.html">/.test(notices[0][1]));
-    assert.equal(plain(notices[0][0]).trim(),
-      `We collect these details to ${short}. How we handle them: collection notice · Privacy Policy.`);
-    assert.ok(!/type="checkbox"/.test(notices[0][0]));
+    assert.ok(!forms[0].includes('form-privacy-notice'));
   });
 }
 

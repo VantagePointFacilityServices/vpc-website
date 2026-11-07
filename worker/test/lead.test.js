@@ -5,7 +5,10 @@ import worker, {
 } from "../worker.js";
 
 const WWW = "https://www.vantagepointcleaning.com.au";
-const env = { GHL_VPC_API_KEY: "k", GHL_VPC_LOCATION_ID: "loc", QUOTE_TOKEN_SECRET: "sek" };
+const env = {
+  GHL_VPC_API_KEY: "k", GHL_VPC_LOCATION_ID: "loc", QUOTE_TOKEN_SECRET: "sek",
+  GHL_PIPELINE_ID: "pipe", GHL_STAGE_NEW_ENQUIRY_ID: "st-new",
+};
 const good = { first_name: " Ann ", last_name: "Lee", email: "a@b.co", phone: "0400000000", postcode: SERVICE_ZONE_POSTCODES[0] };
 
 let calls;
@@ -48,6 +51,43 @@ describe("POST /lead", () => {
     const res = await post({ ...good, postcode: "2000" });
     expect(res.status).toBe(200);
     expect(tagsCall().body.tags).toEqual(["website-lead", "out-of-area"]);
+  });
+
+  it("creates the Opportunity in New Enquiry for an in-area lead", async () => {
+    const res = await post(good);
+    expect(res.status).toBe(200);
+    const search = calls.find((c) => c.url.includes("/opportunities/search"));
+    expect(search.url).toContain("contact_id=c1");
+    expect(search.url).toContain("pipeline_id=pipe");
+    const create = calls.find((c) => c.url.endsWith("/opportunities/"));
+    expect(create.body).toEqual({
+      pipelineId: "pipe", pipelineStageId: "st-new", status: "open", monetaryValue: 0,
+      locationId: "loc", contactId: "c1", name: "Website instant quote",
+    });
+  });
+
+  it("never moves an existing Opportunity (a returning client stays where they are)", async () => {
+    mockFetch((url) =>
+      String(url).includes("/opportunities/search")
+        ? new Response(JSON.stringify({ opportunities: [{ id: "o9" }] }))
+        : okGhl(url));
+    expect((await post(good)).status).toBe(200);
+    expect(calls.some((c) => c.url.includes("/opportunities/o9"))).toBe(false);
+    expect(calls.some((c) => c.url.endsWith("/opportunities/"))).toBe(false);
+  });
+
+  it("no Opportunity for an out-of-area lead", async () => {
+    await post({ ...good, postcode: "2000" });
+    expect(calls.some((c) => c.url.includes("/opportunities"))).toBe(false);
+  });
+
+  it("still succeeds if the Opportunity search or create fails", async () => {
+    mockFetch((url) => (String(url).includes("/opportunities") ? new Response("x", { status: 500 }) : okGhl(url)));
+    const res = await post(good);
+    expect(res.status).toBe(200);
+    expect((await res.json()).contact_id).toBe("c1");
+    mockFetch((url) => (String(url).endsWith("/opportunities/") ? new Response("x", { status: 500 }) : okGhl(url)));
+    expect((await post(good)).status).toBe(200);
   });
 
   it.each(["first_name", "email", "phone", "postcode"])("400 when %s missing", async (k) => {

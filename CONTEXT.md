@@ -28,8 +28,8 @@ A **package** is a published, instant-quoted, flat-rate level of the Home Care s
 | Package / service | SOP | Scope |
 |---|---|---|
 | **Essential Home Care** (package) | CLN-21 | Kitchen (incl. microwave interior), bathrooms, floors, dusting, surfaces, beds made, bins, high-touch areas, same cleaner or team, inspection and before-and-after photos |
-| **Signature Home Care** (package) | CLN-22 | Essential plus linen changed (client-supplied), one laundry load, interior glass at reachable height, detailed kitchen, one rotational deep-clean task per visit, consumable monitoring, priority booking window |
-| **Reserve Home Care** (package) | CLN-24 | Signature plus two rotational tasks per visit, up to two laundry loads, detailed bathrooms every visit, 48-hour priority reschedule guarantee. No Supervisor element |
+| **Signature Home Care** (package) | CLN-22 | Essential plus interior glass at reachable height, detailed kitchen, one rotational deep-clean task per visit, consumable monitoring, priority booking window |
+| **Reserve Home Care** (package) | CLN-24 | Signature plus two rotational tasks per visit, detailed bathrooms every visit, presentation finish, replacement-cleaner guarantee, 48-hour priority reschedule guarantee. Laundry, linen changes and ironing are Housekeeping add-ons on every package, not inclusions. No Supervisor element |
 | **Estate Care** (service, not a package) | CLN-23 | Dedicated team, detailed program, rotational maintenance, priority scheduling, supervisor inspection, concierge communication |
 | **Turnover** | CLN-14 | Turnover scope contracted with the property manager — not self-declared per visit |
 
@@ -58,7 +58,7 @@ The original Vol 1 §9.2 used **contract** to mean three different things — on
 | **Visit** (or **clean**) | One service delivery at one property. The unit crews are scheduled against and per-visit pricing is quoted in. |
 | **Frequency** | Weekly (4.33 visits/month) or fortnightly (2.17 visits/month). Plan value = per-visit price × visits per month. |
 
-**Worked example:** a Signature plan at $420/visit, fortnightly, is a plan value of $911/month ($420 × 2.17). One customer, one plan, 26 visits a year.
+**Worked example:** a Signature plan at $419/visit, fortnightly, is a plan value of $909/month ($419 × 2.17). One customer, one plan, 26 visits a year.
 
 ---
 
@@ -71,20 +71,20 @@ The original Vol 1 §9.2 used **contract** to mean three different things — on
 | **Proposal** | The scope- and value-based document issued after an Estate Care walkthrough. |
 | **Package price** | The published flat rate for a declared property configuration. Binding for the declared scope, subject to the variance clause. |
 | **Increment** | A published add-on price for a room or feature beyond the base configuration. |
-| **Minimum job price** | $199. Below ~1.5 hours a job cannot carry its own travel and setup. |
+| **Minimum job price** | Per tier: $179 Essential, $279 Signature, $449 Reserve. Below ~1.5 hours a job cannot carry its own travel and setup. |
 
 ### The pricing decision (August 2026, revised)
 
-**Essential, Signature and Reserve are sold as published flat-rate packages with instant quoting. Estate Care is not instant quoted** — it is reached through a paid walkthrough ($100, credited on booking) and custom quotes from $2,000 per visit. Pricing is per visit and uniform across all five zones.
+**Essential, Signature and Reserve are sold as published flat-rate packages with instant quoting. Estate Care is not instant quoted** — it is reached through a walkthrough and custom quotes from $2,000 per visit. Pricing is per visit and uniform across all five zones.
 
-Full ladder, room model, increments and bounded inclusions: vpos `residential/docs/specs/residential-package-and-pricing-model.md`. **Price per hour = $65 loaded labour cost × 2 = $130, GST-inclusive** (so a 2-hour job is $260); the $65 is the cost cap, not a price. Pay bands, the cost model, weekend rates and the subcontractor policy live in the vpos doc `residential-pay-and-workforce-model.md`; the research behind the three-package ladder and the Reserve name is in `residential-tier-structure-market-research.md`.
+Full ladder, room model, increments and bounded inclusions: vpos `residential/docs/specs/residential-package-and-pricing-model.md`. **Price per hour is per tier, GST-inclusive: Essential $88.20, Signature $102.22, Reserve $130.50**, calibrated so the 3-bed/2-bath lands at $269 / $419 / $699 (about the 70th percentile of published Australian prices); the loaded labour cost is a cost cap, not a price. Pay bands, the cost model, weekend rates and the subcontractor policy live in the vpos doc `residential-pay-and-workforce-model.md`; the research behind the three-package ladder and the Reserve name is in `residential-tier-structure-market-research.md`.
 
 **This revises an earlier decision in the same month.** The audit first resolved the suite to *assessment-first, no price shown*, on the evidence that instant online pricing is a Value-quadrant signal (vpos `residential-direct-competitor-market-analysis.md`, Positioning Axis) and that no premium competitor in Zones 1–5 publishes pricing. That evidence still stands; the commercial decision changed. Audit finding S2 is retained and marked superseded rather than deleted.
 
 Two things follow, and both matter:
 
 - **Self-declared scope is the pricing basis.** A price is issued before anyone visits, so OPS-16 governs *declared-scope* variance and the mandatory timestamped T&Cs acknowledgement sits at form submission.
-- **The price does not carry the positioning.** At $379 the 3-bed/2-bath is 1.20× the verified market ceiling; the 4-bed at $419 is 1.02×. These are top-of-band prices, not obviously-premium ones. The bounded inclusions, the same-cleaner promise and the SafetyCulture record carry the premium claim instead.
+- **The price does not carry the positioning.** At $269 / $419 / $699 the 3-bed/2-bath sits at about the 70th percentile of published prices: premium, but not top-of-market. The bounded inclusions, the same-cleaner promise and the SafetyCulture record carry the premium claim instead.
 
 The CTA remains **"Request Your Private Home Care Assessment"** for Estate Care. Essential, Signature and Reserve lead with the price and a booking; **Signature is shown as "Recommended"** (never "Most popular", which can't be substantiated at launch).
 

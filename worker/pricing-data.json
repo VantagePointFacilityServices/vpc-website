@@ -1,0 +1,357 @@
+{
+  "source_commit": "cea3baee7784dfb9cd430969753a2eeae795181c",
+  "version": "2026-10-18",
+  "gst_inclusive": true,
+  "floor_per_hour": 65,
+  "first_visit_multiple": 2,
+  "room_model": {
+    "base": 0.7,
+    "bedroom": 0.35,
+    "bathroom": 0.5,
+    "living_extra": 0.3,
+    "studio_bedrooms": 0.5
+  },
+  "tiers": {
+    "essential": {
+      "rate": 88.2,
+      "minimum": 179,
+      "fixed_hours": 0,
+      "scale_of_essential": 0,
+      "increment_scale": 1,
+      "increment_reconcile_tolerance": 10
+    },
+    "signature": {
+      "rate": 102.22,
+      "minimum": 279,
+      "fixed_hours": 0.5,
+      "scale_of_essential": 0.18,
+      "increment_scale": 1.18,
+      "increment_reconcile_tolerance": 10
+    },
+    "reserve": {
+      "rate": 130.5,
+      "minimum": 449,
+      "fixed_hours": 0.8,
+      "scale_of_essential": 0.15,
+      "increment_scale": 1.33,
+      "increment_reconcile_tolerance": 10
+    }
+  },
+  "ladder": [
+    {
+      "bedrooms": 0,
+      "bathrooms": 1,
+      "living_areas": 1,
+      "hours": {
+        "essential": 1.38,
+        "signature": 2.12,
+        "reserve": 3.13
+      },
+      "computed": {
+        "essential": 119,
+        "signature": 219,
+        "reserve": 409
+      },
+      "price": {
+        "essential": 179,
+        "signature": 279,
+        "reserve": 449
+      }
+    },
+    {
+      "bedrooms": 1,
+      "bathrooms": 1,
+      "living_areas": 1,
+      "hours": {
+        "essential": 1.55,
+        "signature": 2.33,
+        "reserve": 3.36
+      },
+      "computed": {
+        "essential": 139,
+        "signature": 239,
+        "reserve": 439
+      },
+      "price": {
+        "essential": 179,
+        "signature": 279,
+        "reserve": 449
+      }
+    },
+    {
+      "bedrooms": 2,
+      "bathrooms": 1,
+      "living_areas": 1,
+      "hours": {
+        "essential": 1.9,
+        "signature": 2.74,
+        "reserve": 3.83
+      },
+      "computed": {
+        "essential": 169,
+        "signature": 279,
+        "reserve": 499
+      },
+      "price": {
+        "essential": 179,
+        "signature": 279,
+        "reserve": 499
+      }
+    },
+    {
+      "bedrooms": 2,
+      "bathrooms": 2,
+      "living_areas": 1,
+      "hours": {
+        "essential": 2.4,
+        "signature": 3.33,
+        "reserve": 4.49
+      },
+      "computed": {
+        "essential": 209,
+        "signature": 339,
+        "reserve": 589
+      },
+      "price": {
+        "essential": 209,
+        "signature": 339,
+        "reserve": 589
+      }
+    },
+    {
+      "bedrooms": 3,
+      "bathrooms": 2,
+      "living_areas": 2,
+      "hours": {
+        "essential": 3.05,
+        "signature": 4.1,
+        "reserve": 5.36
+      },
+      "computed": {
+        "essential": 269,
+        "signature": 419,
+        "reserve": 699
+      },
+      "price": {
+        "essential": 269,
+        "signature": 419,
+        "reserve": 699
+      }
+    },
+    {
+      "bedrooms": 4,
+      "bathrooms": 2,
+      "living_areas": 2,
+      "hours": {
+        "essential": 3.4,
+        "signature": 4.51,
+        "reserve": 5.82
+      },
+      "computed": {
+        "essential": 299,
+        "signature": 459,
+        "reserve": 759
+      },
+      "price": {
+        "essential": 299,
+        "signature": 459,
+        "reserve": 759
+      }
+    },
+    {
+      "bedrooms": 3,
+      "bathrooms": 3,
+      "living_areas": 2,
+      "hours": {
+        "essential": 3.55,
+        "signature": 4.69,
+        "reserve": 6.02
+      },
+      "computed": {
+        "essential": 309,
+        "signature": 479,
+        "reserve": 789
+      },
+      "price": {
+        "essential": 309,
+        "signature": 479,
+        "reserve": 789
+      }
+    },
+    {
+      "bedrooms": 4,
+      "bathrooms": 3,
+      "living_areas": 2,
+      "hours": {
+        "essential": 3.9,
+        "signature": 5.1,
+        "reserve": 6.49
+      },
+      "computed": {
+        "essential": 339,
+        "signature": 519,
+        "reserve": 849
+      },
+      "price": {
+        "essential": 339,
+        "signature": 519,
+        "reserve": 849
+      }
+    },
+    {
+      "bedrooms": 5,
+      "bathrooms": 3,
+      "living_areas": 3,
+      "hours": {
+        "essential": 4.55,
+        "signature": 5.87,
+        "reserve": 7.35
+      },
+      "computed": {
+        "essential": 399,
+        "signature": 599,
+        "reserve": 959
+      },
+      "price": {
+        "essential": 399,
+        "signature": 599,
+        "reserve": 959
+      }
+    },
+    {
+      "bedrooms": 5,
+      "bathrooms": 4,
+      "living_areas": 3,
+      "hours": {
+        "essential": 5.05,
+        "signature": 6.46,
+        "reserve": 8.02
+      },
+      "computed": {
+        "essential": 449,
+        "signature": 659,
+        "reserve": 1049
+      },
+      "price": {
+        "essential": 449,
+        "signature": 659,
+        "reserve": 1049
+      }
+    }
+  ],
+  "increments": {
+    "extra_bedroom": {
+      "hours": 0.35,
+      "essential": 30,
+      "signature": 40,
+      "reserve": 60
+    },
+    "extra_bathroom": {
+      "hours": 0.5,
+      "essential": 45,
+      "signature": 60,
+      "reserve": 85
+    },
+    "powder_room": {
+      "hours": 0.22,
+      "essential": 20,
+      "signature": 25,
+      "reserve": 40
+    },
+    "extra_living_area": {
+      "hours": 0.3,
+      "essential": 25,
+      "signature": 35,
+      "reserve": 50
+    },
+    "study": {
+      "hours": 0.2,
+      "essential": 20,
+      "signature": 25,
+      "reserve": 35
+    },
+    "media_room": {
+      "hours": 0.25,
+      "essential": 20,
+      "signature": 30,
+      "reserve": 45
+    },
+    "multi_level": {
+      "hours": 0.3,
+      "essential": 25,
+      "signature": 35,
+      "reserve": 50
+    },
+    "outdoor_alfresco": {
+      "hours": 0.35,
+      "essential": 30,
+      "signature": 40,
+      "reserve": 60
+    },
+    "pool_surrounds": {
+      "hours": 0.3,
+      "essential": 25,
+      "signature": 35,
+      "reserve": 50
+    },
+    "balcony": {
+      "hours": 0.15,
+      "essential": 15,
+      "signature": 20,
+      "reserve": 25
+    },
+    "walk_in_robe": {
+      "hours": 0.12,
+      "essential": 10,
+      "signature": 15,
+      "reserve": 20
+    },
+    "garage_serviced": {
+      "hours": 0.3,
+      "essential": 25,
+      "signature": 35,
+      "reserve": 50
+    }
+  },
+  "extras": {
+    "oven": {
+      "price": 109,
+      "group": "detail",
+      "essential_only": true
+    },
+    "fridge": {
+      "price": 65,
+      "group": "detail",
+      "essential_only": true
+    },
+    "cabinets": {
+      "price": 69,
+      "group": "detail"
+    },
+    "interior_glass": {
+      "price": 65,
+      "group": "detail",
+      "essential_only": true
+    },
+    "laundry_load": {
+      "price": 45,
+      "group": "housekeeping",
+      "unit": "load"
+    },
+    "linen_bed": {
+      "price": 20,
+      "group": "housekeeping",
+      "unit": "bed"
+    },
+    "ironing_block": {
+      "price": 45,
+      "group": "housekeeping",
+      "unit": "30 minutes"
+    },
+    "reset_block": {
+      "price": 65,
+      "group": "detail",
+      "unit": "30 minutes"
+    }
+  }
+}

@@ -168,7 +168,7 @@ p { margin: 0 0 16px; font-size: var(--p1); color: var(--arsenic); }
   z-index: 100;
   background: rgba(255,255,255,0.96);
   backdrop-filter: blur(6px);
-  border-bottom: 1px solid var(--smoke);
+  border-bottom: 1px solid var(--cloud);
 }
 .header-inner {
   display: flex;
@@ -183,7 +183,7 @@ p { margin: 0 0 16px; font-size: var(--p1); color: var(--arsenic); }
   font-family: var(--font);
   font-weight: 600;
   font-size: 0.98rem;
-  color: var(--graphite);
+  color: var(--arsenic);
   padding: 6px 0;
   border: none;
   border-bottom: 2px solid transparent;
@@ -198,7 +198,7 @@ p { margin: 0 0 16px; font-size: var(--p1); color: var(--arsenic); }
 .nav-dropdown-toggle {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
   background: none;
   cursor: pointer;
   line-height: inherit;
@@ -209,13 +209,12 @@ p { margin: 0 0 16px; font-size: var(--p1); color: var(--arsenic); }
 .has-dropdown.open > .nav-dropdown-menu { display: block; }
 .header-cta { display: flex; align-items: center; gap: 4px; }
 .header-phone {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   gap: 6px;
   font-weight: 600;
   color: var(--navy);
   font-size: 0.98rem;
-  white-space: nowrap;
 }
 .header-phone svg { width: 16px; height: 16px; flex: none; }
 .nav-divider {
@@ -242,7 +241,7 @@ p { margin: 0 0 16px; font-size: var(--p1); color: var(--arsenic); }
     top: 100%;
     left: -12px;
     margin-top: 11px;
-    min-width: 200px;
+    min-width: 236px;
     padding: 7px 8px;
     background: var(--white);
     border: 1px solid var(--cloud);
@@ -313,7 +312,7 @@ p { margin: 0 0 16px; font-size: var(--p1); color: var(--arsenic); }
   .nav-dropdown-menu a:last-child { border-bottom: none; }
   .nav-dropdown-menu a.active { color: var(--navy); }
   .nav-toggle { display: flex; }
-  .logo img { height: 40px; }
+  .logo img { height: 41px; }
 }
 
 /* Below this the CTA label no longer fits beside a legible logo — it stays
@@ -433,11 +432,7 @@ input, select, textarea {
 textarea { resize: vertical; min-height: 100px; }
 input:focus, select:focus, textarea:focus { outline: none; border-color: var(--navy); box-shadow: var(--ring-focus); }
 .form-note { font-size: 0.78rem; color: var(--graphite); margin-top: 12px; text-align: center; }
-.form-privacy-notice { font-size: 0.78rem; line-height: 1.35; color: var(--graphite); margin: 12px 0; text-align: left; }
-.form-privacy-notice a { color: inherit; text-decoration: underline; }
-/* Cloudflare Turnstile: centre the challenge when it is shown (interaction-only keeps it hidden otherwise) */
 .turnstile-widget { display: flex; justify-content: center; }
-@media (max-width: 560px) { .assessment-form .btn-block { white-space: normal; } }
 .form-success {
   display: none;
   text-align: center;
@@ -856,15 +851,18 @@ a.nav-dropdown-toggle { cursor: pointer; }
   cursor: pointer;
   padding: 6px;
   margin-left: 2px;
-  color: var(--graphite);
+  color: var(--arsenic);
 }
 .nav-dropdown-chevron:hover { color: var(--navy); }
 .nav-dropdown-chevron .chev { width: 13px; height: 13px; transition: transform var(--dur-base) var(--ease-standard); }
 @media (min-width: 961px) {
   .has-dropdown { display: flex; align-items: center; flex: none; }
   .main-nav > a, .main-nav .nav-dropdown-toggle { white-space: nowrap; }
+  /* The button toggle has no chevron button after it; this stands in for that
+     button's 6px padding so the next gap matches the split items. */
+  button.nav-dropdown-toggle { margin-right: 6px; }
 }
-@media (min-width: 961px) and (max-width: 1240px) { .main-nav { gap: 28px; } } /* keep the header on one line beside the phone and CTA */
+@media (min-width: 961px) and (max-width: 1240px) { .main-nav { gap: 28px; } }
 @media (max-width: 960px) {
   .has-dropdown { display: flex; flex-wrap: wrap; align-items: center; border-bottom: 1px solid var(--smoke); }
   .has-dropdown .nav-dropdown-toggle { flex: 1; width: auto; border-bottom: none; }
@@ -1013,3 +1011,22 @@ a.nav-dropdown-toggle { cursor: pointer; }
 .quote-close { position: absolute; top: -8px; right: -8px; width: 44px; height: 44px; border: 0; background: none; font-size: 28px; cursor: pointer; color: var(--charcoal); }
 .quote-price { font-size: 1.4rem; margin: 0; }
 .quote-form .btn[aria-disabled="true"] { opacity: 0.5; pointer-events: none; }
+
+/* Extras grid */
+.extras-table-wrap { max-width: 860px; margin: 0 auto; overflow-x: auto; }
+.extras-table { width: 100%; border-collapse: collapse; }
+.extras-table th, .extras-table td { padding: 12px 10px; border-bottom: 1px solid rgba(0,0,0,.12); text-align: left; }
+.extras-table thead th { color: var(--navy); }
+.extras-table .extras-group th { background: rgba(0,0,0,.05); color: var(--navy); font-size: .95rem; letter-spacing: .03em; text-transform: uppercase; }
+.extras-table .extras-included { font-style: italic; color: var(--graphite); }
+.housekeeping-callout { max-width: 860px; margin: 0 auto 24px; padding: 16px 20px; border-left: 4px solid var(--navy); background: rgba(0,0,0,.04); }
+.housekeeping-callout h3 { margin: 0 0 4px; font-size: 1.1rem; }
+.housekeeping-callout p { margin: 0; }
+@media (max-width: 600px) {
+  .extras-table thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+  .extras-table, .extras-table tbody, .extras-table tr, .extras-table th, .extras-table td { display: block; }
+  .extras-table tr[data-extra] { padding: 8px 0; border-bottom: 1px solid rgba(0,0,0,.12); }
+  .extras-table th, .extras-table td { border: 0; padding: 4px 6px; }
+  .extras-table td { display: flex; justify-content: space-between; gap: 12px; }
+  .extras-table td::before { content: attr(data-label); color: var(--graphite); }
+}

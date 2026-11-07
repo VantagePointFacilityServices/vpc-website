@@ -24,7 +24,7 @@ test('lead pages have fields, honeypots, turnstile container, notice, conversion
       assert.match(form, new RegExp(`name="${n}"`), `${p}: ${n}`);
     assert.doesNotMatch(form, /name="suburb"/, p);
     assert.match(form, /class="turnstile-widget" data-sitekey=""/, p);
-    assert.match(form, /privacy\.html#collection-notice/, p);
+    assert.doesNotMatch(form, /form-privacy-notice/, p);
     assert.match(form, /class="form-error" role="alert" hidden/, p);
     assert.match(form, new RegExp(`name="conversion_page" value="/${p}\\.html"`), p);
   }
@@ -84,7 +84,7 @@ test('switch on: widget gets the site key and renders for action "lead"; a faile
 test('placeholder handler and TODO are gone; lead.js loads before main.js', () => {
   const m = read('assets/js/main.js');
   assert.doesNotMatch(m, /TODO|placeholder|data-lead-ready/);
-  for (const p of ALL) assert.match(read(`${p}.html`), /lead\.js"><\/script>\s*<script src="assets\/js\/quote\.js"><\/script>\s*<script src="assets\/js\/main\.js"/, p);
+  for (const p of ALL) assert.match(read(`${p}.html`), /lead\.js"><\/script>\s*<script src="assets\/js\/pricing-data\.js"><\/script>\s*<script src="assets\/js\/quote\.js"><\/script>\s*<script src="assets\/js\/main\.js"/, p);
 });
 
 // --- behaviour with a minimal fake form / document ---
